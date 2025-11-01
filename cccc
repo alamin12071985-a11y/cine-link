@@ -1,0 +1,1789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Changed App Name to Cine Link -->
+    <title id="app-title-user" data-translate-key="appTitleUser">Cine Link - User Panel</title> 
+    <!-- Monetag/Adsterra Placeholder -->
+    <script type='text/javascript' src='//pl27950586.effectivegatecpm.com/c0/6b/f3/c06bf3a50ea747b9efbefbaf2f9a1131.js'></script>
+
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    
+    <!-- NEW: Monetag Script for Popunder/Direct Link Ad -->
+    <script src='//libtl.com/sdk.js' data-zone='10119710' data-sdk='show_10119710'></script>
+    
+    <style>
+        :root {
+            /* Final Color Scheme: Red Gradient */
+            --primary-red: #E21C31; 
+            --deep-maroon: #500B28; 
+            --red-gradient: linear-gradient(135deg, var(--primary-red), var(--deep-maroon)); 
+            
+            --dark-bg: #0A0A0A; 
+            --card-bg: #1C1C1C; 
+            --text-color: #EEEEEE;
+            --secondary-text: #B0B0B0;
+            --input-bg: #2a2a2a; 
+            
+            /* MODIFIED: Colors for Preloader - Changed to Red Glow */
+            --red-glow: var(--primary-red); /* #E21C31 */
+            --cyber-bg: #000000;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            padding-bottom: 65px;
+            transition: background-color 0.3s;
+            position: relative; 
+            overflow-x: hidden; /* Prevent horizontal scroll on mobile */
+        }
+        
+        /* MODIFIED CSS: Preloader Screen (HACKING THEME - RED) */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--cyber-bg);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease-out;
+            opacity: 1;
+        }
+
+        .preloader-hidden {
+            opacity: 0 !important;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .preloader-text {
+            color: var(--red-glow);
+            font-size: 1.5em;
+            font-weight: 700;
+            letter-spacing: 5px;
+            /* Text shadow changed to red glow */
+            text-shadow: 0 0 10px var(--red-glow), 0 0 20px rgba(226, 28, 49, 0.5); 
+            margin-bottom: 40px;
+        }
+
+        .loading-container {
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .loading-bar-wrapper {
+            width: 100%;
+            height: 20px;
+            border: 2px solid var(--red-glow);
+            border-radius: 5px;
+            margin-bottom: 20px;
+            position: relative;
+            box-shadow: 0 0 10px rgba(226, 28, 49, 0.4);
+        }
+
+        .loading-bar {
+            height: 100%;
+            width: 0%; 
+            background-color: var(--red-glow);
+            transition: width 0.1s linear;
+            box-shadow: 0 0 5px var(--red-glow);
+            border-radius: 3px;
+        }
+
+        /* Decorative brackets for the loading bar, similar to the image */
+        .loading-bar-wrapper::before, .loading-bar-wrapper::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            width: 5px;
+            height: 30px;
+            border-radius: 2px;
+            background-color: transparent; 
+            border: 2px solid var(--red-glow);
+            box-shadow: 0 0 8px var(--red-glow);
+        }
+
+        .loading-bar-wrapper::before {
+            left: -10px;
+            border-right: none;
+            transform: skewX(-15deg);
+        }
+
+        .loading-bar-wrapper::after {
+            right: -10px;
+            border-left: none;
+            transform: skewX(15deg);
+        }
+
+        .loading-text {
+            color: var(--red-glow);
+            font-size: 1.2em;
+            text-shadow: 0 0 5px rgba(226, 28, 49, 0.6);
+        }
+        /* END MODIFIED CSS: Preloader */
+
+        
+        /* Binary Code Canvas Background */
+        #binary-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; 
+            /* MODIFIED: Opacity changed from 0.08 to 0.5 (50%) */
+            opacity: 0.5; 
+            pointer-events: none; 
+        }
+
+
+        /* Header (App Name ONLY - Search removed) */
+        .app-header {
+            display: flex;
+            justify-content: flex-start; /* Aligned left now */
+            align-items: center;
+            padding: 15px 20px;
+            background: var(--red-gradient); 
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .app-name {
+            font-size: 1.6em;
+            font-weight: 700;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 20px;
+        }
+
+        .tab-content {
+            display: none;
+            padding-top: 10px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Movies Tab */
+        .movie-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+        }
+
+        .movie-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .movie-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+        }
+
+        .movie-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .movie-card-info {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .movie-card-title {
+            font-size: 1em;
+            font-weight: 600;
+            color: white;
+            margin: 5px 0 0 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        /* NEW CSS: Tutorial Slide Button */
+        #tutorial-slide-button {
+            position: fixed;
+            top: 50%; /* Center vertically */
+            right: 0;
+            transform: translate(100%, -50%); /* Start off-screen to the right */
+            z-index: 90; 
+            background: var(--red-gradient);
+            color: white;
+            padding: 10px 15px;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9em;
+            transition: transform 0.5s ease-out;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        #tutorial-slide-button.active {
+            transform: translate(0, -50%); /* Slide fully onto screen */
+        }
+        /* END NEW CSS */
+
+        /* Settings/Request general styles */
+        .history-item, .settings-item, .request-form-container { 
+            background-color: var(--card-bg);
+            margin-bottom: 12px;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            padding-left: 15px; 
+            position: relative; 
+        }
+        
+        .settings-item {
+            cursor: pointer;
+        }
+        
+        /* Specific style for accent bar on list item */
+        .accent-style-item {
+            border-left: 5px solid var(--primary-red); 
+            padding-left: 15px; 
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+        
+        .social-links a {
+            color: var(--primary-red); 
+            text-decoration: none;
+            margin-right: 15px;
+            font-weight: 600;
+        }
+        
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            background-color: #1a1a1a;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+            cursor: pointer;
+            color: var(--secondary-text);
+            transition: color 0.3s, background-color 0.3s;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            line-height: 1.2; 
+        }
+
+        .nav-item.active {
+            color: white;
+            background: var(--red-gradient); 
+            border-radius: 15px 15px 0 0;
+        }
+
+        .nav-item i {
+            display: block;
+            font-size: 24px;
+            margin-bottom: 2px;
+        }
+
+        .nav-item span {
+            font-size: 0.75em;
+            font-weight: 500;
+        }
+        
+        /* Modal for Movie Details/Ad Banner */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+        }
+        
+        /* Fullscreen Search Modal */
+        #search-modal {
+            background-color: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            padding: 20px;
+            display: none;
+            flex-direction: column; 
+        }
+
+        #search-modal-content {
+            width: 90%;
+            max-width: 600px;
+            margin: auto;
+        }
+        
+        /* NEW: Search Input Group Styling */
+        .search-input-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        #search-input-main {
+            flex-grow: 1;
+            padding: 15px 20px;
+            font-size: 1.2em;
+            border: 2px solid var(--primary-red);
+            border-radius: 30px 0 0 30px; /* Rounded on the left */
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            outline: none;
+        }
+        
+        /* NEW: Close Button Styling in Search Modal */
+        #search-close-btn {
+            background-color: var(--primary-red);
+            color: white;
+            padding: 15px;
+            border: 2px solid var(--primary-red);
+            border-left: none; /* Connects to the input */
+            border-radius: 0 30px 30px 0; /* Rounded on the right */
+            cursor: pointer;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+
+        #search-results-list {
+            max-height: 70vh;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .search-result-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .search-result-item:hover {
+            background-color: #333;
+        }
+
+        .search-result-item img {
+            width: 50px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        
+        .search-result-item span {
+            font-weight: 600;
+        }
+
+
+        .modal-content {
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease-out;
+            position: relative;
+        }
+        
+        /* MODIFIED: Centering for the Password Gate content */
+        #movie-details-modal .modal-content #lock-view {
+            text-align: center; 
+        }
+
+        #lock-view .input-group {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        #lock-view #password-input {
+            width: 80%; /* Reduce width for better appearance when centered */
+            max-width: 300px;
+            margin: 0 auto; 
+        }
+
+        #lock-view .button-container {
+            align-items: center;
+        }
+
+        #lock-view .action-button {
+            max-width: 300px;
+            width: 80%; /* Make buttons narrower and centered */
+            margin: 0 auto;
+        }
+        /* END MODIFIED CSS */
+
+        /* Movie Modal Image (FIXED HEIGHT) */
+        .movie-modal-img {
+            width: 100%;
+            max-height: 250px; 
+            height: 250px; 
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        
+        /* Modal button styles (Rest of the button styles are unchanged) */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .action-button, .request-button { 
+            width: 100%;
+            background: var(--red-gradient); 
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.05em;
+            text-transform: uppercase;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .action-button:hover, .request-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.7);
+        }
+        
+        .secondary-button {
+            background: transparent;
+            color: var(--primary-red);
+            border: 2px solid var(--primary-red);
+            box-shadow: none;
+        }
+        
+        .secondary-button:hover {
+            background: rgba(226, 28, 49, 0.1); 
+            transform: none;
+            box-shadow: none;
+        }
+        
+        /* Form/Input Styles for Request Tab (Unchanged) */
+        .request-form-container label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .request-form-container input, .request-form-container textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            font-size: 1em;
+            box-sizing: border-box;
+            resize: vertical;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .request-form-container input:focus, .request-form-container textarea:focus {
+            border-color: var(--primary-red);
+        }
+        
+        .message-status {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 8px;
+            display: none;
+            font-weight: 600;
+        }
+        
+        .message-status.success {
+            background-color: #4CAF50;
+        }
+        
+        .message-status.error {
+            background-color: #f44336;
+        }
+
+
+        /* MODIFIED: Ad Banner Modal Styles (CTA Button removed) */
+        #ad-banner-modal {
+            background-color: rgba(0, 0, 0, 0.95);
+        }
+        
+        #ad-banner-content {
+            background: none;
+            padding: 0;
+            max-width: 90%; 
+            max-height: 90%;
+            width: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+        }
+
+        /* Close button style for the Ad Modal */
+        #ad-banner-close {
+            position: absolute;
+            top: 15px; 
+            right: 15px;
+            background-color: rgba(0, 0, 0, 0.6); 
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 1001; 
+        }
+        
+        #ad-banner-image {
+            width: 100%;
+            height: auto;
+            max-height: 90vh; /* Reverted max-height as CTA is removed */
+            object-fit: contain; 
+            border-radius: 10px;
+            cursor: pointer;
+            display: block;
+        }
+        /* Removed .ad-banner-cta style */
+        /* END MODIFIED CSS */
+        
+        /* Tutorial Modal Styles (Unchanged) */
+        #tutorial-modal .modal-content {
+            max-width: 350px;
+            text-align: center;
+        }
+        
+        #tutorial-modal h3 {
+            color: var(--primary-red);
+            margin-top: 0;
+        }
+
+
+        /* Fixed Ad Banner (Unchanged) */
+        .fixed-ad-banner-placement {
+            position: fixed;
+            bottom: 50px; 
+            left: 0;
+            width: 100%;
+            height: 35px; 
+            z-index: 99; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--dark-bg);
+        }
+        
+        /* ACCENT BAR STYLES (Unchanged) */
+        #unlock-view h4[data-translate-key="descriptionTitle"], 
+        #settings-tab h2, 
+        #settings-tab h3 { 
+            border-left: 5px solid var(--primary-red);
+            padding-left: 10px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .movie-meta-data strong {
+            position: relative;
+            padding-left: 8px; 
+            font-weight: 600; 
+        }
+
+        .movie-meta-data strong::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%; 
+            width: 3px;
+            background-color: var(--primary-red);
+            border-radius: 2px;
+        }
+        
+        /* Trending Slider Styles (Unchanged) */
+        #trending-slider {
+            margin-bottom: 30px;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(226, 28, 49, 0.4); 
+            box-shadow: 0 0 15px rgba(226, 28, 49, 0.4);
+            position: relative;
+            height: 250px; 
+            background-color: var(--dark-bg);
+        }
+
+        .slider-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slider-item {
+            min-width: 100%;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .slider-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .slider-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            color: white;
+        }
+
+        .slider-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .slider-year {
+            font-size: 0.9em;
+            color: var(--secondary-text);
+            margin: 2px 0 0 0;
+        }
+
+        .slider-tag {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background: #90EE90; 
+            color: #000;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8em;
+            font-weight: 700;
+        }
+        
+        .slider-dots {
+            text-align: center;
+            position: absolute;
+            bottom: 5px;
+            width: 100%;
+            z-index: 5;
+        }
+
+        .dot {
+            height: 10px;
+            width: 10px;
+            margin: 0 4px;
+            background-color: #555;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .dot.active {
+            background-color: var(--text-color);
+        }
+
+
+    </style>
+</head>
+<body onload="startLoadingAnimation()">
+    
+    <!-- MODIFIED: PRELOADER SCREEN (CYBER HAKING THEME - RED) -->
+    <div id="preloader">
+        <div class="preloader-text">Cine Link</div> <!-- MODIFIED: Text changed from CYBER HAKING to Cine Link -->
+        <div class="loading-container">
+            <div class="loading-bar-wrapper">
+                <div class="loading-bar" id="loading-bar"></div>
+            </div>
+            <div class="loading-text" id="loading-percentage">Loading ... 0%</div>
+        </div>
+    </div>
+    <!-- END MODIFIED: PRELOADER SCREEN -->
+
+    <!-- TWA SDK Import (Essential for user info in Telegram Web App) -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script> 
+    
+    <!-- Binary Code Canvas (Background) -->
+    <canvas id="binary-canvas"></canvas>
+
+    <div class="app-header">
+        <span class="app-name" id="app-name-header">Cine Link</span> 
+        <!-- Removed search icon from header -->
+    </div>
+
+    <div class="main-content" style="display: none;"> <!-- Hidden until preloader finishes -->
+        
+        <!-- Movies Tab Content -->
+        <div id="movies-tab" class="tab-content active">
+            
+            <!-- Trending Movies Slider -->
+            <div id="trending-slider">
+                <div class="slider-track" id="slider-track">
+                    <div class="slider-item">
+                        <p style="text-align: center; color: white; line-height: 250px;" data-translate-key="loadingTrending">Loading trending movies...</p>
+                    </div>
+                </div>
+                <!-- Slider Dots -->
+                <div class="slider-dots" id="slider-dots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+            
+            <h3 style="color: var(--primary-red); margin-top: 10px;" data-translate-key="recentlyAddedTitle">Recently Added</h3>
+
+            <div class="movie-list" id="movie-list">
+                <p style="text-align: center; color: var(--secondary-text);" data-translate-key="loadingMovies">Loading movies...</p>
+            </div>
+
+            <!-- MODIFIED: Tutorial Slide Button Text "Tutorial" -->
+            <div id="tutorial-slide-button" onclick="handleTutorialSlideButtonClick()">
+                <i class="material-icons" style="font-size: 20px;">ondemand_video</i>
+                <span data-translate-key="tutorialButton">Tutorial</span> <!-- MODIFIED: Changed from Join Now to Tutorial -->
+            </div>
+            
+        </div>
+        
+        <!-- Request Tab Content -->
+        <div id="request-tab" class="tab-content">
+            <h2 id="request-heading" data-translate-key="requestHeading">Request Your Favorite Movies/Series</h2>
+            <form id="request-form" class="request-form-container">
+                <label for="request-name" data-translate-key="yourNameLabel">Your name</label>
+                <input type="text" id="request-name" placeholder="Enter your name" required>
+
+                <label for="request-movie-title" data-translate-key="movieTitleLabel">Movie/Series Title</label>
+                <input type="text" id="request-movie-title" placeholder="Enter movie or series name" required>
+                
+                <label for="request-release-date" data-translate-key="releaseDateLabel">Release Date (Optional)</label>
+                <input type="text" id="request-release-date" placeholder="e.g., 2024 or December 2024">
+                
+                <label for="request-special-note" data-translate-key="specialNoteLabel">Special Note</label>
+                <textarea id="request-special-note" rows="3" placeholder="Any special requests or details" required></textarea>
+                
+                <div class="button-container" style="margin-top: 25px;">
+                    <button type="submit" class="request-button action-button" data-translate-key="submitRequestButton">Submit Request</button>
+                </div>
+                <div class="message-status" id="request-status-message"></div>
+            </form>
+        </div>
+
+
+        <!-- Settings Tab Content (ME renamed to Settings, History moved in) -->
+        <div id="settings-tab" class="tab-content">
+            <h2 id="settings-heading" data-translate-key="settingsHeading">Settings & User Info</h2>
+            <div class="settings-list" id="settings-list">
+                
+                <!-- Telegram User Info -->
+                <div class="settings-item accent-style-item">
+                    <p><strong data-translate-key="telegramUserTitle">My Telegram Info:</strong></p>
+                    <p style="margin: 5px 0;"><strong data-translate-key="myNameLabel">My Name:</strong> <span id="my-telegram-name" style="color: var(--secondary-text);">...</span></p> 
+                    <p style="margin: 5px 0;"><strong data-translate-key="myUsernameLabel">My Username:</strong> <span id="my-telegram-username" style="color: var(--secondary-text);">...</span></p>
+                </div>
+                
+                <!-- History Section -->
+                <section class="history-section" style="margin-top: 30px;">
+                    <h3 id="history-subheading" data-translate-key="historySubHeading">Download History</h3>
+                    <ul class="history-list" id="history-list">
+                        <li style="text-align: center; color: var(--secondary-text);" data-translate-key="noHistory">No download history yet.</li>
+                    </ul>
+                </section>
+                
+                <!-- Language Selection REMOVED -->
+                
+                <!-- About App -->
+                <div class="settings-item">
+                    <p><strong id="about-app-title" data-translate-key="aboutAppTitle">About Cine Link:</strong> <span id="settings-about" style="color: var(--secondary-text);">...</span></p>
+                </div>
+                <!-- Version -->
+                <div class="settings-item">
+                    <p><strong id="version-title" data-translate-key="versionTitle">Version:</strong> <span id="settings-version" style="color: var(--secondary-text);">...</span></p>
+                </div>
+                <!-- Social Media -->
+                <div class="settings-item">
+                    <p><strong id="social-media-title" data-translate-key="socialMediaTitle">Social Media:</strong></p>
+                    <div class="social-links">
+                        <a id="link-youtube" href="#" target="_blank" data-translate-key="linkYouTube">YouTube</a>
+                        <a id="link-telegram" href="#" target="_blank" data-translate-key="linkTelegram">Telegram</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation Tabs -->
+    <div class="bottom-nav" style="display: none;"> <!-- Hidden until preloader finishes -->
+        <div class="nav-item active" onclick="switchTab('movies')" data-tab-id="movies">
+            <i class="material-icons">movie_filter</i>
+            <span id="tab-movies" data-translate-key="tabMovies">Movies</span>
+        </div>
+        
+        <!-- Request Tab -->
+        <div class="nav-item" onclick="switchTab('request')" data-tab-id="request">
+            <i class="material-icons">send</i>
+            <span id="tab-request" data-translate-key="tabRequest">Request</span>
+        </div>
+        
+        <!-- Search Tab (Opens Modal) -->
+        <div class="nav-item" onclick="openSearchModal()" data-tab-id="search">
+            <i class="material-icons">search</i>
+            <span id="tab-search" data-translate-key="tabSearch">Search</span>
+        </div>
+        
+        <!-- Settings Tab -->
+        <div class="nav-item" onclick="switchTab('settings')" data-tab-id="settings">
+            <i class="material-icons">settings</i>
+            <span id="tab-settings" data-translate-key="tabSettings">Settings</span>
+        </div>
+    </div>
+    
+    <!-- Movie Details Modal (Unchanged functionality) -->
+    <div class="modal-overlay" id="movie-details-modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            
+            <div id="lock-view">
+                <!-- Content will be injected by openMovieDetails -->
+            </div>
+            
+            <div id="unlock-view" style="display: none;">
+                <!-- Content will be injected by verifyPassword -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- MODIFIED: Ad Banner Modal (CTA Button removed) -->
+    <div class="modal-overlay" id="ad-banner-modal" style="display: none;">
+        <!-- Removed modal-close here, as it's now handled by #ad-banner-close inside content -->
+        <div class="modal-content" id="ad-banner-content">
+            <!-- Close button positioned absolutely on top-right -->
+            <span class="material-icons" id="ad-banner-close" onclick="closeAdBanner()">close</span>
+            
+            <img id="ad-banner-image" src="" alt="Advertisement Banner" onclick="clickAdBanner()">
+            
+            <!-- REMOVED: NEW: CTA Button at the bottom center (as requested) -->
+            <!-- <button class="ad-banner-cta" id="ad-banner-cta-button" onclick="clickAdBanner()">
+                এখনই যোগাযোগ করুন!
+            </button> -->
+        </div>
+    </div>
+    
+    <!-- Fullscreen Search Modal (UPDATED) -->
+    <div class="modal-overlay" id="search-modal">
+        <div id="search-modal-content">
+            <div class="search-input-group">
+                <input type="text" id="search-input-main" data-translate-key="searchPlaceholder" placeholder="Search movies..." oninput="filterSearchResults(this.value)">
+                <!-- NEW: Clear/Close Button for Search -->
+                <i class="material-icons" id="search-close-btn" onclick="closeSearchModal()">clear</i>
+            </div>
+            <div id="search-results-list">
+                <p style="text-align: center; color: var(--secondary-text);" data-translate-key="startSearching">Start typing to search...</p>
+            </div>
+        </div>
+        <!-- Removed the redundant close button below the search bar -->
+    </div>
+    
+    <!-- MODIFIED: Tutorial Modal (Welcome Message logic is removed from JS) -->
+    <div class="modal-overlay" id="tutorial-modal">
+        <div class="modal-content">
+            <!-- <h3 data-translate-key="tutorialTitle">Welcome to Cine Link!</h3> - REMOVED -->
+            <p data-translate-key="tutorialStep1">1. Find your movie on the main screen.</p>
+            <p data-translate-key="tutorialStep2">2. Click a movie to see details and the password gate.</p>
+            <p data-translate-key="tutorialStep3">3. Use 'Collect Password' to get the key from our Telegram channel.</p>
+            <p data-translate-key="tutorialStep4">4. Enter the password and click 'Download Now!'</p>
+            <p style="margin-top: 20px; font-style: italic;" data-translate-key="tutorialNote">This message will only appear once.</p>
+            <button class="action-button" onclick="closeTutorialModal()" data-translate-key="tutorialGotItBtn">Got It!</button>
+        </div>
+    </div>
+
+
+    <script>
+        // Firebase Configuration (as provided)
+        const firebaseConfig = {
+            apiKey: "AIzaSyCJf1uMhhyZ2vN07RtLdmSzi8cN6pntE-M",
+            authDomain: "movie-f9479.firebaseapp.com",
+            databaseURL: "https://movie-f9479-default-rtdb.firebaseio.com",
+            projectId: "movie-f9479",
+            storageBucket: "movie-f9479.firebasestorage.app",
+            messagingSenderId: "415978681706",
+            appId: "1:415978681706:web:16c3ff9df4f24426e36113",
+            measurementId: "G-16BN9VHMD1"
+        };
+        
+        // --- TRANSLATIONS DICTIONARY (ONLY EN) ---
+        const translations = {
+            en: {
+                appTitleUser: 'Cine Link - User Panel', 
+                searchPlaceholder: 'Search movies...',
+                loadingMovies: 'Loading movies...',
+                noMoviesFound: 'No movies found.',
+                noMoviesAvailable: 'No movies available yet.',
+                loadingTrending: 'Loading trending movies...',
+                recentlyAddedTitle: 'Recently Added',
+                errorLoadingMovies: 'Error loading movies.',
+                tabMovies: 'Movies',
+                tabSearch: 'Search', 
+                tabRequest: 'Request',
+                tabSettings: 'Settings', 
+                tutorialButton: 'Tutorial', // MODIFIED: 'Join Now' changed to 'Tutorial'
+                startSearching: 'Start typing to search...', 
+                requestHeading: 'Request Your Favorite Movies/Series',
+                yourNameLabel: 'Your name',
+                movieTitleLabel: 'Movie/Series Title',
+                releaseDateLabel: 'Release Date (Optional)',
+                specialNoteLabel: 'Special Note',
+                submitRequestButton: 'Submit Request',
+                requestSentSuccess: 'Request submitted successfully!',
+                requestSentError: 'Error submitting request.',
+                settingsHeading: 'Settings & User Info', 
+                historySubHeading: 'Download History', 
+                noHistory: 'No download history yet.',
+                historyClicked: 'Clicked:',
+                telegramUserTitle: 'My Telegram Info:', 
+                myNameLabel: 'My Name:', 
+                myUsernameLabel: 'My Username:', 
+                aboutAppTitle: 'About Cine Link:', 
+                versionTitle: 'Version:',
+                socialMediaTitle: 'Social Media:',
+                linkYouTube: 'YouTube',
+                linkTelegram: 'Telegram',
+                passwordPrompt: 'Input password to unlock the download link',
+                passwordInputPlaceholder: 'Enter Password',
+                unlockBtn: 'Unlock',
+                collectPasswordBtn: 'Collect Password',
+                passwordError: 'Incorrect password. Try again.',
+                errorMovieData: 'Error: Movie data is not available.',
+                imdbRatingLabel: 'IMDb Rating:',
+                genreLabel: 'Genre:',
+                languageLabel: 'Language:',
+                descriptionTitle: 'Description',
+                downloadButton: 'Download Now',
+                downloadLinkNotAvailable: 'Download link not available.',
+                movieNotFound: 'Movie data not found.',
+                collectPasswordLinkNotSet: 'Collect Password link not set for this movie.',
+                noDescription: 'No description provided.',
+                alertDownloadLink: 'Download link not available.',
+                alertMonetagAd: 'Monetag Ad shown (Simulated).',
+                tutorialTitle: 'Welcome to Cine Link!', 
+                tutorialStep1: '1. Find your movie on the main screen.', 
+                tutorialStep2: '2. Click a movie to see details and the password gate.', 
+                tutorialStep3: '3. Use \'Collect Password\' to get the key from our Telegram channel.', 
+                tutorialStep4: '4. Enter the password and click \'Download Now!\'', 
+                tutorialNote: 'This message will only appear once.', 
+                tutorialGotItBtn: 'Got It!' ,
+                adCtaText: 'Contact Now!' 
+            }
+        };
+
+        // Current language hardcoded to 'en'
+        let currentLang = 'en'; 
+        
+        // Function to get translation safely (Simplified)
+        function getTranslation(key) {
+            // Check if key is for the modified 'tutorialButton' for consistency
+            if (key === 'tutorialButton') {
+                return 'Tutorial';
+            }
+            // All other keys use the standard translation
+            return translations['en'][key] || 'MISSING TEXT';
+        }
+        
+        // Function to apply translations
+        function applyTranslations() {
+            document.querySelectorAll('[data-translate-key]').forEach(element => {
+                const key = element.getAttribute('data-translate-key');
+                const translation = getTranslation(key);
+                
+                if (element.tagName === 'INPUT' && element.hasAttribute('placeholder')) {
+                    element.setAttribute('placeholder', translation);
+                } else if (element.tagName === 'TITLE') {
+                    document.title = translation; 
+                } else if (element.id && (element.id.startsWith('link-') || element.id.startsWith('tab-') || element.id.startsWith('history-') || element.id.startsWith('about-app-title'))) { 
+                    element.textContent = translation;
+                } else if (key === 'adCtaText') {
+                    // Skip translation for the ad CTA as it was removed
+                    return;
+                }
+                 else {
+                    element.textContent = translation;
+                }
+            });
+            
+            if (document.querySelector('#settings-tab').classList.contains('active')) {
+                loadHistory();
+            }
+        }
+
+        // Language setting function is now a no-op since only 'en' is supported
+        function setLanguage(lang) {
+            // No-op
+        }
+        
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        let currentMovieData = null;
+        let settingsData = {};
+        let allMovies = []; // Store all movies for the full-screen search
+        
+        // --- NEW: Loading Animation ---
+        function startLoadingAnimation() {
+            const loadingBar = document.getElementById('loading-bar');
+            const loadingPercentage = document.getElementById('loading-percentage');
+            let percentage = 0;
+
+            const interval = setInterval(() => {
+                percentage += Math.floor(Math.random() * 5) + 1; // Increment randomly
+                if (percentage >= 100) {
+                    percentage = 100;
+                    clearInterval(interval);
+                    setTimeout(hidePreloader, 500); // Hide after reaching 100%
+                }
+
+                loadingBar.style.width = percentage + '%';
+                loadingPercentage.textContent = `Loading ... ${percentage}%`;
+            }, 100); 
+
+            // Initialize app logic while the preloader is running
+            checkAndShowAdBanner(); 
+            startBinaryAnimation();
+        }
+
+        function hidePreloader() {
+            document.getElementById('preloader').classList.add('preloader-hidden');
+            document.querySelector('.main-content').style.display = 'block';
+            document.querySelector('.bottom-nav').style.display = 'flex';
+            document.querySelector('.fixed-ad-banner-placement').style.display = 'flex';
+        }
+        // --- END NEW: Loading Animation ---
+
+        
+        // --- TWA/User Info Logic (Unchanged) ---
+        function initTelegramUser() {
+            const defaultName = 'N/A';
+            const defaultUsername = 'N/A';
+            
+            let userNameElement = document.getElementById('my-telegram-name');
+            let usernameElement = document.getElementById('my-telegram-username');
+            
+            if (typeof window.Telegram !== 'undefined' && window.Telegram.WebApp.initDataUnsafe.user) {
+                const user = window.Telegram.WebApp.initDataUnsafe.user;
+                const fullName = (user.first_name || '') + (user.last_name ? ' ' + user.last_name : '');
+                
+                userNameElement.textContent = fullName.trim() || `ID: ${user.id || defaultName}`; 
+                usernameElement.textContent = user.username ? `@${user.username}` : defaultUsername;
+                
+                console.log("TWA User ID:", user.id); 
+            } else {
+                userNameElement.textContent = defaultName + " (Run in TWA)"; 
+                usernameElement.textContent = defaultUsername;
+            }
+        }
+
+        
+        // --- Monetag Ad Logic (Unchanged) ---
+        function showMonetagAd() {
+            if (typeof show_10119710 === 'function') {
+                show_10119710();
+                console.log('Monetag Ad (Zone 10119710) Called.');
+                return true;
+            } else {
+                console.log(getTranslation('alertMonetagAd')); 
+                return false;
+            }
+        }
+        
+        // --- Ad Banner Logic (Unchanged) ---
+        function closeAdBanner() {
+            document.getElementById('ad-banner-modal').style.display = 'none';
+        }
+
+        function clickAdBanner() {
+            showMonetagAd(); 
+
+            if (settingsData.adBannerUrl) {
+                window.open(settingsData.adBannerUrl, '_blank');
+                closeAdBanner();
+            } else {
+                console.warn("Ad Banner Click URL not set in settings. Cannot open link.");
+            }
+        }
+        
+        // --- Tutorial Modal Logic (MODIFIED: Removed showTutorialModal call) ---
+        function showTutorialModal() {
+            // REMOVED LOGIC: This modal will no longer automatically show on load
+            // if (localStorage.getItem('cineLinkTutorialShown') !== 'true') {
+            //     document.getElementById('tutorial-modal').style.display = 'flex';
+            // }
+        }
+        
+        function closeTutorialModal() {
+            document.getElementById('tutorial-modal').style.display = 'none';
+            localStorage.setItem('cineLinkTutorialShown', 'true');
+        }
+
+        // --- Tutorial Slide Button Logic ---
+        function loadTutorialSlideButton() {
+            const button = document.getElementById('tutorial-slide-button');
+            const lastClickedDate = localStorage.getItem('tutorialSlideClickedDate');
+            const today = new Date().toDateString();
+
+            if (lastClickedDate === today) {
+                // Already clicked today, do not show
+                button.style.display = 'none';
+                return;
+            }
+            
+            // If not clicked today, show the button
+            button.style.display = 'flex';
+            setTimeout(() => {
+                button.classList.add('active'); // Slide in
+            }, 1000); 
+        }
+
+        function handleTutorialSlideButtonClick() {
+            const button = document.getElementById('tutorial-slide-button');
+            const today = new Date().toDateString();
+            
+            // 1. Save click status
+            localStorage.setItem('tutorialSlideClickedDate', today);
+            
+            // 2. Hide button immediately
+            button.classList.remove('active');
+            setTimeout(() => {
+                button.style.display = 'none';
+            }, 500);
+
+            // 3. Redirect to video link
+            if (settingsData.tutorialVideoLink) {
+                window.open(settingsData.tutorialVideoLink, '_blank');
+            } else {
+                alert('Tutorial video link is not set in Admin Panel (Firebase/settings/tutorialVideoLink).');
+            }
+        }
+        // --- END Tutorial Slide Button Logic ---
+
+
+        function checkAndShowAdBanner() {
+            database.ref('settings').once('value', (snapshot) => {
+                settingsData = snapshot.val() || {};
+                
+                // Load Settings for Display
+                document.getElementById('settings-about').textContent = settingsData.about || getTranslation('noDescription');
+                document.getElementById('settings-version').textContent = settingsData.version || 'N/A';
+                
+                // Load YouTube and Telegram links
+                document.getElementById('link-youtube').href = settingsData.youtubeLink || settingsData.youtube || '#';
+                document.getElementById('link-telegram').href = settingsData.telegramLink || settingsData.telegram || '#'; 
+
+
+                // Check and show Ad Banner
+                if (settingsData.adBannerStatus === 'on' && settingsData.adBannerImageUrl) {
+                    const bannerModal = document.getElementById('ad-banner-modal');
+                    const bannerImage = document.getElementById('ad-banner-image');
+                    
+                    bannerImage.src = settingsData.adBannerImageUrl;
+                    bannerModal.style.display = 'flex';
+                }
+                
+                // Apply translations and load movies after settings are fetched
+                applyTranslations(); 
+                loadTrendingMovies(); 
+                loadMovies();        
+                initTelegramUser();  
+                // showTutorialModal(); // REMOVED: No longer automatically shows welcome modal
+                // Load the slide button after initial data is fetched
+                loadTutorialSlideButton(); 
+            });
+        }
+        
+        // --- Search Modal Logic (Unchanged, but relies on updated HTML) ---
+        function openSearchModal() {
+            document.getElementById('search-modal').style.display = 'flex';
+            document.getElementById('search-input-main').value = '';
+            document.getElementById('search-results-list').innerHTML = `<p style="text-align: center; color: var(--secondary-text);">${getTranslation('startSearching')}</p>`;
+            document.getElementById('search-input-main').focus();
+        }
+        
+        function closeSearchModal() {
+            document.getElementById('search-modal').style.display = 'none';
+        }
+        
+        function filterSearchResults(query) {
+            const resultsList = document.getElementById('search-results-list');
+            resultsList.innerHTML = ''; 
+            const searchQuery = query.toLowerCase().trim();
+            
+            if (searchQuery.length < 2) {
+                resultsList.innerHTML = `<p style="text-align: center; color: var(--secondary-text);">${getTranslation('startSearching')}</p>`;
+                return;
+            }
+            
+            const filteredMovies = allMovies.filter(movie => 
+                movie.title.toLowerCase().includes(searchQuery)
+            );
+            
+            if (filteredMovies.length === 0) {
+                resultsList.innerHTML = `<p style="text-align: center; color: var(--secondary-text);">${getTranslation('noMoviesFound')}</p>`;
+                return;
+            }
+            
+            filteredMovies.forEach(movie => {
+                const item = document.createElement('div');
+                item.classList.add('search-result-item');
+                item.onclick = () => { closeSearchModal(); showMonetagAd(); openMovieDetails(movie.key); };
+                
+                item.innerHTML = `
+                    <img src="${movie.imageUrl || 'https://via.placeholder.com/50x70?text=No+Img'}" alt="${movie.title}">
+                    <span>${movie.title}</span>
+                `;
+                resultsList.appendChild(item);
+            });
+        }
+
+        // --- Tab Switching Logic (Unchanged) ---
+        function switchTab(tabId) {
+            if (tabId === 'search') {
+                openSearchModal();
+                return; 
+            }
+            
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.bottom-nav .nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            document.getElementById(`${tabId}-tab`).classList.add('active');
+            document.querySelector(`.nav-item[data-tab-id='${tabId}']`).classList.add('active');
+
+            if (tabId === 'settings') {
+                loadHistory(); 
+            }
+        }
+        
+        // --- Trending Slider Logic (Unchanged) ---
+        let trendingMovies = [];
+        let currentSlide = 0;
+        let slideInterval;
+
+        function createTrendingSlide(movie) {
+            const item = document.createElement('div');
+            item.classList.add('slider-item');
+            item.setAttribute('data-key', movie.key);
+            item.onclick = () => { showMonetagAd(); openMovieDetails(movie.key); };
+            
+            const displayTitle = movie.title.length > 50 ? movie.title.substring(0, 50) + '...' : movie.title;
+            
+            item.innerHTML = `
+                <img src="${movie.imageUrl || 'https://via.placeholder.com/450x250?text=Trending+Movie'}" alt="${movie.title}">
+                <div class="slider-overlay">
+                    <p class="slider-title">${displayTitle}</p>
+                    <p class="slider-year">${movie.year || 'N/A'}</p>
+                    <span class="slider-tag">MOVIE</span>
+                </div>
+            `;
+            return item;
+        }
+
+        function renderTrendingSlider() {
+            const track = document.getElementById('slider-track');
+            const dotsContainer = document.getElementById('slider-dots');
+            track.innerHTML = '';
+            dotsContainer.innerHTML = '';
+            
+            clearInterval(slideInterval);
+
+            if (trendingMovies.length === 0) {
+                 track.innerHTML = `<div class="slider-item">
+                                        <p style="text-align: center; color: white; line-height: 250px;">${getTranslation('loadingTrending')}</p>
+                                    </div>`;
+                return;
+            }
+
+            trendingMovies.forEach((movie, index) => {
+                track.appendChild(createTrendingSlide(movie));
+                
+                const dot = document.createElement('span');
+                dot.classList.add('dot');
+                if (index === 0) dot.classList.add('active');
+                dot.onclick = () => showSlide(index);
+                dotsContainer.appendChild(dot);
+            });
+
+            currentSlide = 0;
+            showSlide(currentSlide);
+            startAutoSlide();
+        }
+        
+        function showSlide(index) {
+            const track = document.getElementById('slider-track');
+            const dots = document.querySelectorAll('#slider-dots .dot');
+            const totalSlides = trendingMovies.length;
+
+            if (totalSlides === 0) return;
+
+            if (index >= totalSlides) {
+                index = 0;
+            } else if (index < 0) {
+                index = totalSlides - 1;
+            }
+            
+            currentSlide = index;
+            const offset = -currentSlide * 100;
+            track.style.transform = `translateX(${offset}%)`;
+
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlide);
+            });
+        }
+        
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function startAutoSlide() {
+            clearInterval(slideInterval);
+            if (trendingMovies.length > 1) {
+                slideInterval = setInterval(nextSlide, 5000); 
+            }
+        }
+
+        function loadTrendingMovies() {
+            const trendingRef = database.ref('trending_movies');
+            
+            trendingRef.once('value').then(snapshot => {
+                const trendingData = snapshot.val();
+                if (!trendingData) {
+                    trendingMovies = [];
+                    renderTrendingSlider();
+                    return;
+                }
+
+                const movieIds = Object.keys(trendingData).map(key => trendingData[key].movieId);
+                
+                const fetchPromises = movieIds.map(movieId => 
+                    database.ref(`movies/${movieId}`).once('value').then(fullMovieSnapshot => {
+                        if (fullMovieSnapshot.exists()) {
+                            const trendingItem = Object.values(trendingData).find(item => item.movieId === movieId);
+                            return { 
+                                key: fullMovieSnapshot.key, 
+                                ...fullMovieSnapshot.val(), 
+                                year: trendingItem ? trendingItem.year : 'N/A' 
+                            };
+                        }
+                        return null;
+                    })
+                );
+
+                Promise.all(fetchPromises).then(results => {
+                    trendingMovies = results.filter(movie => movie !== null);
+                    renderTrendingSlider(); 
+                });
+
+            }).catch(error => {
+                console.error("Firebase trending fetch error:", error);
+                renderTrendingSlider(); 
+            });
+        }
+        
+        
+        // --- Movie Loading and Display (Unchanged) ---
+        function createMovieCard(key, movie) {
+            const card = document.createElement('div');
+            card.classList.add('movie-card');
+            card.setAttribute('data-key', key);
+            card.onclick = () => { showMonetagAd(); openMovieDetails(key); }; 
+
+            card.innerHTML = `
+                <img src="${movie.imageUrl || 'https://via.placeholder.com/140x200?text=No+Image'}" alt="${movie.title}">
+                <div class="movie-card-info">
+                    <p class="movie-card-title">${movie.title}</p>
+                </div>
+            `;
+            return card;
+        }
+
+        function loadMovies() {
+            const movieListContainer = document.getElementById('movie-list');
+            movieListContainer.innerHTML = `<p style="text-align: center; color: var(--secondary-text);">${getTranslation('loadingMovies')}</p>`;
+            
+            database.ref('movies').once('value', (snapshot) => {
+                movieListContainer.innerHTML = '';
+                allMovies = []; 
+                
+                if (snapshot.exists()) {
+                    const movies = snapshot.val();
+                    let hasResults = false;
+                    for (const key in movies) {
+                        const movie = movies[key];
+                        // Add to global list for full-screen search
+                        allMovies.push({ key, ...movie }); 
+                        
+                        // Add to the main screen list
+                        movieListContainer.appendChild(createMovieCard(key, movie));
+                        hasResults = true;
+                    }
+                    if (!hasResults) {
+                        movieListContainer.innerHTML = `<p style="text-align: center; color: var(--secondary-text);">${getTranslation('noMoviesAvailable')}</p>`;
+                    }
+                } else {
+                    movieListContainer.innerHTML = `<p style="text-align: center; color: var(--secondary-text);">${getTranslation('noMoviesAvailable')}</p>`;
+                }
+            }, (error) => {
+                console.error("Firebase fetch error:", error);
+                movieListContainer.innerHTML = `<p style="text-align: center; color: var(--secondary-text);">${getTranslation('errorLoadingMovies')}</p>`;
+            });
+        }
+        
+        // --- Movie Details Modal Logic (Unchanged) ---
+        function openMovieDetails(movieId) {
+            currentMovieData = null;
+            
+            database.ref(`movies/${movieId}`).once('value', (snapshot) => {
+                if (snapshot.exists()) {
+                    currentMovieData = { id: movieId, ...snapshot.val() };
+                    
+                    const movieData = currentMovieData;
+                    
+                    // Populate Lock View content
+                    document.getElementById('lock-view').innerHTML = `
+                        <img src="${movieData.imageUrl || 'https://via.placeholder.com/140x200?text=No+Image'}" alt="Movie Poster" class="movie-modal-img" id="lock-img">
+                        <h3 class="modal-title" id="lock-title">${movieData.title}</h3>
+                        <p style="color: var(--secondary-text);"><strong id="password-prompt" data-translate-key="passwordPrompt">${getTranslation('passwordPrompt')}</strong></p>
+                        
+                        <div class="input-group">
+                            <input type="password" id="password-input" data-translate-key="passwordInputPlaceholder" placeholder="${getTranslation('passwordInputPlaceholder')}" required>
+                        </div>
+                        
+                        <div class="button-container">
+                            <button class="action-button" onclick="verifyPassword()" id="unlock-btn" data-translate-key="unlockBtn">${getTranslation('unlockBtn')}</button>
+                            <button class="action-button secondary-button" onclick="collectPassword()" id="collect-password-btn" data-translate-key="collectPasswordBtn">${getTranslation('collectPasswordBtn')}</button>
+                        </div>
+                        
+                        <p class="error-message" id="password-error" data-translate-key="passwordError" style="display: none;">${getTranslation('passwordError')}</p>
+                    `;
+
+                    document.getElementById('lock-view').style.display = 'block';
+                    document.getElementById('unlock-view').style.display = 'none';
+                    document.getElementById('movie-details-modal').style.display = 'flex';
+                } else {
+                    alert(getTranslation('movieNotFound'));
+                }
+            });
+        }
+
+        function closeModal() {
+            document.getElementById('movie-details-modal').style.display = 'none';
+            currentMovieData = null;
+        }
+
+        // --- PASSWORD VERIFICATION (Unchanged) ---
+        function verifyPassword() {
+            showMonetagAd(); 
+
+            const inputPassword = document.getElementById('password-input').value.trim();
+            const errorElement = document.getElementById('password-error');
+            const movieData = currentMovieData;
+
+            errorElement.style.display = 'none';
+
+            if (!movieData) {
+                errorElement.textContent = getTranslation('errorMovieData');
+                errorElement.style.display = 'block';
+                return;
+            }
+
+            const correctPassword = String(movieData.password || '').trim();
+
+            if (inputPassword === correctPassword && correctPassword !== '') {
+                // Correct password, switch to unlock view
+                
+                // Dynamically populate unlock view content
+                document.getElementById('unlock-view').innerHTML = `
+                    <img src="${movieData.imageUrl || 'https://via.placeholder.com/140x200?text=No+Image'}" alt="Movie Poster" class="movie-modal-img" id="unlock-img">
+                    <h3 class="modal-title" id="unlock-title">${movieData.title}</h3>
+                    
+                    <div class="movie-meta-data">
+                        <p class="meta-item"><strong data-translate-key="imdbRatingLabel">${getTranslation('imdbRatingLabel')}</strong> <span id="unlock-rating">${movieData.imdbRating || 'N/A'}</span></p>
+                        <span class="meta-separator">|</span>
+                        <p class="meta-item"><strong data-translate-key="genreLabel">${getTranslation('genreLabel')}</strong> <span id="unlock-genre">${movieData.genre || 'N/A'}</span></p>
+                        <span class="meta-separator">|</span>
+                        <p class="meta-item"><strong data-translate-key="languageLabel">${getTranslation('languageLabel')}</strong> <span id="unlock-language">${movieData.language || 'N/A'}</span></p>
+                    </div>
+                    
+                    <h4 data-translate-key="descriptionTitle">${getTranslation('descriptionTitle')}</h4>
+                    <p class="description" id="unlock-description" style="color: var(--secondary-text);">${movieData.description || getTranslation('noDescription')}</p>
+                    
+                    <div class="button-container">
+                        <button class="action-button" onclick="downloadMovie()" id="download-button" data-translate-key="downloadButton">${getTranslation('downloadButton')}</button>
+                    </div>
+                `;
+
+                document.getElementById('lock-view').style.display = 'none';
+                document.getElementById('unlock-view').style.display = 'block';
+
+            } else {
+                // Incorrect password or empty password in DB
+                errorElement.textContent = getTranslation('passwordError');
+                errorElement.style.display = 'block';
+            }
+        }
+
+        // --- DOWNLOAD MOVIE (Unchanged) ---
+        function downloadMovie() {
+            showMonetagAd(); 
+            
+            if (currentMovieData && currentMovieData.downloadUrl) {
+                addToHistory(currentMovieData.id, currentMovieData.title);
+                window.open(currentMovieData.downloadUrl, '_blank');
+                closeModal();
+            } else {
+                alert(getTranslation('alertDownloadLink'));
+            }
+        }
+        
+        // --- Collect Password Logic (Unchanged) ---
+        function collectPassword() {
+            const linkToOpen = currentMovieData.collectPasswordLink || settingsData.collectPasswordLink;
+
+            if (linkToOpen) {
+                window.open(linkToOpen, '_blank');
+            } else {
+                alert(getTranslation('collectPasswordLinkNotSet'));
+            }
+        }
+        
+        // --- Request Form Logic (Unchanged) ---
+        function showStatusMessage(elementId, message, isSuccess) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.className = 'message-status ' + (isSuccess ? 'success' : 'error');
+            element.style.display = 'block';
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 3000);
+        }
+        
+        document.getElementById('request-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            let userID = 'N/A';
+            let userName = 'N/A';
+            if (typeof window.Telegram !== 'undefined' && window.Telegram.WebApp.initDataUnsafe.user) {
+                const user = window.Telegram.WebApp.initDataUnsafe.user;
+                userID = user.id;
+                userName = user.username ? `@${user.username}` : (user.first_name || '') + (user.last_name ? ' ' + user.last_name : '');
+            }
+
+            const requestData = {
+                requestedBy: document.getElementById('request-name').value,
+                movieTitle: document.getElementById('request-movie-title').value,
+                releaseDate: document.getElementById('request-release-date').value || 'N/A',
+                specialNote: document.getElementById('request-special-note').value,
+                telegramID: userID,
+                telegramUsername: userName,
+                timestamp: firebase.database.ServerValue.TIMESTAMP 
+            };
+            
+            database.ref('requests').push(requestData)
+            .then(() => {
+                showStatusMessage('request-status-message', getTranslation('requestSentSuccess'), true);
+                document.getElementById('request-form').reset();
+            })
+            .catch(error => {
+                console.error("Error submitting request:", error);
+                showStatusMessage('request-status-message', getTranslation('requestSentError') + error.message, false);
+            });
+        });
+
+        // --- History Logic (Unchanged) ---
+        function getHistory() {
+            const history = localStorage.getItem('movieVaultHistory');
+            return history ? JSON.parse(history) : [];
+        }
+
+        function saveHistory(history) {
+            localStorage.setItem('movieVaultHistory', JSON.stringify(history));
+        }
+
+        function addToHistory(id, title) {
+            let history = getHistory();
+            const timestamp = new Date().toLocaleString(currentLang);
+            
+            history = history.filter(item => item.id !== id);
+            history.unshift({ id, title, timestamp });
+            saveHistory(history.slice(0, 10));
+        }
+
+        function loadHistory() {
+            const historyList = document.getElementById('history-list');
+            const history = getHistory();
+
+            historyList.innerHTML = '';
+
+            if (history.length === 0) {
+                historyList.innerHTML = `<li style="text-align: center; color: var(--secondary-text);">${getTranslation('noHistory')}</li>`;
+                return;
+            }
+
+            history.forEach(item => {
+                const li = document.createElement('li');
+                li.classList.add('history-item');
+                li.innerHTML = `
+                    <span>${item.title}</span>
+                    <span style="font-size: 0.8em; color: #999;">${getTranslation('historyClicked')} ${item.timestamp}</span>
+                `;
+                historyList.appendChild(li);
+            });
+        }
+        
+        // --- Binary Code Animation Logic (Unchanged) ---
+        function startBinaryAnimation() {
+            const canvas = document.getElementById('binary-canvas');
+            const ctx = canvas.getContext('2d');
+
+            canvas.height = window.innerHeight;
+            canvas.width = window.innerWidth;
+
+            const matrix = '01'; 
+            const font_size = 10;
+            let columns = canvas.width / font_size; 
+            let drops = [];
+
+            for(let x = 0; x < columns; x++)
+                drops[x] = 1; 
+
+            function draw() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'; 
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.fillStyle = '#E21C31'; 
+                ctx.font = font_size + 'px arial';
+
+                for(let i = 0; i < drops.length; i++) {
+                    const text = matrix[Math.floor(Math.random() * matrix.length)];
+                    ctx.fillText(text, i * font_size, drops[i] * font_size);
+
+                    if(drops[i] * font_size > canvas.height && Math.random() > 0.975)
+                        drops[i] = 0;
+
+                    drops[i]++;
+                }
+            }
+            
+            window.addEventListener('resize', () => {
+                canvas.height = window.innerHeight;
+                canvas.width = window.innerWidth;
+                const newColumns = canvas.width / font_size;
+                if (newColumns !== columns) {
+                    columns = newColumns;
+                    drops = [];
+                    for(let x = 0; x < columns; x++) drops[x] = 1;
+                }
+            });
+
+            setInterval(draw, 35); 
+        }
+
+
+        // --- Initialization ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // startBinaryAnimation() is called inside startLoadingAnimation()
+        });
+        
+        // NOTE: onload changed to startLoadingAnimation()
+    </script>
+    
+    <!-- Fixed Ad Banner (Unchanged) -->
+    <div class="fixed-ad-banner-placement" style="display: none;"> <!-- Hidden until preloader finishes -->
+        <script type="text/javascript">
+            atOptions = {
+                'key' : '7e6c53dbca6af62dfb935a3fe3c1777f',
+                'format' : 'iframe',
+                'height' : 35, 
+                'width' : 320,
+                'params' : {}
+            };
+        </script>
+        <script type="text/javascript" src="//www.highperformanceformat.com/7e6c53dbca6af62dfb935a3fe3c1777f/invoke.js"></script>
+    </div>
+
+</body>
+</html>
