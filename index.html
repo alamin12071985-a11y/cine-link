@@ -357,8 +357,7 @@
 
         .ring-container {
             position: absolute;
-            /* Ring moved down slightly to match character */
-            top: 65%; 
+            top: 70%; /* Moved down slightly to match character */
             left: 50%;
             transform: translate(-50%, -50%) scale(0.85); 
             width: 350px;
@@ -402,8 +401,8 @@
             text-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
             margin-bottom: 10px;
             z-index: 5;
-            /* Balance moved down slightly */
-            margin-top: 20px; 
+            /* Added margin-top to push balance down a bit */
+            margin-top: 20px;
         }
 
         .main-balance img {
@@ -419,9 +418,8 @@
             z-index: 10; 
             transition: transform 0.1s;
             filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.1));
-            
-            /* --- UPDATED: Snowman moved DOWN --- */
-            margin-top: 110px; 
+            /* --- MODIFIED: Moved Snowman Down --- */
+            margin-top: 100px; 
             margin-bottom: 10px;
         }
 
@@ -437,10 +435,9 @@
             font-weight: 800;
             cursor: pointer;
             z-index: 20;
-            
-            /* Feed Button Positioning */
-            margin-top: 15px; 
             margin-bottom: 15px;
+            /* Pushing Feed Button Down */
+            margin-top: 15px; 
             box-shadow: 0 4px 10px rgba(221, 36, 118, 0.5);
             text-transform: uppercase;
         }
@@ -457,8 +454,7 @@
             cursor: pointer;
             z-index: 20;
             box-shadow: 0 0 15px rgba(147, 249, 185, 0.4);
-            
-            /* Mining Button Positioning */
+            /* Pushing Mining Button Down */
             margin-top: 5px; 
             margin-bottom: 20px;
             display: flex;
@@ -480,9 +476,8 @@
             width: 100%;
             padding: 10px 10px;
             z-index: 10;
-            
-            /* --- UPDATED: Moved UP from the bottom --- */
-            margin-bottom: 80px; 
+            /* --- MODIFIED: Lifted Up significantly from bottom --- */
+            margin-bottom: 85px; 
         }
 
         .control-item {
@@ -602,8 +597,8 @@
     <!-- LOADING SCREEN -->
     <div id="loading-screen">
         <div class="loading-title">WELCOME</div>
-        <!-- Snowman in Loading -->
-        <img src="https://alamin12071985-a11y.github.io/Snowman/snowman.png" class="loading-char" alt="Loading">
+        <!-- UPDATED PATH TO cine-link -->
+        <img src="https://alamin12071985-a11y.github.io/cine-link/snowman.png" class="loading-char" alt="Loading">
         
         <div class="loading-bar-container">
             <div class="loading-text">Get ready... Your adventure is about to begin!</div>
@@ -623,8 +618,8 @@
             <!-- Left: Profit -->
             <div class="stat-card-left">
                 <div class="stat-value">
-                    <!-- FIXED: coin.png (lowercase 'c' to match file) -->
-                    <img src="https://alamin12071985-a11y.github.io/Snowman/coin.png" alt="C">
+                    <!-- FIXED: coin.png (Lowercase 'c') and Path 'cine-link' -->
+                    <img src="https://alamin12071985-a11y.github.io/cine-link/coin.png" alt="C">
                     <span id="miningRateText">+0</span>
                 </div>
                 <div class="stat-label">/hour</div>
@@ -633,7 +628,8 @@
             <!-- Center: User Profile & Level -->
             <div class="profile-section">
                 <div class="profile-top">
-                    <img id="headerAvatar" src="https://alamin12071985-a11y.github.io/Snowman/snowman.png" class="user-avatar" alt="User">
+                    <!-- UPDATED PATH -->
+                    <img id="headerAvatar" src="https://alamin12071985-a11y.github.io/cine-link/snowman.png" class="user-avatar" alt="User">
                     <span id="headerName" class="user-name">EAZY-R</span>
                 </div>
                 
@@ -651,7 +647,8 @@
 
             <!-- Right: Options -->
             <div class="settings-btn">
-                <img src="https://alamin12071985-a11y.github.io/Snowman/setting.png" alt="Settings">
+                <!-- UPDATED PATH -->
+                <img src="https://alamin12071985-a11y.github.io/cine-link/setting.png" alt="Settings">
             </div>
         </div>
 
@@ -663,16 +660,19 @@
                 <!-- Top Menu -->
                 <div class="daily-menu-container">
                     <div class="daily-item" onclick="claimDailyReward()">
-                        <img src="https://alamin12071985-a11y.github.io/Snowman/reward.png" alt="Reward">
+                        <!-- UPDATED PATH -->
+                        <img src="https://alamin12071985-a11y.github.io/cine-link/reward.png" alt="Reward">
                         <span>Daily Reward</span>
                     </div>
                     <div class="daily-item" onclick="spinWheel()">
-                        <img src="https://alamin12071985-a11y.github.io/Snowman/spin.png" alt="Spin">
+                        <!-- UPDATED PATH -->
+                        <img src="https://alamin12071985-a11y.github.io/cine-link/spin.png" alt="Spin">
                         <span>Daily Spin</span>
                     </div>
-                    <!-- FIXED: Using click.png because Taps.png does not exist in file list -->
+                    
+                    <!-- FIXED: Replaced 'Taps.png' with 'click.png' (as seen in file list) and Path 'cine-link' -->
                     <div class="daily-item">
-                        <img src="https://alamin12071985-a11y.github.io/Snowman/click.png" alt="Taps">
+                        <img src="https://alamin12071985-a11y.github.io/cine-link/click.png" alt="Taps">
                         <span>Total Taps</span>
                         <div id="totalTapsText" class="daily-sub-text">0</div>
                     </div>
@@ -682,8 +682,8 @@
                 <div class="game-area-wrapper" id="snowContainer">
                     
                     <div class="main-balance">
-                        <!-- FIXED: coin.png (lowercase) -->
-                        <img src="https://alamin12071985-a11y.github.io/Snowman/coin.png" alt="C">
+                        <!-- FIXED: coin.png (Lowercase 'c') and Path 'cine-link' -->
+                        <img src="https://alamin12071985-a11y.github.io/cine-link/coin.png" alt="C">
                         <span id="displayBalance">0</span>
                     </div>
 
@@ -695,7 +695,8 @@
                     </div>
                     
                     <!-- Character Image -->
-                    <img src="https://alamin12071985-a11y.github.io/Snowman/snowman.png" class="character-img" id="clickerBtn" alt="Snowman">
+                    <!-- UPDATED PATH -->
+                    <img src="https://alamin12071985-a11y.github.io/cine-link/snowman.png" class="character-img" id="clickerBtn" alt="Snowman">
                     
                     <!-- FEED BUTTON -->
                     <button class="feed-btn" onclick="feedPet()">FEED</button>
@@ -707,14 +708,16 @@
                     
                 </div>
 
-                <!-- Bottom Controls (Lifted Up via CSS) -->
+                <!-- Bottom Controls (Lifted Up) -->
                 <div class="bottom-controls">
                     <div class="control-item">
-                        <img src="https://alamin12071985-a11y.github.io/Snowman/energy.png" alt="Energy">
+                        <!-- UPDATED PATH -->
+                        <img src="https://alamin12071985-a11y.github.io/cine-link/energy.png" alt="Energy">
                         <span id="energyDisplay">500</span><span> / 500</span>
                     </div>
                     <div class="control-item">
-                        <img src="https://alamin12071985-a11y.github.io/Snowman/boost.png" alt="Boost">
+                        <!-- UPDATED PATH -->
+                        <img src="https://alamin12071985-a11y.github.io/cine-link/boost.png" alt="Boost">
                         <span>Boost</span>
                     </div>
                 </div>
@@ -724,7 +727,8 @@
             <!-- EARN TAB -->
             <div id="earn" class="tab-content">
                 <div class="glass-panel-full" style="text-align:center;">
-                    <img src="https://alamin12071985-a11y.github.io/Snowman/task.png" width="80" style="margin-bottom:10px; filter: drop-shadow(0 0 10px var(--accent-violet));">
+                    <!-- UPDATED PATH -->
+                    <img src="https://alamin12071985-a11y.github.io/cine-link/task.png" width="80" style="margin-bottom:10px; filter: drop-shadow(0 0 10px var(--accent-violet));">
                     <h2 style="color:var(--accent-cyan); margin-bottom:5px;">Earn Coins</h2>
                     <p style="opacity:0.7; font-size:0.9rem;">Complete tasks for rewards</p>
                 </div>
@@ -734,8 +738,8 @@
             <!-- FRIENDS TAB -->
             <div id="friends" class="tab-content">
                 <div class="glass-panel-full" style="text-align:center;">
-                    <!-- CHECKED: friends%20page.png matches file list 'friends page.png' -->
-                    <img src="https://alamin12071985-a11y.github.io/Snowman/friends%20page.png" width="120" style="margin-bottom:10px; border-radius:10px;">
+                    <!-- FIXED: Path to 'cine-link'. Filename is 'friends%20page.png' which should work if file exists -->
+                    <img src="https://alamin12071985-a11y.github.io/cine-link/friends%20page.png" width="120" style="margin-bottom:10px; border-radius:10px;">
                     <h2 style="color:var(--accent-cyan);">Invite Friends</h2>
                     <p>Invite friends and get bonuses!</p>
                     <button onclick="inviteFriend()" style="width:100%; padding:15px; background:var(--gradient-main); border:none; border-radius:12px; font-weight:bold; color:white; margin-top:15px;">
@@ -747,7 +751,8 @@
             <!-- WALLET TAB -->
             <div id="wallet" class="tab-content">
                 <div class="glass-panel-full" style="text-align:center;">
-                    <img src="https://alamin12071985-a11y.github.io/Snowman/wallet.png" width="100" style="margin-bottom:20px; filter: drop-shadow(0 0 20px var(--accent-cyan));">
+                    <!-- UPDATED PATH -->
+                    <img src="https://alamin12071985-a11y.github.io/cine-link/wallet.png" width="100" style="margin-bottom:20px; filter: drop-shadow(0 0 20px var(--accent-cyan));">
                     <h2 style="font-size:1.8rem; margin-bottom:10px;">Wallet</h2>
                     <p style="color:rgba(227, 244, 249, 0.6);">Connect your TON wallet.</p>
                     <button id="connectWalletBtn" onclick="connectWallet()" style="width:80%; padding:15px; background:var(--gradient-main); border:none; border-radius:12px; font-weight:bold; color:white; margin-top:30px;">
@@ -764,19 +769,23 @@
         <!-- NAVIGATION -->
         <div class="nav-bar">
             <div class="nav-item active" onclick="switchTab('home', this)">
-                <img src="https://alamin12071985-a11y.github.io/Snowman/home.png" alt="Home">
+                <!-- UPDATED PATH -->
+                <img src="https://alamin12071985-a11y.github.io/cine-link/home.png" alt="Home">
                 <span>Home</span>
             </div>
             <div class="nav-item" onclick="switchTab('earn', this)">
-                <img src="https://alamin12071985-a11y.github.io/Snowman/task.png" alt="Earn">
+                <!-- UPDATED PATH -->
+                <img src="https://alamin12071985-a11y.github.io/cine-link/task.png" alt="Earn">
                 <span>Earn</span>
             </div>
             <div class="nav-item" onclick="switchTab('friends', this)">
-                <img src="https://alamin12071985-a11y.github.io/Snowman/friends.png" alt="Friends">
+                <!-- UPDATED PATH -->
+                <img src="https://alamin12071985-a11y.github.io/cine-link/friends.png" alt="Friends">
                 <span>Friends</span>
             </div>
             <div class="nav-item" onclick="switchTab('wallet', this)">
-                <img src="https://alamin12071985-a11y.github.io/Snowman/wallet.png" alt="Wallet">
+                <!-- UPDATED PATH -->
+                <img src="https://alamin12071985-a11y.github.io/cine-link/wallet.png" alt="Wallet">
                 <span>Wallet</span>
             </div>
         </div>
