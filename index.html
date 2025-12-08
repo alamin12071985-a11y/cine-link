@@ -6,6 +6,10 @@
     <title>Snowman Adventure</title>
     <!-- Telegram Web App Script -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <!-- Firebase SDK (Version 8 compatible) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- FontAwesome -->
@@ -13,13 +17,10 @@
 
     <style>
         :root {
-            /* Theme Colors */
             --bg-dark: #050f1a;
             --text-light: #E3F4F9;
             --accent-cyan: #00E5FF;
             --accent-violet: #6A5ACD;
-            
-            /* Glassmorphism Variables */
             --glass-bg: linear-gradient(145deg, rgba(22, 52, 80, 0.4) 0%, rgba(8, 24, 43, 0.6) 100%);
             --glass-border: 1px solid rgba(0, 229, 255, 0.15);
         }
@@ -145,19 +146,8 @@
             width: 90px;
         }
 
-        .stat-label {
-            font-size: 0.7rem;
-            color: var(--accent-cyan);
-            opacity: 0.8;
-        }
-        
-        .stat-value {
-            font-size: 0.9rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
+        .stat-label { font-size: 0.7rem; color: var(--accent-cyan); opacity: 0.8; }
+        .stat-value { font-size: 0.9rem; font-weight: 700; display: flex; align-items: center; gap: 4px; }
         .stat-value img { width: 18px; }
 
         .profile-section {
@@ -245,17 +235,12 @@
             font-size: 1.1rem;
             overflow: hidden;
         }
-        .settings-btn img {
-            width: 24px;
-            height: 24px;
-            object-fit: contain;
-        }
+        .settings-btn img { width: 24px; height: 24px; object-fit: contain; }
 
         /* --- CONTENT AREA --- */
         .content-area {
             flex: 1;
             overflow-y: auto;
-            /* Bottom padding ensures content isn't hidden behind nav */
             padding: 0 20px 110px 20px; 
             position: relative;
         }
@@ -330,14 +315,15 @@
             color: rgba(255, 255, 255, 0.9);
             text-align: center;
             margin-bottom: 10px;
+            line-height: 1.1;
         }
 
         .daily-sub-text {
             position: relative;
             z-index: 3;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--accent-cyan);
-            margin-top: -12px;
+            margin-top: -10px;
             margin-bottom: 5px;
             font-weight: 700;
         }
@@ -357,7 +343,8 @@
 
         .ring-container {
             position: absolute;
-            top: 70%; /* Moved down slightly to match character */
+            /* MOVED UP: from 70% to 55% */
+            top: 55%; 
             left: 50%;
             transform: translate(-50%, -50%) scale(0.85); 
             width: 350px;
@@ -398,10 +385,10 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            text-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
+            /* REMOVED BLUE GLOW/SHADOW behind balance */
+            /* text-shadow: 0 0 20px rgba(0, 229, 255, 0.3); */
             margin-bottom: 10px;
             z-index: 5;
-            /* Added margin-top to push balance down a bit */
             margin-top: 20px;
         }
 
@@ -418,56 +405,14 @@
             z-index: 10; 
             transition: transform 0.1s;
             filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.1));
-            /* --- MODIFIED: Moved Snowman Down --- */
+            /* Snowman stays at 100px */
             margin-top: 100px; 
             margin-bottom: 10px;
         }
 
         .character-img:active { transform: scale(0.96) rotate(-2deg); }
 
-        .feed-btn {
-            background: linear-gradient(45deg, #FF512F, #DD2476);
-            color: white;
-            border: none;
-            padding: 8px 22px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 800;
-            cursor: pointer;
-            z-index: 20;
-            margin-bottom: 15px;
-            /* Pushing Feed Button Down */
-            margin-top: 15px; 
-            box-shadow: 0 4px 10px rgba(221, 36, 118, 0.5);
-            text-transform: uppercase;
-        }
-
-        .start-mining-btn {
-            background: linear-gradient(90deg, #1D976C, #93F9B9);
-            color: #030a13;
-            border: none;
-            width: 90%;
-            padding: 15px;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 800;
-            cursor: pointer;
-            z-index: 20;
-            box-shadow: 0 0 15px rgba(147, 249, 185, 0.4);
-            /* Pushing Mining Button Down */
-            margin-top: 5px; 
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .start-mining-btn.active {
-            background: linear-gradient(90deg, #4b6cb7, #182848);
-            color: white;
-            cursor: default;
-        }
+        /* REMOVED FEED AND MINING BTN STYLES */
 
         /* --- BOTTOM CONTROLS (Boost/Energy) --- */
         .bottom-controls {
@@ -476,8 +421,8 @@
             width: 100%;
             padding: 10px 10px;
             z-index: 10;
-            /* --- MODIFIED: Lifted Up significantly from bottom --- */
-            margin-bottom: 85px; 
+            /* MOVED UP: from 85px to 120px */
+            margin-bottom: 120px; 
         }
 
         .control-item {
@@ -590,6 +535,30 @@
             align-items: center;
             font-size: 1.2rem;
         }
+
+        /* --- SPIN WHEEL PAGE STYLES --- */
+        .spin-wheel-container {
+            width: 300px;
+            height: 300px;
+            background: conic-gradient(from 0deg, #ff0000 0 60deg, #ffff00 60deg 120deg, #00ff00 120deg 180deg, #00ffff 180deg 240deg, #0000ff 240deg 300deg, #ff00ff 300deg 360deg);
+            border-radius: 50%;
+            border: 5px solid white;
+            position: relative;
+            margin: 50px auto;
+            transition: transform 4s cubic-bezier(0.1, 0.7, 0.1, 1);
+        }
+        .spin-marker {
+            width: 0; 
+            height: 0; 
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 25px solid white;
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
     </style>
 </head>
 <body>
@@ -597,7 +566,6 @@
     <!-- LOADING SCREEN -->
     <div id="loading-screen">
         <div class="loading-title">WELCOME</div>
-        <!-- UPDATED PATH TO cine-link -->
         <img src="https://alamin12071985-a11y.github.io/cine-link/snowman.png" class="loading-char" alt="Loading">
         
         <div class="loading-bar-container">
@@ -618,7 +586,6 @@
             <!-- Left: Profit -->
             <div class="stat-card-left">
                 <div class="stat-value">
-                    <!-- FIXED: coin.png (Lowercase 'c') and Path 'cine-link' -->
                     <img src="https://alamin12071985-a11y.github.io/cine-link/coin.png" alt="C">
                     <span id="miningRateText">+0</span>
                 </div>
@@ -628,9 +595,8 @@
             <!-- Center: User Profile & Level -->
             <div class="profile-section">
                 <div class="profile-top">
-                    <!-- UPDATED PATH -->
                     <img id="headerAvatar" src="https://alamin12071985-a11y.github.io/cine-link/snowman.png" class="user-avatar" alt="User">
-                    <span id="headerName" class="user-name">EAZY-R</span>
+                    <span id="headerName" class="user-name">User</span>
                 </div>
                 
                 <!-- Level Progress -->
@@ -647,7 +613,6 @@
 
             <!-- Right: Options -->
             <div class="settings-btn">
-                <!-- UPDATED PATH -->
                 <img src="https://alamin12071985-a11y.github.io/cine-link/setting.png" alt="Settings">
             </div>
         </div>
@@ -659,21 +624,28 @@
 
                 <!-- Top Menu -->
                 <div class="daily-menu-container">
+                    
+                    <!-- Daily Reward -->
                     <div class="daily-item" onclick="claimDailyReward()">
-                        <!-- UPDATED PATH -->
                         <img src="https://alamin12071985-a11y.github.io/cine-link/reward.png" alt="Reward">
                         <span>Daily Reward</span>
+                        <!-- Showing amount text clearly as requested -->
+                        <div id="dailyRewardAmount" class="daily-sub-text">+500 Coin</div>
                     </div>
-                    <div class="daily-item" onclick="spinWheel()">
-                        <!-- UPDATED PATH -->
+
+                    <!-- Daily Spin -->
+                    <div class="daily-item" onclick="goToSpinPage()">
                         <img src="https://alamin12071985-a11y.github.io/cine-link/spin.png" alt="Spin">
                         <span>Daily Spin</span>
+                        <!-- Showing +1 Spin text -->
+                        <div class="daily-sub-text">+1 Spin</div>
                     </div>
                     
-                    <!-- FIXED: Replaced 'Taps.png' with 'click.png' (as seen in file list) and Path 'cine-link' -->
+                    <!-- Total Taps (Changed to Dynamic Counter) -->
                     <div class="daily-item">
                         <img src="https://alamin12071985-a11y.github.io/cine-link/click.png" alt="Taps">
-                        <span>Total Taps</span>
+                        <span>Taps Done</span>
+                        <!-- Binding this to actual tap count -->
                         <div id="totalTapsText" class="daily-sub-text">0</div>
                     </div>
                 </div>
@@ -682,41 +654,31 @@
                 <div class="game-area-wrapper" id="snowContainer">
                     
                     <div class="main-balance">
-                        <!-- FIXED: coin.png (Lowercase 'c') and Path 'cine-link' -->
                         <img src="https://alamin12071985-a11y.github.io/cine-link/coin.png" alt="C">
                         <span id="displayBalance">0</span>
                     </div>
 
-                    <!-- RING -->
+                    <!-- RING (Background moved slightly up in CSS) -->
                     <div class="ring-container">
                         <div class="ring-inner">
                             <!-- Inner glow effect -->
                         </div>
                     </div>
                     
-                    <!-- Character Image -->
-                    <!-- UPDATED PATH -->
+                    <!-- Character Image (Snowman) -->
                     <img src="https://alamin12071985-a11y.github.io/cine-link/snowman.png" class="character-img" id="clickerBtn" alt="Snowman">
                     
-                    <!-- FEED BUTTON -->
-                    <button class="feed-btn" onclick="feedPet()">FEED</button>
-
-                    <!-- START MINING BUTTON -->
-                    <button class="start-mining-btn" id="miningBtn" onclick="startMining()">
-                        <i class="fas fa-hammer"></i> START MINING
-                    </button>
+                    <!-- REMOVED FEED AND START MINING BUTTONS -->
                     
                 </div>
 
-                <!-- Bottom Controls (Lifted Up) -->
+                <!-- Bottom Controls (Lifted Up in CSS) -->
                 <div class="bottom-controls">
                     <div class="control-item">
-                        <!-- UPDATED PATH -->
                         <img src="https://alamin12071985-a11y.github.io/cine-link/energy.png" alt="Energy">
                         <span id="energyDisplay">500</span><span> / 500</span>
                     </div>
                     <div class="control-item">
-                        <!-- UPDATED PATH -->
                         <img src="https://alamin12071985-a11y.github.io/cine-link/boost.png" alt="Boost">
                         <span>Boost</span>
                     </div>
@@ -727,22 +689,24 @@
             <!-- EARN TAB -->
             <div id="earn" class="tab-content">
                 <div class="glass-panel-full" style="text-align:center;">
-                    <!-- UPDATED PATH -->
-                    <img src="https://alamin12071985-a11y.github.io/cine-link/task.png" width="80" style="margin-bottom:10px; filter: drop-shadow(0 0 10px var(--accent-violet));">
+                    <!-- UPDATED IMAGE to earn page.png -->
+                    <img src="https://alamin12071985-a11y.github.io/cine-link/earn%20page.png" width="80" style="margin-bottom:10px; filter: drop-shadow(0 0 10px var(--accent-violet)); border-radius:10px;">
                     <h2 style="color:var(--accent-cyan); margin-bottom:5px;">Earn Coins</h2>
                     <p style="opacity:0.7; font-size:0.9rem;">Complete tasks for rewards</p>
                 </div>
-                <div class="glass-panel-full" id="taskList"></div>
+                <!-- Task list filled by Firebase -->
+                <div class="glass-panel-full" id="taskList">
+                    <div style="text-align:center; padding:20px;">Loading tasks...</div>
+                </div>
             </div>
 
             <!-- FRIENDS TAB -->
             <div id="friends" class="tab-content">
                 <div class="glass-panel-full" style="text-align:center;">
-                    <!-- FIXED: Path to 'cine-link'. Filename is 'friends%20page.png' which should work if file exists -->
                     <img src="https://alamin12071985-a11y.github.io/cine-link/friends%20page.png" width="120" style="margin-bottom:10px; border-radius:10px;">
                     <h2 style="color:var(--accent-cyan);">Invite Friends</h2>
                     <p>Invite friends and get bonuses!</p>
-                    <button onclick="inviteFriend()" style="width:100%; padding:15px; background:var(--gradient-main); border:none; border-radius:12px; font-weight:bold; color:white; margin-top:15px;">
+                    <button onclick="inviteFriend()" style="width:100%; padding:15px; background:var(--accent-cyan); border:none; border-radius:12px; font-weight:bold; color:black; margin-top:15px;">
                         Copy Invite Link
                     </button>
                 </div>
@@ -751,16 +715,30 @@
             <!-- WALLET TAB -->
             <div id="wallet" class="tab-content">
                 <div class="glass-panel-full" style="text-align:center;">
-                    <!-- UPDATED PATH -->
                     <img src="https://alamin12071985-a11y.github.io/cine-link/wallet.png" width="100" style="margin-bottom:20px; filter: drop-shadow(0 0 20px var(--accent-cyan));">
                     <h2 style="font-size:1.8rem; margin-bottom:10px;">Wallet</h2>
                     <p style="color:rgba(227, 244, 249, 0.6);">Connect your TON wallet.</p>
-                    <button id="connectWalletBtn" onclick="connectWallet()" style="width:80%; padding:15px; background:var(--gradient-main); border:none; border-radius:12px; font-weight:bold; color:white; margin-top:30px;">
+                    <button id="connectWalletBtn" onclick="connectWallet()" style="width:80%; padding:15px; background:linear-gradient(90deg, #1D976C, #93F9B9); border:none; border-radius:12px; font-weight:bold; color:black; margin-top:30px;">
                         <i class="fas fa-wallet"></i> Connect Wallet
                     </button>
                     <div id="airdropMsg" style="margin-top:20px; opacity:0; transition:opacity 0.5s;">
-                        <span style="color: var(--accent-green); font-weight:bold;">✅ Connected Successfully</span>
+                        <span style="color: #93F9B9; font-weight:bold;">✅ Connected Successfully</span>
                     </div>
+                </div>
+            </div>
+
+            <!-- SPIN PAGE (New Page View) -->
+            <div id="spinPage" class="tab-content">
+                <div class="glass-panel-full" style="text-align:center; position:relative; height: 80vh;">
+                    <h2>Lucky Spin</h2>
+                    <p>Spin to win coins!</p>
+                    
+                    <div class="spin-marker"></div>
+                    <div class="spin-wheel-container" id="wheel"></div>
+                    
+                    <button onclick="doSpin()" style="margin-top:20px; padding:15px 40px; background:var(--accent-cyan); border:none; border-radius:25px; font-weight:bold; font-size:1.2rem;">SPIN</button>
+                    
+                    <button onclick="switchTab('home', document.querySelector('.nav-item'))" style="margin-top:20px; display:block; width:100%; background:transparent; border:1px solid white; color:white; padding:10px; border-radius:10px;">Back to Home</button>
                 </div>
             </div>
 
@@ -769,22 +747,18 @@
         <!-- NAVIGATION -->
         <div class="nav-bar">
             <div class="nav-item active" onclick="switchTab('home', this)">
-                <!-- UPDATED PATH -->
                 <img src="https://alamin12071985-a11y.github.io/cine-link/home.png" alt="Home">
                 <span>Home</span>
             </div>
             <div class="nav-item" onclick="switchTab('earn', this)">
-                <!-- UPDATED PATH -->
                 <img src="https://alamin12071985-a11y.github.io/cine-link/task.png" alt="Earn">
                 <span>Earn</span>
             </div>
             <div class="nav-item" onclick="switchTab('friends', this)">
-                <!-- UPDATED PATH -->
                 <img src="https://alamin12071985-a11y.github.io/cine-link/friends.png" alt="Friends">
                 <span>Friends</span>
             </div>
             <div class="nav-item" onclick="switchTab('wallet', this)">
-                <!-- UPDATED PATH -->
                 <img src="https://alamin12071985-a11y.github.io/cine-link/wallet.png" alt="Wallet">
                 <span>Wallet</span>
             </div>
@@ -793,6 +767,24 @@
     </div>
 
     <script>
+        // --- FIREBASE CONFIGURATION ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyD1PPDhogcw7fBu27PkO1iuMfGFLUwMN70",
+            authDomain: "fir-55206.firebaseapp.com",
+            databaseURL: "https://fir-55206-default-rtdb.firebaseio.com",
+            projectId: "fir-55206",
+            storageBucket: "fir-55206.firebasestorage.app",
+            messagingSenderId: "24586463698",
+            appId: "1:24586463698:web:8b2f21073295ef4382400b",
+            measurementId: "G-K676BWHYR4"
+        };
+        
+        // Initialize Firebase
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const db = firebase.database();
+
         // --- LOADING LOGIC ---
         window.addEventListener('load', () => {
             let loadPercent = 0;
@@ -827,9 +819,6 @@
         let level = 1;
         let levelCap = 1000;
         
-        let isMining = false;
-        let miningInterval;
-        
         // --- DOM ELEMENTS ---
         const balanceDisplay = document.getElementById('displayBalance');
         const energyDisplay = document.getElementById('energyDisplay');
@@ -840,16 +829,16 @@
         const currentLevelHeader = document.getElementById('currentLevelHeader');
         const levelNameHeader = document.getElementById('levelNameHeader');
         
-        const miningBtn = document.getElementById('miningBtn');
-        const miningRateText = document.getElementById('miningRateText');
         const totalTapsText = document.getElementById('totalTapsText');
+        const dailyRewardText = document.getElementById('dailyRewardAmount');
 
         // --- INIT ---
         function init() {
             startSnowfall();
-            renderTasks();
             initTelegramUser(); 
             updateUI();
+            checkDailyRewardStatus(); // Check amount for display
+            fetchTasksFromFirebase(); // Load Firebase tasks
             
             setInterval(() => {
                 if (energy < maxEnergy) {
@@ -857,34 +846,6 @@
                     updateUI();
                 }
             }, 1500);
-        }
-
-        function startMining() {
-            if (isMining) return;
-            isMining = true;
-            
-            miningBtn.innerHTML = '<i class="fas fa-cog fa-spin"></i> MINING ACTIVE';
-            miningBtn.classList.add('active');
-            miningRateText.innerText = "+250"; 
-
-            alert("Mining Started! You are earning +250 coins/hour.");
-
-            miningInterval = setInterval(() => {
-                balance += 1;
-                updateUI();
-            }, 5000); 
-        }
-
-        function feedPet() {
-            if (balance >= 50) {
-                balance -= 50;
-                clickerBtn.style.transform = "scale(1.1)";
-                setTimeout(() => clickerBtn.style.transform = "scale(1)", 200);
-                updateUI();
-                alert("Yum! Snowman is happy. (-50 coins)");
-            } else {
-                alert("Not enough coins to feed (Cost: 50)");
-            }
         }
 
         function initTelegramUser() {
@@ -946,19 +907,84 @@
             headerLevelBar.style.width = `${percentage}%`;
         }
 
+        // --- DAILY REWARD LOGIC ---
+        function checkDailyRewardStatus() {
+            const lastReward = localStorage.getItem('lastRewardDate');
+            const today = new Date().toDateString();
+            
+            // Logic: Base 500, +100 for every consecutive day
+            let streak = parseInt(localStorage.getItem('rewardStreak') || '1');
+            
+            if (lastReward === today) {
+                // Already claimed
+                dailyRewardText.innerText = "Claimed";
+            } else {
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                
+                if (lastReward !== yesterday.toDateString() && lastReward) {
+                    // Streak broken (if last reward wasn't yesterday and wasn't null)
+                     // Note: Simple logic here. If user misses a day, reset streak to 1
+                    streak = 1; 
+                }
+                
+                let amount = 500 + ((streak - 1) * 100);
+                dailyRewardText.innerText = "+" + amount + " Coin";
+            }
+        }
+
         function claimDailyReward() {
-            balance += 500;
+            const lastReward = localStorage.getItem('lastRewardDate');
+            const today = new Date().toDateString();
+
+            if (lastReward === today) {
+                alert("Already claimed today!");
+                return;
+            }
+
+            let streak = parseInt(localStorage.getItem('rewardStreak') || '1');
+            // If checking broken streak logic
+            if(lastReward) {
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                if (lastReward !== yesterday.toDateString()) {
+                    streak = 1;
+                }
+            }
+
+            let amount = 500 + ((streak - 1) * 100);
+            balance += amount;
+            
+            localStorage.setItem('lastRewardDate', today);
+            localStorage.setItem('rewardStreak', streak + 1);
+            
+            dailyRewardText.innerText = "Claimed";
             updateUI();
-            alert("Daily Reward Claimed! +500 Coins");
+            alert(`Daily Reward: +${amount} Coins! (Day ${streak})`);
         }
 
-        function spinWheel() {
-            let outcome = Math.floor(Math.random() * 1000) + 100;
-            balance += outcome;
-            updateUI();
-            alert(`Daily Spin: You won ${outcome} Coins!`);
+        // --- SPIN WHEEL LOGIC ---
+        function goToSpinPage() {
+            // Switch to Spin Tab (Custom view)
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.getElementById('spinPage').classList.add('active');
+            document.getElementById('mainHeader').style.display = 'none';
         }
 
+        function doSpin() {
+            const wheel = document.getElementById('wheel');
+            const rot = Math.floor(Math.random() * 360) + 720; // 2+ full rotations
+            wheel.style.transform = `rotate(${rot}deg)`;
+            
+            setTimeout(() => {
+                const won = Math.floor(Math.random() * 500) + 100;
+                balance += won;
+                updateUI();
+                alert(`You won ${won} Coins!`);
+            }, 4000);
+        }
+
+        // --- TAP LOGIC ---
         clickerBtn.addEventListener('touchstart', handleTap, {passive: false});
         clickerBtn.addEventListener('click', handleTap);
 
@@ -996,45 +1022,65 @@
             setTimeout(() => floatEl.remove(), 800);
         }
 
+        // --- TAB SWITCHING ---
         function switchTab(tabId, navElement) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
             
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            navElement.classList.add('active');
+            if(navElement) {
+                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+                navElement.classList.add('active');
+            }
 
             if(tabId === 'home') document.getElementById('mainHeader').style.display = 'flex';
             else document.getElementById('mainHeader').style.display = 'none';
         }
 
-        const tasks = [
-            { id: 1, title: 'Join Telegram Channel', reward: 50000, icon: 'fab fa-telegram' },
-            { id: 2, title: 'Follow on Twitter', reward: 50000, icon: 'fab fa-twitter' },
-            { id: 3, title: 'Subscribe YouTube', reward: 100000, icon: 'fab fa-youtube' }
-        ];
-
-        function renderTasks() {
+        // --- FIREBASE TASKS ---
+        function fetchTasksFromFirebase() {
             const list = document.getElementById('taskList');
-            list.innerHTML = '';
-            tasks.forEach(task => {
-                const item = document.createElement('div');
-                item.className = 'task-card';
-                item.onclick = () => {
-                     balance += task.reward;
-                     updateUI();
-                     alert("Reward added!");
-                };
-                item.innerHTML = `
-                    <div style="display:flex; align-items:center; gap:15px;">
-                        <div class="task-icon"><i class="${task.icon}"></i></div>
-                        <div class="task-info">
-                            <h4 style="margin:0; font-size:0.9rem; color:var(--text-light)">${task.title}</h4>
-                            <span style="font-size:0.8rem; color:var(--accent-cyan)">+${task.reward.toLocaleString()}</span>
+            
+            // Listen for data in 'tasks' node
+            db.ref('tasks').on('value', (snapshot) => {
+                list.innerHTML = ''; // Clear existing
+                const data = snapshot.val();
+
+                if (!data) {
+                    list.innerHTML = '<div style="text-align:center; padding:20px;">No tasks available yet.</div>';
+                    return;
+                }
+
+                // Iterate through keys
+                Object.keys(data).forEach(key => {
+                    const task = data[key];
+                    // Create Task HTML
+                    const item = document.createElement('div');
+                    item.className = 'task-card';
+                    item.onclick = () => {
+                         // Simple claim logic simulation. 
+                         // In production, verify with backend if task completed.
+                         balance += parseInt(task.reward || 0);
+                         updateUI();
+                         alert("Reward added!");
+                    };
+                    
+                    const iconClass = task.icon || 'fas fa-star'; // Default icon
+                    
+                    item.innerHTML = `
+                        <div style="display:flex; align-items:center; gap:15px;">
+                            <div class="task-icon"><i class="${iconClass}"></i></div>
+                            <div class="task-info">
+                                <h4 style="margin:0; font-size:0.9rem; color:var(--text-light)">${task.title}</h4>
+                                <span style="font-size:0.8rem; color:var(--accent-cyan)">+${parseInt(task.reward).toLocaleString()}</span>
+                            </div>
                         </div>
-                    </div>
-                    <div style="color:var(--text-light); opacity:0.5;"><i class="fas fa-chevron-right"></i></div>
-                `;
-                list.appendChild(item);
+                        <div style="color:var(--text-light); opacity:0.5;"><i class="fas fa-chevron-right"></i></div>
+                    `;
+                    list.appendChild(item);
+                });
+            }, (error) => {
+                console.error("Firebase Error:", error);
+                list.innerHTML = '<div style="color:red; text-align:center;">Error loading tasks</div>';
             });
         }
 
