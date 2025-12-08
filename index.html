@@ -357,7 +357,8 @@
 
         .ring-container {
             position: absolute;
-            top: 60%; 
+            /* Ring moved down slightly to match character */
+            top: 65%; 
             left: 50%;
             transform: translate(-50%, -50%) scale(0.85); 
             width: 350px;
@@ -401,6 +402,8 @@
             text-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
             margin-bottom: 10px;
             z-index: 5;
+            /* Balance moved down slightly */
+            margin-top: 20px; 
         }
 
         .main-balance img {
@@ -416,8 +419,9 @@
             z-index: 10; 
             transition: transform 0.1s;
             filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.1));
-            /* Lowering Character */
-            margin-top: 60px; 
+            
+            /* --- UPDATED: Snowman moved DOWN --- */
+            margin-top: 110px; 
             margin-bottom: 10px;
         }
 
@@ -433,9 +437,10 @@
             font-weight: 800;
             cursor: pointer;
             z-index: 20;
-            margin-bottom: 15px;
-            /* Pushing Feed Button Down */
+            
+            /* Feed Button Positioning */
             margin-top: 15px; 
+            margin-bottom: 15px;
             box-shadow: 0 4px 10px rgba(221, 36, 118, 0.5);
             text-transform: uppercase;
         }
@@ -452,7 +457,8 @@
             cursor: pointer;
             z-index: 20;
             box-shadow: 0 0 15px rgba(147, 249, 185, 0.4);
-            /* Pushing Mining Button Down */
+            
+            /* Mining Button Positioning */
             margin-top: 5px; 
             margin-bottom: 20px;
             display: flex;
@@ -474,8 +480,9 @@
             width: 100%;
             padding: 10px 10px;
             z-index: 10;
-            /* Lifting this UP from the bottom */
-            margin-bottom: 25px; 
+            
+            /* --- UPDATED: Moved UP from the bottom --- */
+            margin-bottom: 80px; 
         }
 
         .control-item {
@@ -616,8 +623,8 @@
             <!-- Left: Profit -->
             <div class="stat-card-left">
                 <div class="stat-value">
-                    <!-- FIXED: Coin.png (Capital C) -->
-                    <img src="https://alamin12071985-a11y.github.io/Snowman/Coin.png" alt="C">
+                    <!-- FIXED: coin.png (lowercase 'c' to match file) -->
+                    <img src="https://alamin12071985-a11y.github.io/Snowman/coin.png" alt="C">
                     <span id="miningRateText">+0</span>
                 </div>
                 <div class="stat-label">/hour</div>
@@ -663,9 +670,9 @@
                         <img src="https://alamin12071985-a11y.github.io/Snowman/spin.png" alt="Spin">
                         <span>Daily Spin</span>
                     </div>
-                    <!-- FIXED: Taps.png (Capital T) -->
+                    <!-- FIXED: Using click.png because Taps.png does not exist in file list -->
                     <div class="daily-item">
-                        <img src="https://alamin12071985-a11y.github.io/Snowman/Taps.png" alt="Taps">
+                        <img src="https://alamin12071985-a11y.github.io/Snowman/click.png" alt="Taps">
                         <span>Total Taps</span>
                         <div id="totalTapsText" class="daily-sub-text">0</div>
                     </div>
@@ -675,8 +682,8 @@
                 <div class="game-area-wrapper" id="snowContainer">
                     
                     <div class="main-balance">
-                        <!-- FIXED: Coin.png (Capital C) -->
-                        <img src="https://alamin12071985-a11y.github.io/Snowman/Coin.png" alt="C">
+                        <!-- FIXED: coin.png (lowercase) -->
+                        <img src="https://alamin12071985-a11y.github.io/Snowman/coin.png" alt="C">
                         <span id="displayBalance">0</span>
                     </div>
 
@@ -700,7 +707,7 @@
                     
                 </div>
 
-                <!-- Bottom Controls (Lifted Up) -->
+                <!-- Bottom Controls (Lifted Up via CSS) -->
                 <div class="bottom-controls">
                     <div class="control-item">
                         <img src="https://alamin12071985-a11y.github.io/Snowman/energy.png" alt="Energy">
@@ -727,7 +734,7 @@
             <!-- FRIENDS TAB -->
             <div id="friends" class="tab-content">
                 <div class="glass-panel-full" style="text-align:center;">
-                    <!-- FIXED: friends%20page.png (Encoded Space) -->
+                    <!-- CHECKED: friends%20page.png matches file list 'friends page.png' -->
                     <img src="https://alamin12071985-a11y.github.io/Snowman/friends%20page.png" width="120" style="margin-bottom:10px; border-radius:10px;">
                     <h2 style="color:var(--accent-cyan);">Invite Friends</h2>
                     <p>Invite friends and get bonuses!</p>
