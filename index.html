@@ -43,14 +43,13 @@
             justify-content: center;
         }
 
-        /* --- LOADING SCREEN (UPDATED COLOR) --- */
+        /* --- LOADING SCREEN --- */
         #loading-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            /* Changed to App Theme Colors */
             background: radial-gradient(circle at center, #163450 0%, #030a13 100%);
             z-index: 9999;
             display: flex;
@@ -64,7 +63,6 @@
         .loading-title {
             font-size: 3rem;
             font-weight: 900;
-            /* Changed to Cyan */
             color: var(--accent-cyan);
             text-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
             letter-spacing: 2px;
@@ -110,7 +108,6 @@
         .progress-fill {
             height: 100%;
             width: 0%;
-            /* Changed to Cyan Gradient */
             background: linear-gradient(90deg, #00E5FF, #6A5ACD);
             border-radius: 10px;
             transition: width 0.3s linear;
@@ -407,11 +404,41 @@
             z-index: 10; 
             transition: transform 0.1s;
             filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.1));
-            margin-top: 100px; 
-            margin-bottom: 10px;
+            /* Snowman moved UP */
+            margin-top: 30px; 
+            margin-bottom: 0px;
         }
 
         .character-img:active { transform: scale(0.96) rotate(-2deg); }
+        
+        /* Feed Button Section */
+        .feed-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 20;
+            margin-top: -20px; /* Overlap snowman feet slightly */
+        }
+        
+        .feed-btn-img {
+            width: 80px;
+            height: auto;
+            transition: transform 0.1s;
+            cursor: pointer;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
+        }
+        
+        .feed-btn-img:active { transform: scale(0.9); }
+        
+        .start-mining-text {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+            text-shadow: 0 0 5px rgba(0, 229, 255, 0.5);
+        }
 
         /* --- BOTTOM CONTROLS --- */
         .bottom-controls {
@@ -510,6 +537,16 @@
             margin-bottom: 15px;
             margin-top: 20px;
         }
+        
+        /* New styling for Earn Page Image Fading */
+        .earn-hero-img {
+            width: 160px; 
+            margin-bottom: 10px; 
+            border-radius: 10px;
+            /* Faded Bottom effect */
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+        }
 
         .task-card {
             background: rgba(255, 255, 255, 0.05);
@@ -538,7 +575,6 @@
         .spin-wheel-container {
             width: 300px;
             height: 300px;
-            /* Removed CSS Gradient, using Image */
             background: transparent;
             position: relative;
             margin: 50px auto;
@@ -554,10 +590,11 @@
 
         .spin-marker-img {
             position: absolute;
-            top: 20px; /* Adjusted position for marker */
+            /* Marker moved DOWN */
+            top: 45px; 
             left: 50%;
             transform: translateX(-50%);
-            width: 50px; /* Size of arrow */
+            width: 50px; 
             height: auto;
             z-index: 15;
             filter: drop-shadow(0 5px 5px rgba(0,0,0,0.5));
@@ -566,7 +603,7 @@
 </head>
 <body>
 
-    <!-- LOADING SCREEN (Updated Color) -->
+    <!-- LOADING SCREEN -->
     <div id="loading-screen">
         <div class="loading-title">WELCOME</div>
         <img src="https://alamin12071985-a11y.github.io/cine-link/snowman.png" class="loading-char" alt="Loading">
@@ -627,22 +664,16 @@
 
                 <!-- Top Menu -->
                 <div class="daily-menu-container">
-                    
-                    <!-- Daily Reward -->
                     <div class="daily-item" onclick="claimDailyReward()">
                         <img src="https://alamin12071985-a11y.github.io/cine-link/reward.png" alt="Reward">
                         <span>Daily Reward</span>
                         <div id="dailyRewardAmount" class="daily-sub-text">+500 Coin</div>
                     </div>
-
-                    <!-- Daily Spin -->
                     <div class="daily-item" onclick="goToSpinPage()">
                         <img src="https://alamin12071985-a11y.github.io/cine-link/spin.png" alt="Spin">
                         <span>Daily Spin</span>
                         <div class="daily-sub-text">+1 Spin</div>
                     </div>
-                    
-                    <!-- Total Taps -->
                     <div class="daily-item">
                         <img src="https://alamin12071985-a11y.github.io/cine-link/click.png" alt="Taps">
                         <span>Taps Done</span>
@@ -663,8 +694,14 @@
                         <div class="ring-inner"></div>
                     </div>
                     
-                    <!-- Character Image -->
+                    <!-- Character Image (Position Moved Up) -->
                     <img src="https://alamin12071985-a11y.github.io/cine-link/snowman.png" class="character-img" id="clickerBtn" alt="Snowman">
+                    
+                    <!-- Feed Button & Start Mining -->
+                    <div class="feed-section">
+                        <img src="https://alamin12071985-a11y.github.io/cine-link/feed.png" class="feed-btn-img" alt="Feed" onclick="handleTap(event)">
+                        <div class="start-mining-text">Start Mining</div>
+                    </div>
                     
                 </div>
 
@@ -682,55 +719,56 @@
 
             </div>
 
-            <!-- EARN TAB (Image Doubled 2x: width 80 to 160) -->
+            <!-- EARN TAB (Updated Text & Image Opacity) -->
             <div id="earn" class="tab-content">
                 <div class="glass-panel-full" style="text-align:center;">
-                    <img src="https://alamin12071985-a11y.github.io/cine-link/earn%20page.png" width="160" style="margin-bottom:10px; filter: drop-shadow(0 0 10px var(--accent-violet)); border-radius:10px;">
-                    <h2 style="color:var(--accent-cyan); margin-bottom:5px;">Earn Coins</h2>
-                    <p style="opacity:0.7; font-size:0.9rem;">Complete tasks for rewards</p>
+                    <img src="https://alamin12071985-a11y.github.io/cine-link/earn%20page.png" class="earn-hero-img">
+                    <h2 style="color:var(--accent-cyan); margin-bottom:2px; font-size: 2rem;">Earn Coins</h2>
+                    <p style="opacity:0.8; font-size:0.9rem; margin-bottom: 5px;">Claim Coin Everyday or Finish Task</p>
                 </div>
                 <div class="glass-panel-full" id="taskList">
                     <div style="text-align:center; padding:20px;">Loading tasks...</div>
                 </div>
             </div>
 
-            <!-- FRIENDS TAB (Image Doubled 2x: width 120 to 240) -->
+            <!-- FRIENDS TAB (Invite Friend Button changed to Image) -->
             <div id="friends" class="tab-content">
                 <div class="glass-panel-full" style="text-align:center;">
                     <img src="https://alamin12071985-a11y.github.io/cine-link/friends%20page.png" width="240" style="margin-bottom:10px; border-radius:10px;">
                     <h2 style="color:var(--accent-cyan);">Invite Friends</h2>
                     <p>Invite friends and get bonuses!</p>
-                    <button onclick="inviteFriend()" style="width:100%; padding:15px; background:var(--accent-cyan); border:none; border-radius:12px; font-weight:bold; color:black; margin-top:15px;">
-                        Copy Invite Link
-                    </button>
+                    
+                    <!-- Invite Button Image -->
+                    <img src="https://alamin12071985-a11y.github.io/cine-link/invite%20friends.png" onclick="inviteFriend()" style="width: 80%; margin-top: 20px; cursor: pointer;">
                 </div>
             </div>
 
-            <!-- WALLET TAB (Image Doubled 2x: width 100 to 200) -->
+            <!-- WALLET TAB (Image Removed, Text Added, Button Image Added) -->
             <div id="wallet" class="tab-content">
-                <div class="glass-panel-full" style="text-align:center;">
-                    <img src="https://alamin12071985-a11y.github.io/cine-link/wallet.png" width="200" style="margin-bottom:20px; filter: drop-shadow(0 0 20px var(--accent-cyan));">
-                    <h2 style="font-size:1.8rem; margin-bottom:10px;">Wallet</h2>
-                    <p style="color:rgba(227, 244, 249, 0.6);">Connect your TON wallet.</p>
-                    <button id="connectWalletBtn" onclick="connectWallet()" style="width:80%; padding:15px; background:linear-gradient(90deg, #1D976C, #93F9B9); border:none; border-radius:12px; font-weight:bold; color:black; margin-top:30px;">
-                        <i class="fas fa-wallet"></i> Connect Wallet
-                    </button>
+                <div class="glass-panel-full" style="text-align:center; padding-top: 50px;">
+                    <!-- Removed old Image -->
+                    <h1 style="font-size:2.5rem; line-height: 1.1; margin-bottom:10px; font-weight: 800;">Get Real<br>Crypto.</h1>
+                    <p style="color:rgba(227, 244, 249, 0.7); font-size: 1rem;">Earn and buy and tokens.</p>
+                    
+                    <!-- Connect Wallet Image Button -->
+                    <img id="connectWalletBtn" src="https://alamin12071985-a11y.github.io/cine-link/connect%20wallet.png" onclick="connectWallet()" style="width:90%; max-width: 250px; margin-top:40px; cursor: pointer;">
+                    
                     <div id="airdropMsg" style="margin-top:20px; opacity:0; transition:opacity 0.5s;">
                         <span style="color: #93F9B9; font-weight:bold;">✅ Connected Successfully</span>
                     </div>
                 </div>
             </div>
 
-            <!-- SPIN PAGE (Updated with Custom Images) -->
+            <!-- SPIN PAGE (Arrow moved down) -->
             <div id="spinPage" class="tab-content">
                 <div class="glass-panel-full" style="text-align:center; position:relative; height: 80vh;">
                     <h2>Lucky Spin</h2>
                     <p>Spin to win coins!</p>
                     
-                    <!-- Marker Image (Arrow) -->
+                    <!-- Marker Image (Position Adjusted in CSS) -->
                     <img src="arrow.png" class="spin-marker-img" alt="Arrow">
                     
-                    <!-- Wheel Container with Image -->
+                    <!-- Wheel Container -->
                     <div class="spin-wheel-container" id="wheel">
                         <img src="spin wheel.png" class="spin-wheel-img" alt="Wheel">
                     </div>
@@ -791,7 +829,7 @@
         let maxEnergy = 500;
         let level = 1;
         let levelCap = 1000;
-        let userId = "test_user_001"; // Default User ID (will be overwritten by Telegram ID)
+        let userId = "test_user_001"; 
         
         // --- DOM ELEMENTS ---
         const balanceDisplay = document.getElementById('displayBalance');
@@ -834,9 +872,8 @@
         function init() {
             initTelegramUser(); 
             startSnowfall();
-            loadUserData(); // LOAD DATA FROM FIREBASE
+            loadUserData();
             
-            // Energy Regeneration
             setInterval(() => {
                 if (energy < maxEnergy) {
                     energy++;
@@ -844,7 +881,6 @@
                 }
             }, 1500);
 
-            // Auto-Save every 5 seconds
             setInterval(saveUserData, 5000);
         }
 
@@ -854,7 +890,7 @@
                 tg.expand(); 
                 const user = tg.initDataUnsafe.user;
                 if (user) {
-                    userId = user.id.toString(); // Set Real User ID
+                    userId = user.id.toString(); 
                     if (user.username) headerName.innerText = user.username;
                     else if (user.first_name) headerName.innerText = user.first_name;
                     if (user.photo_url) headerAvatar.src = user.photo_url;
@@ -864,10 +900,9 @@
             }
         }
 
-        // --- DATABASE FUNCTIONS (SAVE & LOAD) ---
+        // --- DATABASE FUNCTIONS ---
         function saveUserData() {
             if(!userId) return;
-            // Writes data to: users/{userId}
             db.ref('users/' + userId).update({
                 balance: balance,
                 energy: energy,
@@ -886,13 +921,11 @@
                     energy = data.energy || 500;
                     tapCount = data.tapCount || 0;
                     level = data.level || 1;
-                    // Recalculate level cap based on loaded level
                     levelCap = 1000 * Math.pow(2, level - 1);
                     updateUI();
                     checkDailyRewardStatus();
                     fetchTasksFromFirebase();
                 } else {
-                    // New User
                     updateUI();
                     checkDailyRewardStatus();
                     fetchTasksFromFirebase();
@@ -946,7 +979,7 @@
             headerLevelBar.style.width = `${percentage}%`;
         }
 
-        // --- DAILY REWARD LOGIC ---
+        // --- DAILY REWARD ---
         function checkDailyRewardStatus() {
             const lastReward = localStorage.getItem('lastRewardDate');
             const today = new Date().toDateString();
@@ -983,12 +1016,12 @@
             localStorage.setItem('rewardStreak', streak + 1);
             
             dailyRewardText.innerText = "Claimed";
-            saveUserData(); // Save immediately
+            saveUserData(); 
             updateUI();
             alert(`Daily Reward: +${amount} Coins!`);
         }
 
-        // --- SPIN WHEEL LOGIC ---
+        // --- SPIN WHEEL ---
         function goToSpinPage() {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.getElementById('spinPage').classList.add('active');
@@ -997,17 +1030,15 @@
 
         function doSpin() {
             const wheel = document.getElementById('wheel');
-            // Random degree: at least 5 spins (1800) + random
             const deg = Math.floor(5000 + Math.random() * 5000); 
             wheel.style.transform = `rotate(${deg}deg)`;
             
             setTimeout(() => {
                 const won = Math.floor(Math.random() * 500) + 100;
                 balance += won;
-                saveUserData(); // Save after spin
+                saveUserData(); 
                 updateUI();
                 alert(`You won ${won} Coins!`);
-                // Reset rotation for next spin (optional logic needed for real reset)
                 wheel.style.transition = 'none';
                 const actualDeg = deg % 360;
                 wheel.style.transform = `rotate(${actualDeg}deg)`;
@@ -1026,8 +1057,6 @@
                 tapCount++; 
                 energy--;
                 updateUI();
-                // We don't save on every tap to reduce server load
-                // The interval handles saving
                 
                 let clientX = e.clientX;
                 let clientY = e.clientY;
@@ -1036,7 +1065,8 @@
                     clientY = e.touches[0].clientY;
                 }
                 if (!clientX) {
-                    const rect = clickerBtn.getBoundingClientRect();
+                    // Fallback to center of element
+                    const rect = e.target.getBoundingClientRect();
                     clientX = rect.left + rect.width / 2;
                     clientY = rect.top + rect.height / 2;
                 }
@@ -1111,13 +1141,13 @@
         }
 
         function connectWallet() {
-            const btn = document.getElementById('connectWalletBtn');
+            // Updated to reflect button image click interaction
             const msg = document.getElementById('airdropMsg');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connecting...';
+            alert("Connecting to Wallet...");
             setTimeout(() => {
-                btn.style.display = 'none';
+                document.getElementById('connectWalletBtn').style.opacity = '0.5';
                 msg.style.opacity = '1';
-                saveUserData(); // Save wallet connection status if needed
+                saveUserData(); 
             }, 1500);
         }
 
