@@ -184,6 +184,12 @@
             align-items: center;
             color: var(--accent-cyan);
             font-size: 1.1rem;
+            overflow: hidden;
+        }
+        .settings-btn img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
         }
 
         /* --- CONTENT AREA --- */
@@ -532,7 +538,8 @@
             <!-- Left: Profit (Updated Logic) -->
             <div class="stat-card-left">
                 <div class="stat-value">
-                    <img src="https://i.ibb.co.com/vCkqBPCH/coin.png" alt="C">
+                    <!-- Using reward.png as coin substitute since coin.png is missing -->
+                    <img src="https://alamin12071985-a11y.github.io/Snowman/reward.png" alt="C">
                     <span id="miningRateText">+0</span>
                 </div>
                 <div class="stat-label">/hour</div>
@@ -541,7 +548,8 @@
             <!-- Center: User Profile & Level -->
             <div class="profile-section">
                 <div class="profile-top">
-                    <img id="headerAvatar" src="https://i.ibb.co.com/k63J902r/tap-snowman.png" class="user-avatar" alt="User">
+                    <!-- Using snowman.png as default avatar -->
+                    <img id="headerAvatar" src="https://alamin12071985-a11y.github.io/Snowman/snowman.png" class="user-avatar" alt="User">
                     <span id="headerName" class="user-name">EAZY-R</span>
                 </div>
                 
@@ -557,9 +565,9 @@
                 </div>
             </div>
 
-            <!-- Right: Options -->
+            <!-- Right: Options (Using setting.png) -->
             <div class="settings-btn">
-                <i class="fas fa-cog"></i>
+                <img src="https://alamin12071985-a11y.github.io/Snowman/setting.png" alt="Settings">
             </div>
         </div>
 
@@ -571,17 +579,18 @@
                 <!-- Top Menu (Daily Cards - Updated) -->
                 <div class="daily-menu-container">
                     <div class="daily-item" onclick="claimDailyReward()">
-                        <img src="https://i.ibb.co.com/ZzgH3R72/dailyrewards.png" alt="Reward">
+                        <img src="https://alamin12071985-a11y.github.io/Snowman/reward.png" alt="Reward">
                         <span>Daily Reward</span>
                     </div>
                     <!-- Renamed to Daily Spin -->
                     <div class="daily-item" onclick="spinWheel()">
-                        <img src="https://i.ibb.co.com/qYDQGVyB/dailyspin.png" alt="Spin">
+                        <img src="https://alamin12071985-a11y.github.io/Snowman/spin.png" alt="Spin">
                         <span>Daily Spin</span>
                     </div>
                     <!-- Total Earn (Taps tracking) -->
                     <div class="daily-item">
-                        <img src="https://i.ibb.co.com/Xfy914qC/earn.png" alt="Total">
+                        <!-- Using task.png as earn icon substitute -->
+                        <img src="https://alamin12071985-a11y.github.io/Snowman/task.png" alt="Total">
                         <span>Total Earn</span>
                         <div id="totalTapsText" class="daily-sub-text">0</div>
                     </div>
@@ -591,7 +600,8 @@
                 <div class="game-area-wrapper" id="snowContainer">
                     
                     <div class="main-balance">
-                        <img src="https://i.ibb.co.com/vCkqBPCH/coin.png" alt="C">
+                        <!-- Using reward.png as coin substitute -->
+                        <img src="https://alamin12071985-a11y.github.io/Snowman/reward.png" alt="C">
                         <span id="displayBalance">0</span>
                     </div>
 
@@ -603,7 +613,7 @@
                     </div>
                     
                     <!-- Character Image (Lowered) -->
-                    <img src="https://i.ibb.co.com/k63J902r/tap-snowman.png" class="character-img" id="clickerBtn" alt="Snowman">
+                    <img src="https://alamin12071985-a11y.github.io/Snowman/snowman.png" class="character-img" id="clickerBtn" alt="Snowman">
                     
                     <!-- NEW: FEED BUTTON -->
                     <button class="feed-btn" onclick="feedPet()">FEED</button>
@@ -618,11 +628,11 @@
                 <!-- Previous Controls (Energy & Boost) kept as requested -->
                 <div class="bottom-controls">
                     <div class="control-item">
-                        <img src="https://i.ibb.co.com/ZRsPnmdF/energy.png" alt="Energy">
+                        <img src="https://alamin12071985-a11y.github.io/Snowman/energy.png" alt="Energy">
                         <span id="energyDisplay">500</span><span> / 500</span>
                     </div>
                     <div class="control-item">
-                        <img src="https://i.ibb.co.com/HLYsJMwk/boost.png" alt="Boost">
+                        <img src="https://alamin12071985-a11y.github.io/Snowman/boost.png" alt="Boost">
                         <span>Boost</span>
                     </div>
                 </div>
@@ -632,7 +642,8 @@
             <!-- EARN TAB -->
             <div id="earn" class="tab-content">
                 <div class="glass-panel-full" style="text-align:center;">
-                    <img src="https://i.ibb.co.com/M56vd5Zh/earn-page.png" width="80" style="margin-bottom:10px; filter: drop-shadow(0 0 10px var(--accent-violet));">
+                    <!-- Using task.png for earn page -->
+                    <img src="https://alamin12071985-a11y.github.io/Snowman/task.png" width="80" style="margin-bottom:10px; filter: drop-shadow(0 0 10px var(--accent-violet));">
                     <h2 style="color:var(--accent-cyan); margin-bottom:5px;">Earn Coins</h2>
                     <p style="opacity:0.7; font-size:0.9rem;">Complete tasks for rewards</p>
                 </div>
@@ -642,7 +653,7 @@
             <!-- FRIENDS TAB -->
             <div id="friends" class="tab-content">
                 <div class="glass-panel-full" style="text-align:center;">
-                    <img src="https://i.ibb.co.com/wNshMp9B/friend-page.png" width="80" style="margin-bottom:10px;">
+                    <img src="https://alamin12071985-a11y.github.io/Snowman/friends.png" width="80" style="margin-bottom:10px;">
                     <h2 style="color:var(--accent-cyan);">Invite Friends</h2>
                     <p>Invite friends and get bonuses!</p>
                     <button onclick="inviteFriend()" style="width:100%; padding:15px; background:var(--gradient-main); border:none; border-radius:12px; font-weight:bold; color:white; margin-top:15px;">
@@ -654,7 +665,7 @@
             <!-- WALLET TAB -->
             <div id="wallet" class="tab-content">
                 <div class="glass-panel-full" style="text-align:center;">
-                    <img src="https://i.ibb.co.com/jvc5LjcJ/wallet.png" width="100" style="margin-bottom:20px; filter: drop-shadow(0 0 20px var(--accent-cyan));">
+                    <img src="https://alamin12071985-a11y.github.io/Snowman/wallet.png" width="100" style="margin-bottom:20px; filter: drop-shadow(0 0 20px var(--accent-cyan));">
                     <h2 style="font-size:1.8rem; margin-bottom:10px;">Wallet</h2>
                     <p style="color:rgba(227, 244, 249, 0.6);">Connect your TON wallet.</p>
                     <button id="connectWalletBtn" onclick="connectWallet()" style="width:80%; padding:15px; background:var(--gradient-main); border:none; border-radius:12px; font-weight:bold; color:white; margin-top:30px;">
@@ -671,19 +682,19 @@
         <!-- NAVIGATION -->
         <div class="nav-bar">
             <div class="nav-item active" onclick="switchTab('home', this)">
-                <img src="https://i.ibb.co.com/JWhS3pP7/home.png" alt="Home">
+                <img src="https://alamin12071985-a11y.github.io/Snowman/home.png" alt="Home">
                 <span>Home</span>
             </div>
             <div class="nav-item" onclick="switchTab('earn', this)">
-                <img src="https://i.ibb.co.com/Xfy914qC/earn.png" alt="Earn">
+                <img src="https://alamin12071985-a11y.github.io/Snowman/task.png" alt="Earn">
                 <span>Earn</span>
             </div>
             <div class="nav-item" onclick="switchTab('friends', this)">
-                <img src="https://i.ibb.co.com/hx3cbptz/friend.png" alt="Friends">
+                <img src="https://alamin12071985-a11y.github.io/Snowman/friends.png" alt="Friends">
                 <span>Friends</span>
             </div>
             <div class="nav-item" onclick="switchTab('wallet', this)">
-                <img src="https://i.ibb.co.com/jvc5LjcJ/wallet.png" alt="Wallet">
+                <img src="https://alamin12071985-a11y.github.io/Snowman/wallet.png" alt="Wallet">
                 <span>Wallet</span>
             </div>
         </div>
