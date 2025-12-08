@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BitFurry - Aurora Ice Edition</title>
+    <!-- Telegram Web App Script -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            /* Theme Colors: Aurora Ice */
+            --bg-dark: #050f1a;
+            --text-light: #E3F4F9;
+            --accent-cyan: #00E5FF;
+            --accent-violet: #6A5ACD;
+            --accent-green: #99F3BD;
+            
+            /* Glassmorphism Variables */
+            --glass-bg: linear-gradient(145deg, rgba(22, 52, 80, 0.4) 0%, rgba(8, 24, 43, 0.6) 100%);
+            --glass-border: 1px solid rgba(0, 229, 255, 0.15);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            --glass-backdrop: blur(12px);
+
+            --gradient-main: linear-gradient(135deg, var(--accent-violet), var(--accent-cyan));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #000;
+            color: var(--text-light);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Mobile Container */
+        .app-container {
+            width: 100%;
+            max-width: 450px;
+            height: 100%;
+            background: linear-gradient(180deg, #0e1c2e 0%, #030a13 100%);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* --- HEADER DESIGN --- */
+        .header-dashboard {
+            padding: 15px 15px 5px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            z-index: 20;
+            background: linear-gradient(180deg, rgba(5,15,26,0.9) 0%, rgba(5,15,26,0) 100%);
+        }
+
+        /* Left Side: Profit */
+        .stat-card-left {
+            background: var(--glass-bg);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-radius: 12px 30px 12px 30px; 
+            padding: 8px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 90px;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--accent-cyan);
+            opacity: 0.8;
+        }
+        
+        .stat-value {
+            font-size: 0.9rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .stat-value img { width: 16px; }
+
+        /* Center: Profile & Level */
+        .profile-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 10px;
+        }
+
+        .profile-top {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 4px 15px 4px 4px;
+            border-radius: 30px;
+            border: 1px solid rgba(0, 229, 255, 0.1);
+            margin-bottom: 5px;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-cyan);
+            object-fit: cover;
+            background: #fff;
+        }
+
+        .user-name {
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            max-width: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Level Bar in Header - UPDATED COLOR */
+        .header-level-box {
+            width: 100%;
+            max-width: 140px;
+            text-align: center;
+        }
+        
+        .lvl-text {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 2px;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 4px;
+        }
+
+        .header-progress-bg {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+        }
+
+        .header-progress-fill {
+            height: 100%;
+            width: 0%;
+            /* Orange/Gold Gradient as requested */
+            background: linear-gradient(90deg, #FF8C00, #FFD700); 
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            transition: width 0.3s ease;
+        }
+
+        /* Right Side: Options */
+        .settings-btn {
+            background: var(--glass-bg);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--accent-cyan);
+            font-size: 1.1rem;
+        }
+
+        /* --- CONTENT AREA --- */
+        .content-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0 20px 100px 20px;
+            position: relative;
+        }
+
+        .tab-content {
+            display: none;
+            flex-direction: column;
+            animation: fadeIn 0.4s ease;
+            height: 100%;
+        }
+
+        .tab-content.active { display: flex; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- Top Menu (Daily) --- */
+        .daily-menu-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 15px;
+            margin-top: 10px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .daily-item {
+            flex: 1;
+            position: relative;
+            height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .daily-item:active { transform: scale(0.96); }
+
+        .daily-item::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(5, 15, 26, 0.5) 100%);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            z-index: 1;
+        }
+
+        .daily-item img {
+            width: 70px;
+            height: 70px;
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 0;
+            filter: drop-shadow(0 5px 15px rgba(0, 229, 255, 0.3));
+        }
+
+        .daily-item span {
+            position: relative;
+            z-index: 2;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        /* Value inside Daily Item (for Total Earn) */
+        .daily-sub-text {
+            position: relative;
+            z-index: 3;
+            font-size: 0.75rem;
+            color: var(--accent-cyan);
+            margin-top: -12px;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        /* --- GAME AREA (Ring & Character) --- */
+        .game-area-wrapper {
+            flex: 1;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* THE RING STYLE */
+        .ring-container {
+            position: absolute;
+            top: 58%; /* Moved down slightly */
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.85); 
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background: linear-gradient(
+                to bottom, 
+                rgba(106, 90, 205, 0.1) 0%, 
+                rgba(106, 90, 205, 0.5) 40%, 
+                #00E5FF 100%
+            );
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            box-shadow: 0 10px 50px rgba(0, 229, 255, 0.25);
+            z-index: 1; 
+            pointer-events: none;
+        }
+
+        .ring-inner {
+            width: 344px;
+            height: 344px;
+            border-radius: 50%;
+            background: radial-gradient(
+                circle at 50% 90%, 
+                rgba(0, 229, 255, 0.2) 0%, 
+                rgba(11, 15, 25, 0.95) 60%, 
+                transparent 100%
+            );
+            margin-top: 1px;
+            box-shadow: inset 0 -5px 20px rgba(0, 0, 0, 0.8);
+            z-index: 2;
+        }
+
+        .main-balance {
+            font-size: 2.2rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
+            margin-bottom: 10px;
+            z-index: 5;
+        }
+
+        .main-balance img {
+            width: 40px;
+            filter: drop-shadow(0 0 10px var(--accent-cyan));
+        }
+
+        /* Character */
+        .character-img {
+            width: 250px;
+            height: auto;
+            cursor: pointer;
+            z-index: 10; 
+            transition: transform 0.1s;
+            filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.1));
+            margin-top: 40px; /* Moved Lower as requested */
+            margin-bottom: 10px;
+        }
+
+        .character-img:active { transform: scale(0.96) rotate(-2deg); }
+
+        /* --- NEW BUTTONS --- */
+        .feed-btn {
+            background: linear-gradient(45deg, #FF512F, #DD2476);
+            color: white;
+            border: none;
+            padding: 5px 18px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            cursor: pointer;
+            z-index: 20;
+            margin-bottom: 15px;
+            margin-top: -15px; /* Pull up to be near feet */
+            box-shadow: 0 4px 10px rgba(221, 36, 118, 0.5);
+            text-transform: uppercase;
+        }
+
+        .start-mining-btn {
+            background: linear-gradient(90deg, #1D976C, #93F9B9);
+            color: #030a13;
+            border: none;
+            width: 90%;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            cursor: pointer;
+            z-index: 20;
+            box-shadow: 0 0 15px rgba(147, 249, 185, 0.4);
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .start-mining-btn.active {
+            background: linear-gradient(90deg, #4b6cb7, #182848);
+            color: white;
+            cursor: default;
+        }
+
+        /* Floating Score */
+        .floating-score {
+            position: absolute;
+            color: var(--accent-cyan);
+            font-weight: 800;
+            font-size: 32px;
+            pointer-events: none;
+            animation: floatUp 0.8s ease-out forwards;
+            z-index: 100;
+            text-shadow: 0 0 10px var(--accent-violet);
+        }
+
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-80px) scale(1.2); }
+        }
+
+        .bottom-controls {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 10px 10px;
+            z-index: 10;
+        }
+
+        .control-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+        }
+        .control-item img { width: 22px; }
+
+        /* --- NAV BAR --- */
+        .nav-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 85px;
+            background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.9) 100%);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 100;
+            padding-bottom: 10px;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            width: 65px;
+            height: 60px;
+            border-radius: 14px;
+            color: rgba(255, 255, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .nav-item img {
+            width: 26px;
+            height: 26px;
+            opacity: 0.5;
+            transition: all 0.3s;
+            filter: grayscale(100%);
+        }
+
+        .nav-item span { font-size: 0.7rem; font-weight: 500; }
+
+        .nav-item.active {
+            color: var(--accent-cyan);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(0, 229, 255, 0.05) 100%);
+            backdrop-filter: blur(5px);
+            border-top: 1px solid rgba(0, 229, 255, 0.5);
+            box-shadow: 0 -10px 20px rgba(0, 229, 255, 0.15) inset;
+        }
+
+        .nav-item.active img {
+            opacity: 1;
+            filter: grayscale(0%) drop-shadow(0 0 8px var(--accent-cyan));
+            transform: scale(1.1);
+        }
+
+        /* Other Tabs Styles */
+        .glass-panel-full {
+            background: var(--glass-bg);
+            border: var(--glass-border);
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 15px;
+            margin-top: 20px;
+        }
+
+        .task-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 12px;
+        }
+
+        .task-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(0, 229, 255, 0.1);
+            color: var(--accent-cyan);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <!-- HEADER DASHBOARD -->
+        <div class="header-dashboard" id="mainHeader">
+            
+            <!-- Left: Profit (Updated Logic) -->
+            <div class="stat-card-left">
+                <div class="stat-value">
+                    <img src="https://i.ibb.co.com/vCkqBPCH/coin.png" alt="C">
+                    <span id="miningRateText">+0</span>
+                </div>
+                <div class="stat-label">/hour</div>
+            </div>
+
+            <!-- Center: User Profile & Level -->
+            <div class="profile-section">
+                <div class="profile-top">
+                    <img id="headerAvatar" src="https://i.ibb.co.com/k63J902r/tap-snowman.png" class="user-avatar" alt="User">
+                    <span id="headerName" class="user-name">EAZY-R</span>
+                </div>
+                
+                <!-- Level Progress (Updated Color) -->
+                <div class="header-level-box">
+                    <div class="lvl-text">
+                        <span id="levelNameHeader">Lvl 1</span>
+                        <span><span id="currentLevelHeader">0</span>/10</span>
+                    </div>
+                    <div class="header-progress-bg">
+                        <div class="header-progress-fill" id="headerLevelBar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Options -->
+            <div class="settings-btn">
+                <i class="fas fa-cog"></i>
+            </div>
+        </div>
+
+        <div class="content-area">
+            
+            <!-- HOME TAB -->
+            <div id="home" class="tab-content active">
+
+                <!-- Top Menu (Daily Cards - Updated) -->
+                <div class="daily-menu-container">
+                    <div class="daily-item" onclick="claimDailyReward()">
+                        <img src="https://i.ibb.co.com/ZzgH3R72/dailyrewards.png" alt="Reward">
+                        <span>Daily Reward</span>
+                    </div>
+                    <!-- Renamed to Daily Spin -->
+                    <div class="daily-item" onclick="spinWheel()">
+                        <img src="https://i.ibb.co.com/qYDQGVyB/dailyspin.png" alt="Spin">
+                        <span>Daily Spin</span>
+                    </div>
+                    <!-- Total Earn (Taps tracking) -->
+                    <div class="daily-item">
+                        <img src="https://i.ibb.co.com/Xfy914qC/earn.png" alt="Total">
+                        <span>Total Earn</span>
+                        <div id="totalTapsText" class="daily-sub-text">0</div>
+                    </div>
+                </div>
+
+                <!-- Game Area -->
+                <div class="game-area-wrapper" id="snowContainer">
+                    
+                    <div class="main-balance">
+                        <img src="https://i.ibb.co.com/vCkqBPCH/coin.png" alt="C">
+                        <span id="displayBalance">0</span>
+                    </div>
+
+                    <!-- RING -->
+                    <div class="ring-container">
+                        <div class="ring-inner">
+                            <!-- Inner glow effect -->
+                        </div>
+                    </div>
+                    
+                    <!-- Character Image (Lowered) -->
+                    <img src="https://i.ibb.co.com/k63J902r/tap-snowman.png" class="character-img" id="clickerBtn" alt="Snowman">
+                    
+                    <!-- NEW: FEED BUTTON -->
+                    <button class="feed-btn" onclick="feedPet()">FEED</button>
+
+                    <!-- NEW: START MINING BUTTON -->
+                    <button class="start-mining-btn" id="miningBtn" onclick="startMining()">
+                        <i class="fas fa-hammer"></i> START MINING
+                    </button>
+                    
+                </div>
+
+                <!-- Previous Controls (Energy & Boost) kept as requested -->
+                <div class="bottom-controls">
+                    <div class="control-item">
+                        <img src="https://i.ibb.co.com/ZRsPnmdF/energy.png" alt="Energy">
+                        <span id="energyDisplay">500</span><span> / 500</span>
+                    </div>
+                    <div class="control-item">
+                        <img src="https://i.ibb.co.com/HLYsJMwk/boost.png" alt="Boost">
+                        <span>Boost</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- EARN TAB -->
+            <div id="earn" class="tab-content">
+                <div class="glass-panel-full" style="text-align:center;">
+                    <img src="https://i.ibb.co.com/M56vd5Zh/earn-page.png" width="80" style="margin-bottom:10px; filter: drop-shadow(0 0 10px var(--accent-violet));">
+                    <h2 style="color:var(--accent-cyan); margin-bottom:5px;">Earn Coins</h2>
+                    <p style="opacity:0.7; font-size:0.9rem;">Complete tasks for rewards</p>
+                </div>
+                <div class="glass-panel-full" id="taskList"></div>
+            </div>
+
+            <!-- FRIENDS TAB -->
+            <div id="friends" class="tab-content">
+                <div class="glass-panel-full" style="text-align:center;">
+                    <img src="https://i.ibb.co.com/wNshMp9B/friend-page.png" width="80" style="margin-bottom:10px;">
+                    <h2 style="color:var(--accent-cyan);">Invite Friends</h2>
+                    <p>Invite friends and get bonuses!</p>
+                    <button onclick="inviteFriend()" style="width:100%; padding:15px; background:var(--gradient-main); border:none; border-radius:12px; font-weight:bold; color:white; margin-top:15px;">
+                        Copy Invite Link
+                    </button>
+                </div>
+            </div>
+
+            <!-- WALLET TAB -->
+            <div id="wallet" class="tab-content">
+                <div class="glass-panel-full" style="text-align:center;">
+                    <img src="https://i.ibb.co.com/jvc5LjcJ/wallet.png" width="100" style="margin-bottom:20px; filter: drop-shadow(0 0 20px var(--accent-cyan));">
+                    <h2 style="font-size:1.8rem; margin-bottom:10px;">Wallet</h2>
+                    <p style="color:rgba(227, 244, 249, 0.6);">Connect your TON wallet.</p>
+                    <button id="connectWalletBtn" onclick="connectWallet()" style="width:80%; padding:15px; background:var(--gradient-main); border:none; border-radius:12px; font-weight:bold; color:white; margin-top:30px;">
+                        <i class="fas fa-wallet"></i> Connect Wallet
+                    </button>
+                    <div id="airdropMsg" style="margin-top:20px; opacity:0; transition:opacity 0.5s;">
+                        <span style="color: var(--accent-green); font-weight:bold;">✅ Connected Successfully</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- NAVIGATION -->
+        <div class="nav-bar">
+            <div class="nav-item active" onclick="switchTab('home', this)">
+                <img src="https://i.ibb.co.com/JWhS3pP7/home.png" alt="Home">
+                <span>Home</span>
+            </div>
+            <div class="nav-item" onclick="switchTab('earn', this)">
+                <img src="https://i.ibb.co.com/Xfy914qC/earn.png" alt="Earn">
+                <span>Earn</span>
+            </div>
+            <div class="nav-item" onclick="switchTab('friends', this)">
+                <img src="https://i.ibb.co.com/hx3cbptz/friend.png" alt="Friends">
+                <span>Friends</span>
+            </div>
+            <div class="nav-item" onclick="switchTab('wallet', this)">
+                <img src="https://i.ibb.co.com/jvc5LjcJ/wallet.png" alt="Wallet">
+                <span>Wallet</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // --- GAME STATE ---
+        let balance = 0;
+        let tapCount = 0; // Tracks total taps for "Total Earn"
+        let energy = 500;
+        let maxEnergy = 500;
+        let level = 1;
+        let levelCap = 1000;
+        
+        let isMining = false;
+        let miningInterval;
+        
+        // --- DOM ELEMENTS ---
+        const balanceDisplay = document.getElementById('displayBalance');
+        const energyDisplay = document.getElementById('energyDisplay');
+        const clickerBtn = document.getElementById('clickerBtn');
+        const headerName = document.getElementById('headerName');
+        const headerAvatar = document.getElementById('headerAvatar');
+        const headerLevelBar = document.getElementById('headerLevelBar');
+        const currentLevelHeader = document.getElementById('currentLevelHeader');
+        const levelNameHeader = document.getElementById('levelNameHeader');
+        
+        // New DOM Elements
+        const miningBtn = document.getElementById('miningBtn');
+        const miningRateText = document.getElementById('miningRateText');
+        const totalTapsText = document.getElementById('totalTapsText');
+
+        // --- INIT ---
+        function init() {
+            startSnowfall();
+            renderTasks();
+            initTelegramUser(); 
+            updateUI();
+            
+            // Energy Regen
+            setInterval(() => {
+                if (energy < maxEnergy) {
+                    energy++;
+                    updateUI();
+                }
+            }, 1500);
+        }
+
+        // --- MINING LOGIC ---
+        function startMining() {
+            if (isMining) return;
+            isMining = true;
+            
+            // Change UI
+            miningBtn.innerHTML = '<i class="fas fa-cog fa-spin"></i> MINING ACTIVE';
+            miningBtn.classList.add('active');
+            miningRateText.innerText = "+250"; // Update Header Text
+
+            alert("Mining Started! You are earning +250 coins/hour.");
+
+            // Start adding coins automatically
+            // 250 coins / hour = ~4.16 coins / minute = ~1 coin every 14.4 seconds
+            // To make it look good in demo, we add 1 coin every few seconds but visually representing the rate
+            miningInterval = setInterval(() => {
+                balance += 1;
+                updateUI();
+            }, 5000); // Demo Speed: 1 coin every 5 seconds
+        }
+
+        function feedPet() {
+            // Simple visual feedback
+            if (balance >= 50) {
+                balance -= 50;
+                clickerBtn.style.transform = "scale(1.1)";
+                setTimeout(() => clickerBtn.style.transform = "scale(1)", 200);
+                updateUI();
+                alert("Yum! Snowman is happy. (-50 coins)");
+            } else {
+                alert("Not enough coins to feed (Cost: 50)");
+            }
+        }
+
+        // --- TELEGRAM DATA INTEGRATION ---
+        function initTelegramUser() {
+            try {
+                const tg = window.Telegram.WebApp;
+                tg.expand(); 
+                const user = tg.initDataUnsafe.user;
+                if (user) {
+                    if (user.username) headerName.innerText = user.username;
+                    else if (user.first_name) headerName.innerText = user.first_name;
+                    if (user.photo_url) headerAvatar.src = user.photo_url;
+                }
+            } catch (e) {
+                console.log("Not running in Telegram");
+            }
+        }
+
+        // --- SNOWFALL EFFECT ---
+        function startSnowfall() {
+            const container = document.getElementById('snowContainer');
+            // Inject Keyframes
+            const styleSheet = document.createElement("style");
+            styleSheet.innerText = `@keyframes fall { 0% { transform: translateY(-10px); opacity: 0.8; } 100% { transform: translateY(300px); opacity: 0; } }`;
+            document.head.appendChild(styleSheet);
+
+            setInterval(() => {
+                const flake = document.createElement('div');
+                flake.style.position = 'absolute';
+                flake.style.background = 'white';
+                flake.style.borderRadius = '50%';
+                flake.style.opacity = '0.8';
+                flake.style.pointerEvents = 'none';
+                flake.style.animation = 'fall linear infinite';
+                
+                const size = Math.random() * 4 + 2 + 'px';
+                flake.style.width = size;
+                flake.style.height = size;
+                flake.style.left = Math.random() * 90 + 5 + '%';
+                flake.style.animationDuration = Math.random() * 3 + 3 + 's';
+                container.appendChild(flake);
+                setTimeout(() => { flake.remove(); }, 5000);
+            }, 600); 
+        }
+
+        function updateUI() {
+            balanceDisplay.innerText = balance.toLocaleString();
+            energyDisplay.innerText = Math.floor(energy);
+            totalTapsText.innerText = tapCount.toLocaleString(); // Update Total Earn/Tap
+
+            // Level Logic
+            let progress = balance % levelCap;
+            let percentage = (progress / levelCap) * 100;
+            
+            if (balance >= levelCap * level) {
+                level++;
+                levelCap = levelCap * 2;
+                percentage = 0;
+            }
+
+            levelNameHeader.innerText = "LVL " + level + "/10";
+            currentLevelHeader.innerText = level;
+            headerLevelBar.style.width = `${percentage}%`;
+        }
+
+        // --- ACTIONS ---
+        function claimDailyReward() {
+            // Updated to 500 coins
+            balance += 500;
+            updateUI();
+            alert("Daily Reward Claimed! +500 Coins");
+        }
+
+        function spinWheel() {
+            let outcome = Math.floor(Math.random() * 1000) + 100;
+            balance += outcome;
+            updateUI();
+            alert(`Daily Spin: You won ${outcome} Coins!`);
+        }
+
+        // --- CLICKER ---
+        clickerBtn.addEventListener('touchstart', handleTap, {passive: false});
+        clickerBtn.addEventListener('click', handleTap);
+
+        function handleTap(e) {
+            e.preventDefault(); 
+            if (energy > 0) {
+                balance++;
+                tapCount++; // Track total taps
+                energy--;
+                updateUI();
+                
+                let clientX = e.clientX;
+                let clientY = e.clientY;
+                if(e.touches && e.touches.length > 0) {
+                    clientX = e.touches[0].clientX;
+                    clientY = e.touches[0].clientY;
+                }
+                if (!clientX) {
+                    const rect = clickerBtn.getBoundingClientRect();
+                    clientX = rect.left + rect.width / 2;
+                    clientY = rect.top + rect.height / 2;
+                }
+                showFloatingText(clientX, clientY);
+                if (navigator.vibrate) navigator.vibrate(10);
+            }
+        }
+
+        function showFloatingText(x, y) {
+            const floatEl = document.createElement('div');
+            floatEl.className = 'floating-score';
+            floatEl.innerText = '+1';
+            floatEl.style.left = `${x}px`;
+            floatEl.style.top = `${y}px`;
+            document.body.appendChild(floatEl);
+            setTimeout(() => floatEl.remove(), 800);
+        }
+
+        // --- TABS ---
+        function switchTab(tabId, navElement) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            navElement.classList.add('active');
+
+            if(tabId === 'home') document.getElementById('mainHeader').style.display = 'flex';
+            else document.getElementById('mainHeader').style.display = 'none';
+        }
+
+        // --- TASKS ---
+        const tasks = [
+            { id: 1, title: 'Join Telegram Channel', reward: 50000, icon: 'fab fa-telegram' },
+            { id: 2, title: 'Follow on Twitter', reward: 50000, icon: 'fab fa-twitter' },
+            { id: 3, title: 'Subscribe YouTube', reward: 100000, icon: 'fab fa-youtube' }
+        ];
+
+        function renderTasks() {
+            const list = document.getElementById('taskList');
+            list.innerHTML = '';
+            tasks.forEach(task => {
+                const item = document.createElement('div');
+                item.className = 'task-card';
+                item.onclick = () => {
+                     balance += task.reward;
+                     updateUI();
+                     alert("Reward added!");
+                };
+                item.innerHTML = `
+                    <div style="display:flex; align-items:center; gap:15px;">
+                        <div class="task-icon"><i class="${task.icon}"></i></div>
+                        <div class="task-info">
+                            <h4 style="margin:0; font-size:0.9rem; color:var(--text-light)">${task.title}</h4>
+                            <span style="font-size:0.8rem; color:var(--accent-cyan)">+${task.reward.toLocaleString()}</span>
+                        </div>
+                    </div>
+                    <div style="color:var(--text-light); opacity:0.5;"><i class="fas fa-chevron-right"></i></div>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        function inviteFriend() {
+            navigator.clipboard.writeText("https://t.me/aurora_ice_bot");
+            alert("Referral link copied!");
+        }
+
+        function connectWallet() {
+            const btn = document.getElementById('connectWalletBtn');
+            const msg = document.getElementById('airdropMsg');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connecting...';
+            setTimeout(() => {
+                btn.style.display = 'none';
+                msg.style.opacity = '1';
+            }, 1500);
+        }
+
+        // Run Init
+        init();
+    </script>
+</body>
+</html>
