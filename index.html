@@ -396,17 +396,17 @@
 
         /* --- CHARACTER --- */
         .character-img {
-            width: 260px;
+            /* EDIT: Changed from 260px to 520px (2x bigger) */
+            width: 520px;
+            max-width: 100%; /* Ensure it stays within screen bounds */
             height: auto;
             cursor: pointer;
             z-index: 10; 
             transition: transform 0.1s;
             filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.1));
-            
-            /* UPDATED: Increased margin-top to move Snowman down by 80px */
-            /* Previous: 60px -> New: 140px */
-            margin-top: 190px; 
-            margin-bottom: 30px; 
+            /* EDIT: Adjusted margins to fit the larger image and controls */
+            margin-top: 60px; 
+            margin-bottom: 10px; 
         }
 
         .character-img:active { transform: scale(0.96) rotate(-2deg); }
@@ -428,9 +428,8 @@
             width: 100%;
             padding: 10px 10px;
             z-index: 20;
-            /* UPDATED: Reduced margin-top to prevent scrolling issues */
-            /* Previous: 110px -> New: 30px */
-            margin-top: 30px; 
+            /* EDIT: Changed from 110px to 10px (Moved UP) */
+            margin-top: 10px; 
         }
 
         .control-item {
@@ -725,7 +724,8 @@
 
             <!-- WALLET TAB -->
             <div id="wallet" class="tab-content">
-                <div class="glass-panel-full" style="text-align:center; padding-top: 50px;">
+                <!-- EDIT: Removed "glass-panel-full" class from here to remove the black box background -->
+                <div style="text-align:center; padding-top: 50px;">
                     <h1 style="font-size:2.5rem; line-height: 1.1; margin-bottom:10px; font-weight: 800;">Get Real<br>Crypto.</h1>
                     <p style="color:rgba(227, 244, 249, 0.7); font-size: 1rem;">Earn and buy and tokens.</p>
                     
