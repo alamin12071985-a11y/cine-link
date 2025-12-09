@@ -6,9 +6,12 @@
     <title>Snowman Adventure</title>
     <!-- Telegram Web App Script -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <!-- Firebase SDK (Version 8 compatible) -->
+    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    
+    <!-- TON Connect UI SDK (অফিসিয়াল ওয়ালেট কানেক্ট এর জন্য) -->
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -343,7 +346,7 @@
 
         .ring-container {
             position: absolute;
-            /* EDITED: Moved UP (was 180px) */
+            /* EDITED: Moved UP */
             top: 120px; 
             left: 50%;
             transform: translateX(-50%) scale(0.9); 
@@ -404,8 +407,8 @@
             z-index: 10; 
             transition: transform 0.1s;
             filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.1));
-            /* EDITED: Moved UP (was 50px) */
-            margin-top: 10px; 
+            /* EDITED: Moved UP 20px more (was 10px, now -10px) */
+            margin-top: -10px; 
             margin-bottom: 10px; 
             position: relative;
         }
@@ -415,11 +418,11 @@
         /* NEW: Start Mining Image Class */
         .start-mining-img {
             position: absolute;
-            /* EDITED: Moved DOWN (was 40px) */
+            /* EDITED: Moved DOWN */
             bottom: 5px; 
             left: 50%;
             transform: translateX(-50%);
-            /* EDITED: Made BIGGER (was 180px) */
+            /* EDITED: Made BIGGER */
             width: 230px; 
             z-index: 25;
             pointer-events: none; 
@@ -755,12 +758,15 @@
                     <h1 style="font-size:2.5rem; line-height: 1.1; margin-bottom:10px; font-weight: 800;">Get Real<br>Crypto.</h1>
                     <p style="color:rgba(227, 244, 249, 0.7); font-size: 1rem;">Earn and buy and tokens.</p>
                     
-                    <!-- Connect Wallet Image Button (UPDATED FUNCTION) -->
+                    <!-- Connect Wallet Image Button (Functions as Trigger) -->
                     <img id="connectWalletBtn" src="https://alamin12071985-a11y.github.io/cine-link/connect%20wallet.png" onclick="connectWallet()" style="width:90%; max-width: 250px; margin-top:40px; cursor: pointer;">
                     
                     <div id="airdropMsg" style="margin-top:20px; opacity:0; transition:opacity 0.5s;">
                         <span style="color: #93F9B9; font-weight:bold;">✅ Connected Successfully</span>
                     </div>
+                    
+                    <!-- Hidden Div for TON Connect UI to anchor if needed (Though we use Modal) -->
+                    <div id="ton-connect" style="display:none;"></div>
                 </div>
             </div>
 
@@ -847,6 +853,48 @@
         const levelNameHeader = document.getElementById('levelNameHeader');
         const totalTapsText = document.getElementById('totalTapsText');
         const dailyRewardText = document.getElementById('dailyRewardAmount');
+
+        // --- TON CONNECT INITIALIZATION (NEW) ---
+        const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+            manifestUrl: 'https://alamin12071985-a11y.github.io/cine-link/tonconnect-manifest.json',
+            buttonRootId: null // We trigger manually
+        });
+
+        // Monitor Connection Status
+        tonConnectUI.onStatusChange(wallet => {
+            if(wallet) {
+                // User is connected
+                console.log("Wallet Connected:", wallet);
+                const btn = document.getElementById('connectWalletBtn');
+                const msg = document.getElementById('airdropMsg');
+                
+                // Change Button to 'Connected'
+                btn.src = "https://alamin12071985-a11y.github.io/cine-link/connected%20wallet.png";
+                msg.style.opacity = '1';
+                
+                // You can save wallet address to firebase here if needed
+                // wallet.account.address
+            } else {
+                // User disconnected
+                document.getElementById('connectWalletBtn').src = "https://alamin12071985-a11y.github.io/cine-link/connect%20wallet.png";
+                document.getElementById('airdropMsg').style.opacity = '0';
+            }
+        });
+
+        async function connectWallet() {
+            try {
+                // If already connected, maybe show wallet info or disconnect option
+                if(tonConnectUI.connected) {
+                    alert("Wallet already connected!");
+                    // To disconnect: await tonConnectUI.disconnect();
+                } else {
+                    // Open the Modal
+                    await tonConnectUI.openModal();
+                }
+            } catch(e) {
+                console.error("Error connecting wallet:", e);
+            }
+        }
 
         // --- LOADING & INIT ---
         window.addEventListener('load', () => {
@@ -1143,25 +1191,6 @@
         function inviteFriend() {
             navigator.clipboard.writeText("https://t.me/aurora_ice_bot?start=" + userId);
             alert("Referral link copied!");
-        }
-
-        function connectWallet() {
-            // EDITED: Open the specific tonconnect-manifest.json link
-            const manifestUrl = "https://alamin12071985-a11y.github.io/cine-link/tonconnect-manifest.json";
-            window.open(manifestUrl, "_blank");
-            
-            const btn = document.getElementById('connectWalletBtn');
-            const msg = document.getElementById('airdropMsg');
-
-            // 2. Simulate User Returning and Wallet Connecting (Visual Feedback)
-            setTimeout(() => {
-                // Change button to "Connected Wallet" Image
-                btn.src = "https://alamin12071985-a11y.github.io/cine-link/connected%20wallet.png";
-                
-                // Show success message
-                msg.style.opacity = '1';
-                saveUserData(); 
-            }, 3000); 
         }
 
         init();
