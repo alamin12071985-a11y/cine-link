@@ -243,7 +243,6 @@
         .content-area {
             flex: 1;
             overflow-y: auto;
-            /* Bottom padding adjusted for nav bar */
             padding: 0 20px 100px 20px; 
             position: relative;
         }
@@ -339,13 +338,11 @@
             align-items: center;
             position: relative;
             z-index: 10;
-            /* Height removed to allow natural flow and remove black box */
             padding-bottom: 20px;
         }
 
         .ring-container {
             position: absolute;
-            /* Adjusted position relative to the wrapper */
             top: 130px; 
             left: 50%;
             transform: translateX(-50%) scale(0.9); 
@@ -397,7 +394,7 @@
             filter: drop-shadow(0 0 10px var(--accent-cyan));
         }
 
-        /* --- CHARACTER & BUTTONS --- */
+        /* --- CHARACTER --- */
         .character-img {
             width: 260px;
             height: auto;
@@ -407,12 +404,12 @@
             filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.1));
             /* Spacing adjustments */
             margin-top: 10px; 
-            margin-bottom: -40px;
+            margin-bottom: 30px; /* Feed button removed, adding positive margin */
         }
 
         .character-img:active { transform: scale(0.96) rotate(-2deg); }
         
-        /* Actions Group (Feed, Mining, Controls) */
+        /* Actions Group */
         .actions-group {
             display: flex;
             flex-direction: column;
@@ -422,42 +419,14 @@
             position: relative;
         }
         
-        /* Feed Button */
-        .feed-btn-img {
-            width: 180px;
-            height: auto;
-            transition: transform 0.1s;
-            cursor: pointer;
-            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
-            /* Overlap the snowman slightly */
-            z-index: 21;
-        }
-        
-        .feed-btn-img:active { transform: scale(0.9); }
-        
-        /* Start Mining */
-        .start-mining-wrapper {
-            margin-top: 0px; /* Directly below Feed */
-            z-index: 20;
-            display: flex;
-            justify-content: center;
-            width: 100%;
-        }
-
-        .start-mining-wrapper img {
-            width: 130px;
-            height: auto;
-            filter: drop-shadow(0 0 5px var(--accent-cyan));
-        }
-
-        /* --- BOTTOM CONTROLS (Moved Inside) --- */
+        /* --- BOTTOM CONTROLS --- */
         .bottom-controls {
             display: flex;
             justify-content: space-between;
             width: 100%;
             padding: 10px 10px;
             z-index: 20;
-            margin-top: 10px; /* Below Start Mining */
+            margin-top: 10px; 
         }
 
         .control-item {
@@ -551,12 +520,10 @@
             margin-top: 20px;
         }
         
-        /* New styling for Earn Page Image Fading */
         .earn-hero-img {
             width: 160px; 
             margin-bottom: 10px; 
             border-radius: 10px;
-            /* Faded Bottom effect */
             -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
             mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
         }
@@ -584,7 +551,7 @@
             font-size: 1.2rem;
         }
 
-        /* --- SPIN WHEEL UPDATED STYLES --- */
+        /* --- SPIN WHEEL --- */
         .spin-wheel-container {
             width: 300px;
             height: 300px;
@@ -603,7 +570,6 @@
 
         .spin-marker-img {
             position: absolute;
-            /* Marker moved DOWN */
             top: 45px; 
             left: 50%;
             transform: translateX(-50%);
@@ -710,16 +676,9 @@
                     <!-- Character Image -->
                     <img src="https://alamin12071985-a11y.github.io/cine-link/snowman.png" class="character-img" id="clickerBtn" alt="Snowman">
                     
-                    <!-- Actions Group: Feed -> Mining -> Controls -->
+                    <!-- Actions Group: Controls only -->
                     <div class="actions-group">
-                        <!-- Feed Button -->
-                        <img src="https://alamin12071985-a11y.github.io/cine-link/feed.png" class="feed-btn-img" alt="Feed" onclick="handleTap(event)">
                         
-                        <!-- Start Mining Image -->
-                        <div class="start-mining-wrapper">
-                            <img src="https://alamin12071985-a11y.github.io/cine-link/start%20mining.png" alt="Start Mining">
-                        </div>
-
                         <!-- Bottom Controls -->
                         <div class="bottom-controls">
                             <div class="control-item">
@@ -763,7 +722,6 @@
             <!-- WALLET TAB -->
             <div id="wallet" class="tab-content">
                 <div class="glass-panel-full" style="text-align:center; padding-top: 50px;">
-                    <!-- Removed old Image -->
                     <h1 style="font-size:2.5rem; line-height: 1.1; margin-bottom:10px; font-weight: 800;">Get Real<br>Crypto.</h1>
                     <p style="color:rgba(227, 244, 249, 0.7); font-size: 1rem;">Earn and buy and tokens.</p>
                     
