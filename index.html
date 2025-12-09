@@ -333,7 +333,7 @@
             font-weight: 700;
         }
 
-        /* --- GAME AREA (UPDATED) --- */
+        /* --- GAME AREA --- */
         .game-area-wrapper {
             width: 100%;
             display: flex;
@@ -352,12 +352,7 @@
             width: 350px;
             height: 350px;
             border-radius: 50%;
-            background: linear-gradient(
-                to bottom, 
-                rgba(106, 90, 205, 0.1) 0%, 
-                rgba(106, 90, 205, 0.5) 40%, 
-                #00E5FF 100%
-            );
+            background: linear-gradient(to bottom, rgba(106, 90, 205, 0.1) 0%, rgba(106, 90, 205, 0.5) 40%, #00E5FF 100%);
             display: flex;
             justify-content: center;
             align-items: flex-start;
@@ -370,12 +365,7 @@
             width: 344px;
             height: 344px;
             border-radius: 50%;
-            background: radial-gradient(
-                circle at 50% 90%, 
-                rgba(0, 229, 255, 0.2) 0%, 
-                rgba(11, 15, 25, 0.95) 60%, 
-                transparent 100%
-            );
+            background: radial-gradient(circle at 50% 90%, rgba(0, 229, 255, 0.2) 0%, rgba(11, 15, 25, 0.95) 60%, transparent 100%);
             margin-top: 1px;
             box-shadow: inset 0 -5px 20px rgba(0, 0, 0, 0.8);
             z-index: 2;
@@ -413,7 +403,6 @@
 
         .character-img:active { transform: scale(0.96) rotate(-2deg); }
         
-        /* NEW: Start Mining Image Class */
         .start-mining-img {
             position: absolute;
             bottom: 5px; 
@@ -432,16 +421,6 @@
             100% { transform: translateX(-50%) scale(1); }
         }
 
-        /* Actions Group */
-        .actions-group {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            z-index: 20;
-            position: relative;
-        }
-        
         /* --- BOTTOM CONTROLS --- */
         .bottom-controls {
             display: flex;
@@ -450,6 +429,7 @@
             padding: 10px 10px;
             z-index: 30; 
             margin-top: -40px; 
+            position: relative;
         }
 
         .control-item {
@@ -463,7 +443,10 @@
             padding: 5px 15px;
             border-radius: 20px;
             border: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+            transition: 0.2s;
         }
+        .control-item:active { transform: scale(0.95); background: rgba(0, 229, 255, 0.1); }
         .control-item img { width: 22px; }
 
         .floating-score {
@@ -573,6 +556,79 @@
             justify-content: center;
             align-items: center;
             font-size: 1.2rem;
+        }
+
+        /* --- BOOST PAGE STYLES --- */
+        .boost-header {
+            text-align: center;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+        .boost-balance {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #FFD700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+        .boost-balance img { width: 28px; filter: drop-shadow(0 0 5px #FFD700); }
+        
+        .boost-section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .boost-section-title img { width: 30px; }
+
+        .boost-item {
+            background: rgba(30, 35, 50, 0.6);
+            border-radius: 16px;
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .boost-info { display: flex; flex-direction: column; }
+        .boost-name { font-weight: 600; font-size: 0.95rem; color: #fff; }
+        
+        .boost-price-btn {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        .boost-price-btn:active { transform: scale(0.95); background: rgba(255, 215, 0, 0.1); }
+        .boost-price-val { font-weight: 700; font-size: 0.9rem; color: #FFD700; }
+        .boost-price-btn img { width: 16px; }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            z-index: 50;
         }
 
         /* --- SPIN WHEEL --- */
@@ -706,22 +762,138 @@
                     <!-- NEW: Start Mining Image at Feet -->
                     <img src="https://alamin12071985-a11y.github.io/cine-link/start%20mining.png" class="start-mining-img" alt="Start Mining">
                     
-                    <!-- Actions Group: Controls only -->
-                    <div class="actions-group">
-                        
-                        <!-- Bottom Controls (Moved Up via CSS) -->
-                        <div class="bottom-controls">
-                            <div class="control-item">
-                                <img src="https://alamin12071985-a11y.github.io/cine-link/energy.png" alt="Energy">
-                                <span id="energyDisplay">500</span><span> / 500</span>
-                            </div>
-                            <div class="control-item">
-                                <img src="https://alamin12071985-a11y.github.io/cine-link/boost.png" alt="Boost">
-                                <span>Boost</span>
-                            </div>
+                    <!-- Bottom Controls (Trigger Boost Page) -->
+                    <div class="bottom-controls">
+                        <div class="control-item" onclick="openBoostPage()">
+                            <img src="https://alamin12071985-a11y.github.io/cine-link/energy.png" alt="Energy">
+                            <span id="energyDisplay">500</span><span> / 500</span>
+                        </div>
+                        <div class="control-item" onclick="openBoostPage()">
+                            <img src="https://alamin12071985-a11y.github.io/cine-link/boost.png" alt="Boost">
+                            <span>Boost</span>
                         </div>
                     </div>
                     
+                </div>
+            </div>
+
+            <!-- BOOST PAGE (NEW) -->
+            <div id="boostPage" class="tab-content">
+                <div class="back-btn" onclick="switchTab('home')">
+                    <i class="fas fa-arrow-left"></i>
+                </div>
+                
+                <div class="boost-header">
+                    <h2>Boosters</h2>
+                    <p style="opacity: 0.7; font-size: 0.9rem;">Buy upgrades with Stars</p>
+                </div>
+                
+                <!-- Full Energy Refill -->
+                <div class="glass-panel-full">
+                    <div class="boost-section-title">
+                        <img src="https://alamin12071985-a11y.github.io/cine-link/energy-refill.png" alt="Energy">
+                        Full Energy Refill
+                    </div>
+                    
+                    <div class="boost-item">
+                        <div class="boost-info">
+                            <span class="boost-name">3 Days</span>
+                        </div>
+                        <div class="boost-price-btn" onclick="buyItem('energy_3d', 50)">
+                            <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
+                            <span class="boost-price-val">50</span>
+                        </div>
+                    </div>
+                    <div class="boost-item">
+                        <div class="boost-info">
+                            <span class="boost-name">7 Days</span>
+                        </div>
+                        <div class="boost-price-btn" onclick="buyItem('energy_7d', 100)">
+                            <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
+                            <span class="boost-price-val">100</span>
+                        </div>
+                    </div>
+                    <div class="boost-item">
+                        <div class="boost-info">
+                            <span class="boost-name">30 Days</span>
+                        </div>
+                        <div class="boost-price-btn" onclick="buyItem('energy_30d', 300)">
+                            <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
+                            <span class="boost-price-val">300</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Multitap -->
+                <div class="glass-panel-full">
+                    <div class="boost-section-title">
+                        <img src="https://alamin12071985-a11y.github.io/cine-link/multitap.png" alt="Multitap">
+                        Multitap
+                    </div>
+                    
+                    <div class="boost-item">
+                        <div class="boost-info">
+                            <span class="boost-name">3 Days</span>
+                        </div>
+                        <div class="boost-price-btn" onclick="buyItem('multitap_3d', 70)">
+                            <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
+                            <span class="boost-price-val">70</span>
+                        </div>
+                    </div>
+                    <div class="boost-item">
+                        <div class="boost-info">
+                            <span class="boost-name">7 Days</span>
+                        </div>
+                        <div class="boost-price-btn" onclick="buyItem('multitap_7d', 150)">
+                            <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
+                            <span class="boost-price-val">150</span>
+                        </div>
+                    </div>
+                    <div class="boost-item">
+                        <div class="boost-info">
+                            <span class="boost-name">30 Days</span>
+                        </div>
+                        <div class="boost-price-btn" onclick="buyItem('multitap_30d', 400)">
+                            <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
+                            <span class="boost-price-val">400</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Auto Bot -->
+                <div class="glass-panel-full">
+                    <div class="boost-section-title">
+                        <img src="https://alamin12071985-a11y.github.io/cine-link/bot.png" alt="Bot">
+                        Auto Bot
+                    </div>
+                    
+                    <div class="boost-item">
+                        <div class="boost-info">
+                            <span class="boost-name">3 Days</span>
+                        </div>
+                        <div class="boost-price-btn" onclick="buyItem('bot_3d', 100)">
+                            <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
+                            <span class="boost-price-val">100</span>
+                        </div>
+                    </div>
+                    <div class="boost-item">
+                        <div class="boost-info">
+                            <span class="boost-name">7 Days</span>
+                        </div>
+                        <div class="boost-price-btn" onclick="buyItem('bot_7d', 250)">
+                            <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
+                            <span class="boost-price-val">250</span>
+                        </div>
+                    </div>
+                    <div class="boost-item">
+                        <div class="boost-info">
+                            <span class="boost-name">30 Days</span>
+                        </div>
+                        <div class="boost-price-btn" onclick="buyItem('bot_30d', 700)">
+                            <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
+                            <span class="boost-price-val">700</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -755,15 +927,15 @@
                     <h1 style="font-size:2.5rem; line-height: 1.1; margin-bottom:10px; font-weight: 800;">Get Real<br>Crypto.</h1>
                     <p style="color:rgba(227, 244, 249, 0.7); font-size: 1rem;">Earn and buy and tokens.</p>
                     
-                    <!-- Connect Wallet Image Button (Functions as Trigger) -->
+                    <!-- Connect Wallet Image Button -->
                     <img id="connectWalletBtn" src="https://alamin12071985-a11y.github.io/cine-link/connect%20wallet.png" onclick="connectWallet()" style="width:90%; max-width: 250px; margin-top:40px; cursor: pointer;">
                     
+                    <!-- NEW: Exchange Button -->
+                    <img src="https://alamin12071985-a11y.github.io/cine-link/exchange.png" onclick="alert('Coming Soon...')" style="width:90%; max-width: 250px; margin-top:15px; cursor: pointer;">
+
                     <div id="airdropMsg" style="margin-top:20px; opacity:0; transition:opacity 0.5s;">
                         <span style="color: #93F9B9; font-weight:bold;">✅ Connected Successfully</span>
                     </div>
-                    
-                    <!-- Hidden Div for TON Connect UI to anchor if needed (Though we use Modal) -->
-                    <div id="ton-connect" style="display:none;"></div>
                 </div>
             </div>
 
@@ -853,25 +1025,18 @@
 
         // --- TON CONNECT INITIALIZATION ---
         const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-            // Your original manifest URL
             manifestUrl: 'https://alamin12071985-a11y.github.io/cine-link/tonconnect-manifest.json',
-            buttonRootId: null // We trigger manually
+            buttonRootId: null 
         });
 
-        // Monitor Connection Status
         tonConnectUI.onStatusChange(wallet => {
             if(wallet) {
-                // User is connected
                 console.log("Wallet Connected:", wallet);
                 const btn = document.getElementById('connectWalletBtn');
                 const msg = document.getElementById('airdropMsg');
-                
-                // Change Button to 'Connected'
                 btn.src = "https://alamin12071985-a11y.github.io/cine-link/connected%20wallet.png";
                 msg.style.opacity = '1';
-                
             } else {
-                // User disconnected
                 document.getElementById('connectWalletBtn').src = "https://alamin12071985-a11y.github.io/cine-link/connect%20wallet.png";
                 document.getElementById('airdropMsg').style.opacity = '0';
             }
@@ -946,7 +1111,6 @@
             }
         }
 
-        // --- DATABASE FUNCTIONS ---
         function saveUserData() {
             if(!userId) return;
             db.ref('users/' + userId).update({
@@ -1078,13 +1242,11 @@
             const wheel = document.getElementById('wheel');
             const audio = document.getElementById('spinSound');
 
-            // Play Sound
             audio.currentTime = 0; 
             audio.play().catch(e => console.log("Audio play failed:", e));
 
             const deg = Math.floor(5000 + Math.random() * 5000); 
             
-            // Set transition for 10 seconds
             wheel.style.transition = 'transform 10s cubic-bezier(0.1, 0.7, 0.1, 1)';
             wheel.style.transform = `rotate(${deg}deg)`;
             
@@ -1100,7 +1262,7 @@
                 wheel.style.transition = 'none';
                 const actualDeg = deg % 360;
                 wheel.style.transform = `rotate(${actualDeg}deg)`;
-            }, 10000); // 10 seconds wait
+            }, 10000); 
         }
 
         // --- TAP LOGIC ---
@@ -1122,7 +1284,6 @@
                     clientY = e.touches[0].clientY;
                 }
                 if (!clientX) {
-                    // Fallback to center of element
                     const rect = e.target.getBoundingClientRect();
                     clientX = rect.left + rect.width / 2;
                     clientY = rect.top + rect.height / 2;
@@ -1154,6 +1315,65 @@
 
             if(tabId === 'home') document.getElementById('mainHeader').style.display = 'flex';
             else document.getElementById('mainHeader').style.display = 'none';
+        }
+        
+        // --- NEW: OPEN BOOST PAGE ---
+        function openBoostPage() {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.getElementById('boostPage').classList.add('active');
+            document.getElementById('mainHeader').style.display = 'none';
+        }
+
+        // --- NEW: BUY ITEM LOGIC (CALLING PYTHON BACKEND) ---
+        async function buyItem(itemId, price) {
+            // Check if running in Telegram
+            if (!window.Telegram.WebApp.initData) {
+                alert("Please open in Telegram to purchase with Stars!");
+                return;
+            }
+
+            // Call Backend to generate invoice
+            // Replace 'YOUR_PYTHON_BACKEND_URL' with your actual server URL (e.g., https://myserver.com)
+            const backendUrl = "http://localhost:8000"; // Development URL
+
+            try {
+                // Show loading state
+                const btn = event.currentTarget;
+                const originalContent = btn.innerHTML;
+                btn.innerHTML = '...';
+
+                const response = await fetch(`${backendUrl}/generate-invoice`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_id: userId,
+                        item_id: itemId,
+                        amount: price
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.invoice_link) {
+                    // Open Invoice in Telegram
+                    window.Telegram.WebApp.openInvoice(data.invoice_link, (status) => {
+                        if (status === 'paid') {
+                            alert("Payment Successful! Item activated.");
+                            // Here you would implement logic to actually apply the boost
+                            // For demo, we just alert
+                        } else {
+                            alert("Payment Cancelled or Failed.");
+                        }
+                        btn.innerHTML = originalContent;
+                    });
+                } else {
+                    alert("Error generating invoice");
+                    btn.innerHTML = originalContent;
+                }
+            } catch (error) {
+                console.error("Payment Error:", error);
+                alert("Server connection failed. Make sure Backend is running.");
+            }
         }
 
         // --- FIREBASE TASKS ---
