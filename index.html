@@ -343,7 +343,8 @@
 
         .ring-container {
             position: absolute;
-            top: 180px; 
+            /* EDITED: Moved UP (was 180px) */
+            top: 120px; 
             left: 50%;
             transform: translateX(-50%) scale(0.9); 
             width: 350px;
@@ -403,7 +404,8 @@
             z-index: 10; 
             transition: transform 0.1s;
             filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.1));
-            margin-top: 50px; 
+            /* EDITED: Moved UP (was 50px) */
+            margin-top: 10px; 
             margin-bottom: 10px; 
             position: relative;
         }
@@ -413,12 +415,14 @@
         /* NEW: Start Mining Image Class */
         .start-mining-img {
             position: absolute;
-            bottom: 40px; /* Adjust to sit at feet */
+            /* EDITED: Moved DOWN (was 40px) */
+            bottom: 5px; 
             left: 50%;
             transform: translateX(-50%);
-            width: 180px; 
+            /* EDITED: Made BIGGER (was 180px) */
+            width: 230px; 
             z-index: 25;
-            pointer-events: none; /* Allows click through to snowman if needed */
+            pointer-events: none; 
             filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.5));
             animation: pulse 2s infinite;
         }
@@ -445,8 +449,7 @@
             justify-content: space-between;
             width: 100%;
             padding: 10px 10px;
-            z-index: 30; /* Increased Z-Index */
-            /* EDIT: Moved UP by 50px (Original was 10px, so 10-50 = -40px) */
+            z-index: 30; 
             margin-top: -40px; 
         }
 
@@ -457,7 +460,7 @@
             font-weight: 600;
             font-size: 0.9rem;
             color: rgba(255,255,255,0.8);
-            background: rgba(0,0,0,0.5); /* Darker bg for visibility */
+            background: rgba(0,0,0,0.5); 
             padding: 5px 15px;
             border-radius: 20px;
             border: 1px solid rgba(255,255,255,0.1);
@@ -734,7 +737,8 @@
 
             <!-- FRIENDS TAB -->
             <div id="friends" class="tab-content">
-                <div class="glass-panel-full" style="text-align:center;">
+                <!-- EDITED: Added padding-top: 10px to move image UP -->
+                <div class="glass-panel-full" style="text-align:center; padding-top: 10px;">
                     <img src="https://alamin12071985-a11y.github.io/cine-link/friends%20page.png" width="240" style="margin-bottom:10px; border-radius:10px;">
                     <h2 style="color:var(--accent-cyan);">Invite Friends</h2>
                     <p>Invite friends and get bonuses!</p>
@@ -746,7 +750,8 @@
 
             <!-- WALLET TAB -->
             <div id="wallet" class="tab-content">
-                <div style="text-align:center; padding-top: 50px;">
+                <!-- EDITED: Changed padding-top from 50px to 10px to move UP -->
+                <div style="text-align:center; padding-top: 10px;">
                     <h1 style="font-size:2.5rem; line-height: 1.1; margin-bottom:10px; font-weight: 800;">Get Real<br>Crypto.</h1>
                     <p style="color:rgba(227, 244, 249, 0.7); font-size: 1rem;">Earn and buy and tokens.</p>
                     
@@ -1141,23 +1146,22 @@
         }
 
         function connectWallet() {
-            // Updated wallet connection logic
-            // 1. Open TON Wallet link (Generic Tonkeeper link as placeholder)
-            window.open("https://tonkeeper.com/", "_blank");
+            // EDITED: Open the specific tonconnect-manifest.json link
+            const manifestUrl = "https://alamin12071985-a11y.github.io/cine-link/tonconnect-manifest.json";
+            window.open(manifestUrl, "_blank");
             
             const btn = document.getElementById('connectWalletBtn');
             const msg = document.getElementById('airdropMsg');
 
-            // 2. Simulate User Returning and Wallet Connecting
+            // 2. Simulate User Returning and Wallet Connecting (Visual Feedback)
             setTimeout(() => {
                 // Change button to "Connected Wallet" Image
-                // Assuming filename is connected wallet.png based on your pattern
                 btn.src = "https://alamin12071985-a11y.github.io/cine-link/connected%20wallet.png";
                 
                 // Show success message
                 msg.style.opacity = '1';
                 saveUserData(); 
-            }, 3000); // 3 Seconds delay
+            }, 3000); 
         }
 
         init();
