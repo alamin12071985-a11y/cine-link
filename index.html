@@ -10,7 +10,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     
-    <!-- TON Connect UI SDK (অফিসিয়াল ওয়ালেট কানেক্ট এর জন্য) -->
+    <!-- TON Connect UI SDK -->
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
     
     <!-- Google Fonts -->
@@ -346,7 +346,6 @@
 
         .ring-container {
             position: absolute;
-            /* EDITED: Moved UP */
             top: 120px; 
             left: 50%;
             transform: translateX(-50%) scale(0.9); 
@@ -407,7 +406,6 @@
             z-index: 10; 
             transition: transform 0.1s;
             filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.1));
-            /* EDITED: Moved UP 20px more (was 10px, now -10px) */
             margin-top: -10px; 
             margin-bottom: 10px; 
             position: relative;
@@ -418,11 +416,9 @@
         /* NEW: Start Mining Image Class */
         .start-mining-img {
             position: absolute;
-            /* EDITED: Moved DOWN */
             bottom: 5px; 
             left: 50%;
             transform: translateX(-50%);
-            /* EDITED: Made BIGGER */
             width: 230px; 
             z-index: 25;
             pointer-events: none; 
@@ -610,6 +606,9 @@
 </head>
 <body>
 
+    <!-- AUDIO FOR SPIN -->
+    <audio id="spinSound" src="https://github.com/alamin12071985-a11y/cine-link/raw/bfe25795844512b96dc53827a257581c5d424bf4/spinning%20wheel.mp3"></audio>
+
     <!-- LOADING SCREEN -->
     <div id="loading-screen">
         <div class="loading-title">WELCOME</div>
@@ -740,7 +739,6 @@
 
             <!-- FRIENDS TAB -->
             <div id="friends" class="tab-content">
-                <!-- EDITED: Added padding-top: 10px to move image UP -->
                 <div class="glass-panel-full" style="text-align:center; padding-top: 10px;">
                     <img src="https://alamin12071985-a11y.github.io/cine-link/friends%20page.png" width="240" style="margin-bottom:10px; border-radius:10px;">
                     <h2 style="color:var(--accent-cyan);">Invite Friends</h2>
@@ -753,7 +751,6 @@
 
             <!-- WALLET TAB -->
             <div id="wallet" class="tab-content">
-                <!-- EDITED: Changed padding-top from 50px to 10px to move UP -->
                 <div style="text-align:center; padding-top: 10px;">
                     <h1 style="font-size:2.5rem; line-height: 1.1; margin-bottom:10px; font-weight: 800;">Get Real<br>Crypto.</h1>
                     <p style="color:rgba(227, 244, 249, 0.7); font-size: 1rem;">Earn and buy and tokens.</p>
@@ -854,8 +851,9 @@
         const totalTapsText = document.getElementById('totalTapsText');
         const dailyRewardText = document.getElementById('dailyRewardAmount');
 
-        // --- TON CONNECT INITIALIZATION (NEW) ---
+        // --- TON CONNECT INITIALIZATION ---
         const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+            // Your original manifest URL
             manifestUrl: 'https://alamin12071985-a11y.github.io/cine-link/tonconnect-manifest.json',
             buttonRootId: null // We trigger manually
         });
@@ -872,8 +870,6 @@
                 btn.src = "https://alamin12071985-a11y.github.io/cine-link/connected%20wallet.png";
                 msg.style.opacity = '1';
                 
-                // You can save wallet address to firebase here if needed
-                // wallet.account.address
             } else {
                 // User disconnected
                 document.getElementById('connectWalletBtn').src = "https://alamin12071985-a11y.github.io/cine-link/connect%20wallet.png";
@@ -883,12 +879,9 @@
 
         async function connectWallet() {
             try {
-                // If already connected, maybe show wallet info or disconnect option
                 if(tonConnectUI.connected) {
                     alert("Wallet already connected!");
-                    // To disconnect: await tonConnectUI.disconnect();
                 } else {
-                    // Open the Modal
                     await tonConnectUI.openModal();
                 }
             } catch(e) {
@@ -1083,10 +1076,22 @@
 
         function doSpin() {
             const wheel = document.getElementById('wheel');
+            const audio = document.getElementById('spinSound');
+
+            // Play Sound
+            audio.currentTime = 0; 
+            audio.play().catch(e => console.log("Audio play failed:", e));
+
             const deg = Math.floor(5000 + Math.random() * 5000); 
+            
+            // Set transition for 10 seconds
+            wheel.style.transition = 'transform 10s cubic-bezier(0.1, 0.7, 0.1, 1)';
             wheel.style.transform = `rotate(${deg}deg)`;
             
             setTimeout(() => {
+                audio.pause();
+                audio.currentTime = 0;
+
                 const won = Math.floor(Math.random() * 500) + 100;
                 balance += won;
                 saveUserData(); 
@@ -1095,8 +1100,7 @@
                 wheel.style.transition = 'none';
                 const actualDeg = deg % 360;
                 wheel.style.transform = `rotate(${actualDeg}deg)`;
-                setTimeout(() => wheel.style.transition = 'transform 4s cubic-bezier(0.1, 0.7, 0.1, 1)', 50);
-            }, 4000);
+            }, 10000); // 10 seconds wait
         }
 
         // --- TAP LOGIC ---
