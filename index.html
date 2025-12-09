@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,7 +5,7 @@
     <title>Snowman Adventure</title>
     <!-- Telegram Web App Script -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <!-- Firebase SDK -->
+    <!-- Firebase SDK (Version 8 compatible) -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     
@@ -41,6 +40,77 @@
             overflow: hidden;
             display: flex;
             justify-content: center;
+        }
+
+        /* --- LOADING SCREEN --- */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #163450 0%, #030a13 100%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 40px 20px;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-title {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--accent-cyan);
+            text-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
+            letter-spacing: 2px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .loading-char {
+            width: 280px;
+            height: auto;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+            animation: bounce 2s infinite ease-in-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .loading-bar-container {
+            width: 80%;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .loading-text {
+            color: var(--text-light);
+            opacity: 0.8;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 12px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 229, 255, 0.3);
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #00E5FF, #6A5ACD);
+            border-radius: 10px;
+            transition: width 0.3s linear;
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
         }
 
         /* --- APP CONTAINER --- */
@@ -192,7 +262,7 @@
             display: flex;
             justify-content: space-between;
             gap: 12px;
-            margin-bottom: 5px;
+            margin-bottom: 15px;
             margin-top: 10px;
             position: relative;
             z-index: 5;
@@ -261,7 +331,7 @@
 
         /* --- GAME AREA --- */
         .game-area-wrapper {
-            flex: 1;
+            /* EDITED: Removed flex: 1 to collapse the black box area */
             width: 100%;
             display: flex;
             flex-direction: column;
@@ -274,7 +344,7 @@
 
         .ring-container {
             position: absolute;
-            top: 60%; /* Adjusted slightly */
+            top: 42%; 
             left: 50%;
             transform: translate(-50%, -50%) scale(0.85); 
             width: 350px;
@@ -292,6 +362,7 @@
             box-shadow: 0 10px 50px rgba(0, 229, 255, 0.25);
             z-index: 1; 
             pointer-events: none;
+            margin-top: -100px;
         }
 
         .ring-inner {
@@ -315,7 +386,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
             z-index: 5;
             margin-top: 20px;
         }
@@ -327,39 +398,43 @@
 
         /* --- CHARACTER & BUTTONS --- */
         .character-img {
-            width: 260px;
+            width: 253px;
             height: auto;
             cursor: pointer;
             z-index: 10; 
             transition: transform 0.1s;
             filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.1));
-            /* Snowman moved DOWN further */
-            margin-top: 70px; 
-            margin-bottom: 10px;
+            margin-top: 62px; 
+            margin-bottom: 0px;
         }
 
         .character-img:active { transform: scale(0.96) rotate(-2deg); }
         
-        /* Feed & Mining Section - UPDATED */
+        /* Feed Button Section */
         .feed-section {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px; /* Gap between buttons */
-            z-index: 30;
-            margin-top: 0px; 
-            width: 100%;
+            z-index: 20;
+            margin-top: -20px; 
         }
         
-        .action-btn-img {
-            width: 130px; /* Width for buttons */
+        .feed-btn-img {
+            width: 240px;
             height: auto;
-            cursor: pointer;
             transition: transform 0.1s;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+            cursor: pointer;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
+            margin-top: -85px;
         }
         
-        .action-btn-img:active { transform: scale(0.95); }
+        .feed-btn-img:active { transform: scale(0.9); }
+        
+        .start-mining-wrapper {
+            /* EDITED: Increased negative margin to pull UP closer to Feed button */
+            margin-top: -95px;
+            z-index: 21;
+        }
 
         /* --- BOTTOM CONTROLS --- */
         .bottom-controls {
@@ -368,7 +443,9 @@
             width: 100%;
             padding: 10px 10px;
             z-index: 10;
-            margin-bottom: 90px; 
+            /* EDITED: Moved UP significantly and removed large bottom margin */
+            margin-bottom: 20px; 
+            margin-top: -50px;
         }
 
         .control-item {
@@ -459,10 +536,12 @@
             margin-top: 20px;
         }
         
+        /* New styling for Earn Page Image Fading */
         .earn-hero-img {
             width: 160px; 
             margin-bottom: 10px; 
             border-radius: 10px;
+            /* Faded Bottom effect */
             -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
             mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
         }
@@ -489,50 +568,51 @@
             align-items: center;
             font-size: 1.2rem;
         }
-        
-        /* FEED MODAL STYLES */
-        #feedModal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(8px);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-        
-        .modal-content {
-            background: #163450;
-            border: 1px solid var(--accent-cyan);
-            padding: 30px;
-            border-radius: 20px;
-            width: 80%;
-            max-width: 300px;
-            text-align: center;
+
+        /* --- SPIN WHEEL UPDATED STYLES --- */
+        .spin-wheel-container {
+            width: 300px;
+            height: 300px;
+            background: transparent;
             position: relative;
+            margin: 50px auto;
+            transition: transform 4s cubic-bezier(0.1, 0.7, 0.1, 1);
+        }
+        
+        .spin-wheel-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.3));
         }
 
-        .close-modal {
+        .spin-marker-img {
             position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 24px;
-            color: white;
-            cursor: pointer;
+            /* Marker moved DOWN */
+            top: 45px; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px; 
+            height: auto;
+            z-index: 15;
+            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.5));
         }
-
     </style>
 </head>
 <body>
 
-    <!-- FEED MODAL (Empty for now) -->
-    <div id="feedModal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeFeedModal()">&times;</span>
-            <h2 style="color:var(--accent-cyan);">Feed Snowman</h2>
-            <p style="margin-top:10px; opacity:0.7;">Coming Soon!</p>
+    <!-- LOADING SCREEN -->
+    <div id="loading-screen">
+        <div class="loading-title">WELCOME</div>
+        <img src="https://alamin12071985-a11y.github.io/cine-link/snowman.png" class="loading-char" alt="Loading">
+        
+        <div class="loading-bar-container">
+            <div class="loading-text">Get ready... Your adventure is about to begin!</div>
+            <div style="font-size: 1.2rem; font-weight: 800; color: var(--accent-cyan); margin-bottom:5px;" id="loadingPercent">0%</div>
+            <div class="progress-track">
+                <div class="progress-fill" id="loadingFill"></div>
+            </div>
+            <div style="margin-top:10px; font-size:0.8rem; color:var(--text-light); opacity:0.6; letter-spacing:1px;">LOADING...</div>
         </div>
     </div>
 
@@ -540,6 +620,8 @@
         
         <!-- HEADER DASHBOARD -->
         <div class="header-dashboard" id="mainHeader">
+            
+            <!-- Left: Profit -->
             <div class="stat-card-left">
                 <div class="stat-value">
                     <img src="https://alamin12071985-a11y.github.io/cine-link/coin.png" alt="C">
@@ -548,11 +630,14 @@
                 <div class="stat-label">/hour</div>
             </div>
 
+            <!-- Center: User Profile & Level -->
             <div class="profile-section">
                 <div class="profile-top">
                     <img id="headerAvatar" src="https://alamin12071985-a11y.github.io/cine-link/snowman.png" class="user-avatar" alt="User">
                     <span id="headerName" class="user-name">User</span>
                 </div>
+                
+                <!-- Level Progress -->
                 <div class="header-level-box">
                     <div class="lvl-text">
                         <span id="levelNameHeader">Lvl 1</span>
@@ -564,6 +649,7 @@
                 </div>
             </div>
 
+            <!-- Right: Options -->
             <div class="settings-btn">
                 <img src="https://alamin12071985-a11y.github.io/cine-link/setting.png" alt="Settings">
             </div>
@@ -574,6 +660,7 @@
             <!-- HOME TAB -->
             <div id="home" class="tab-content active">
 
+                <!-- Top Menu -->
                 <div class="daily-menu-container">
                     <div class="daily-item" onclick="claimDailyReward()">
                         <img src="https://alamin12071985-a11y.github.io/cine-link/reward.png" alt="Reward">
@@ -608,17 +695,20 @@
                     <!-- Character Image (Position Moved Down) -->
                     <img src="https://alamin12071985-a11y.github.io/cine-link/snowman.png" class="character-img" id="clickerBtn" alt="Snowman">
                     
-                    <!-- Feed & Start Mining Buttons (Images) -->
+                    <!-- Feed Button & Start Mining -->
                     <div class="feed-section">
-                        <!-- Feed Button Image (Opens Popup) -->
-                        <img src="https://alamin12071985-a11y.github.io/cine-link/feed.png" class="action-btn-img" style="width: 100px;" alt="Feed" onclick="openFeedModal()">
+                        <!-- Feed Button -->
+                        <img src="https://alamin12071985-a11y.github.io/cine-link/feed.png" class="feed-btn-img" alt="Feed" onclick="handleTap(event)">
                         
-                        <!-- Start Mining Button Image -->
-                        <img src="https://alamin12071985-a11y.github.io/cine-link/start%20mining.png" class="action-btn-img" style="width: 160px; margin-top:5px;" alt="Start Mining">
+                        <!-- Start Mining Image -->
+                        <div class="start-mining-wrapper">
+                            <img src="https://alamin12071985-a11y.github.io/cine-link/start%20mining.png" style="width: 120px; height: auto; filter: drop-shadow(0 0 5px var(--accent-cyan));" alt="Start Mining">
+                        </div>
                     </div>
                     
                 </div>
 
+                <!-- Bottom Controls -->
                 <div class="bottom-controls">
                     <div class="control-item">
                         <img src="https://alamin12071985-a11y.github.io/cine-link/energy.png" alt="Energy">
@@ -632,7 +722,7 @@
 
             </div>
 
-            <!-- EARN TAB -->
+            <!-- EARN TAB (Updated Text & Image Opacity) -->
             <div id="earn" class="tab-content">
                 <div class="glass-panel-full" style="text-align:center;">
                     <img src="https://alamin12071985-a11y.github.io/cine-link/earn%20page.png" class="earn-hero-img">
@@ -644,26 +734,27 @@
                 </div>
             </div>
 
-            <!-- FRIENDS TAB -->
+            <!-- FRIENDS TAB (Invite Friend Button changed to Image) -->
             <div id="friends" class="tab-content">
                 <div class="glass-panel-full" style="text-align:center;">
                     <img src="https://alamin12071985-a11y.github.io/cine-link/friends%20page.png" width="240" style="margin-bottom:10px; border-radius:10px;">
                     <h2 style="color:var(--accent-cyan);">Invite Friends</h2>
                     <p>Invite friends and get bonuses!</p>
                     
-                    <!-- Invite Button Image (Moved UP by margin-top change) -->
-                    <img src="https://alamin12071985-a11y.github.io/cine-link/invite%20friends.png" onclick="inviteFriend()" style="width: 80%; margin-top: 10px; cursor: pointer;">
+                    <!-- Invite Button Image -->
+                    <img src="https://alamin12071985-a11y.github.io/cine-link/invite%20friends.png" onclick="inviteFriend()" style="width: 80%; margin-top: 20px; cursor: pointer;">
                 </div>
             </div>
 
-            <!-- WALLET TAB -->
+            <!-- WALLET TAB (Image Removed, Text Added, Button Image Added) -->
             <div id="wallet" class="tab-content">
                 <div class="glass-panel-full" style="text-align:center; padding-top: 50px;">
+                    <!-- Removed old Image -->
                     <h1 style="font-size:2.5rem; line-height: 1.1; margin-bottom:10px; font-weight: 800;">Get Real<br>Crypto.</h1>
                     <p style="color:rgba(227, 244, 249, 0.7); font-size: 1rem;">Earn and buy and tokens.</p>
                     
-                    <!-- Connect Wallet Image Button (Moved UP) -->
-                    <img id="connectWalletBtn" src="https://alamin12071985-a11y.github.io/cine-link/connect%20wallet.png" onclick="connectWallet()" style="width:90%; max-width: 250px; margin-top:20px; cursor: pointer;">
+                    <!-- Connect Wallet Image Button -->
+                    <img id="connectWalletBtn" src="https://alamin12071985-a11y.github.io/cine-link/connect%20wallet.png" onclick="connectWallet()" style="width:90%; max-width: 250px; margin-top:40px; cursor: pointer;">
                     
                     <div id="airdropMsg" style="margin-top:20px; opacity:0; transition:opacity 0.5s;">
                         <span style="color: #93F9B9; font-weight:bold;">✅ Connected Successfully</span>
@@ -671,16 +762,22 @@
                 </div>
             </div>
 
-            <!-- SPIN PAGE -->
+            <!-- SPIN PAGE (Arrow moved down) -->
             <div id="spinPage" class="tab-content">
                 <div class="glass-panel-full" style="text-align:center; position:relative; height: 80vh;">
                     <h2>Lucky Spin</h2>
                     <p>Spin to win coins!</p>
-                    <img src="arrow.png" style="position:absolute; top:45px; left:50%; transform:translateX(-50%); width:50px; z-index:15;" alt="Arrow">
-                    <div style="width:300px; height:300px; margin:50px auto; transition:transform 4s cubic-bezier(0.1, 0.7, 0.1, 1);" id="wheel">
-                        <img src="spin wheel.png" style="width:100%; height:100%; object-fit:contain;">
+                    
+                    <!-- Marker Image (Position Adjusted in CSS) -->
+                    <img src="arrow.png" class="spin-marker-img" alt="Arrow">
+                    
+                    <!-- Wheel Container -->
+                    <div class="spin-wheel-container" id="wheel">
+                        <img src="spin wheel.png" class="spin-wheel-img" alt="Wheel">
                     </div>
+                    
                     <button onclick="doSpin()" style="margin-top:20px; padding:15px 40px; background:var(--accent-cyan); border:none; border-radius:25px; font-weight:bold; font-size:1.2rem;">SPIN</button>
+                    
                     <button onclick="switchTab('home', document.querySelector('.nav-item'))" style="margin-top:20px; display:block; width:100%; background:transparent; border:1px solid white; color:white; padding:10px; border-radius:10px;">Back to Home</button>
                 </div>
             </div>
@@ -722,11 +819,13 @@
             measurementId: "G-K676BWHYR4"
         };
         
+        // Initialize Firebase
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         }
         const db = firebase.database();
 
+        // --- GAME STATE VARIABLES ---
         let balance = 0;
         let tapCount = 0; 
         let energy = 500;
@@ -735,6 +834,7 @@
         let levelCap = 1000;
         let userId = "test_user_001"; 
         
+        // --- DOM ELEMENTS ---
         const balanceDisplay = document.getElementById('displayBalance');
         const energyDisplay = document.getElementById('energyDisplay');
         const clickerBtn = document.getElementById('clickerBtn');
@@ -745,6 +845,32 @@
         const levelNameHeader = document.getElementById('levelNameHeader');
         const totalTapsText = document.getElementById('totalTapsText');
         const dailyRewardText = document.getElementById('dailyRewardAmount');
+
+        // --- LOADING & INIT ---
+        window.addEventListener('load', () => {
+            let loadPercent = 0;
+            const bar = document.getElementById('loadingFill');
+            const percentText = document.getElementById('loadingPercent');
+            const screen = document.getElementById('loading-screen');
+            
+            const interval = setInterval(() => {
+                loadPercent += Math.floor(Math.random() * 5) + 1;
+                if(loadPercent > 100) loadPercent = 100;
+                
+                bar.style.width = loadPercent + '%';
+                percentText.innerText = loadPercent + '%';
+
+                if(loadPercent >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        screen.style.opacity = '0';
+                        setTimeout(() => {
+                            screen.style.display = 'none';
+                        }, 500);
+                    }, 500);
+                }
+            }, 50);
+        });
 
         function init() {
             initTelegramUser(); 
@@ -777,6 +903,7 @@
             }
         }
 
+        // --- DATABASE FUNCTIONS ---
         function saveUserData() {
             if(!userId) return;
             db.ref('users/' + userId).update({
@@ -806,7 +933,9 @@
                     checkDailyRewardStatus();
                     fetchTasksFromFirebase();
                 }
-            }).catch(error => { console.error(error); });
+            }).catch(error => {
+                console.error("Data Load Error:", error);
+            });
         }
 
         function startSnowfall() {
@@ -823,6 +952,7 @@
                 flake.style.opacity = '0.8';
                 flake.style.pointerEvents = 'none';
                 flake.style.animation = 'fall linear infinite';
+                
                 const size = Math.random() * 4 + 2 + 'px';
                 flake.style.width = size;
                 flake.style.height = size;
@@ -837,22 +967,27 @@
             balanceDisplay.innerText = Math.floor(balance).toLocaleString();
             energyDisplay.innerText = Math.floor(energy);
             totalTapsText.innerText = tapCount.toLocaleString();
+
             let progress = balance % levelCap;
             let percentage = (progress / levelCap) * 100;
+            
             if (balance >= levelCap * level) {
                 level++;
                 levelCap = levelCap * 2;
                 percentage = 0;
             }
+
             levelNameHeader.innerText = "LVL " + level;
             currentLevelHeader.innerText = level;
             headerLevelBar.style.width = `${percentage}%`;
         }
 
+        // --- DAILY REWARD ---
         function checkDailyRewardStatus() {
             const lastReward = localStorage.getItem('lastRewardDate');
             const today = new Date().toDateString();
             let streak = parseInt(localStorage.getItem('rewardStreak') || '1');
+            
             if (lastReward === today) {
                 dailyRewardText.innerText = "Claimed";
             } else {
@@ -864,26 +999,32 @@
         function claimDailyReward() {
             const lastReward = localStorage.getItem('lastRewardDate');
             const today = new Date().toDateString();
+
             if (lastReward === today) {
                 alert("Already claimed today!");
                 return;
             }
+
             let streak = parseInt(localStorage.getItem('rewardStreak') || '1');
             if(lastReward) {
                 const yesterday = new Date();
                 yesterday.setDate(yesterday.getDate() - 1);
                 if (lastReward !== yesterday.toDateString()) streak = 1;
             }
+
             let amount = 500 + ((streak - 1) * 100);
             balance += amount;
+            
             localStorage.setItem('lastRewardDate', today);
             localStorage.setItem('rewardStreak', streak + 1);
+            
             dailyRewardText.innerText = "Claimed";
             saveUserData(); 
             updateUI();
             alert(`Daily Reward: +${amount} Coins!`);
         }
 
+        // --- SPIN WHEEL ---
         function goToSpinPage() {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.getElementById('spinPage').classList.add('active');
@@ -894,6 +1035,7 @@
             const wheel = document.getElementById('wheel');
             const deg = Math.floor(5000 + Math.random() * 5000); 
             wheel.style.transform = `rotate(${deg}deg)`;
+            
             setTimeout(() => {
                 const won = Math.floor(Math.random() * 500) + 100;
                 balance += won;
@@ -907,6 +1049,7 @@
             }, 4000);
         }
 
+        // --- TAP LOGIC ---
         clickerBtn.addEventListener('touchstart', handleTap, {passive: false});
         clickerBtn.addEventListener('click', handleTap);
 
@@ -917,6 +1060,7 @@
                 tapCount++; 
                 energy--;
                 updateUI();
+                
                 let clientX = e.clientX;
                 let clientY = e.clientY;
                 if(e.touches && e.touches.length > 0) {
@@ -924,6 +1068,7 @@
                     clientY = e.touches[0].clientY;
                 }
                 if (!clientX) {
+                    // Fallback to center of element
                     const rect = e.target.getBoundingClientRect();
                     clientX = rect.left + rect.width / 2;
                     clientY = rect.top + rect.height / 2;
@@ -943,17 +1088,21 @@
             setTimeout(() => floatEl.remove(), 800);
         }
 
+        // --- TAB SWITCHING ---
         function switchTab(tabId, navElement) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
+            
             if(navElement) {
                 document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
                 navElement.classList.add('active');
             }
+
             if(tabId === 'home') document.getElementById('mainHeader').style.display = 'flex';
             else document.getElementById('mainHeader').style.display = 'none';
         }
 
+        // --- FIREBASE TASKS ---
         function fetchTasksFromFirebase() {
             const list = document.getElementById('taskList');
             db.ref('tasks').on('value', (snapshot) => {
@@ -995,6 +1144,7 @@
         }
 
         function connectWallet() {
+            // Updated to reflect button image click interaction
             const msg = document.getElementById('airdropMsg');
             alert("Connecting to Wallet...");
             setTimeout(() => {
@@ -1002,14 +1152,6 @@
                 msg.style.opacity = '1';
                 saveUserData(); 
             }, 1500);
-        }
-        
-        // Feed Popup Functions
-        function openFeedModal() {
-            document.getElementById('feedModal').style.display = 'flex';
-        }
-        function closeFeedModal() {
-            document.getElementById('feedModal').style.display = 'none';
         }
 
         init();
