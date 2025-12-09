@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -242,7 +243,8 @@
         .content-area {
             flex: 1;
             overflow-y: auto;
-            padding: 0 20px 110px 20px; 
+            /* Bottom padding adjusted for nav bar */
+            padding: 0 20px 100px 20px; 
             position: relative;
         }
 
@@ -329,24 +331,24 @@
             font-weight: 700;
         }
 
-        /* --- GAME AREA --- */
+        /* --- GAME AREA (UPDATED) --- */
         .game-area-wrapper {
-            /* EDITED: Removed flex: 1 to collapse the black box area */
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 10px;
-            margin-bottom: 10px;
             position: relative;
             z-index: 10;
+            /* Height removed to allow natural flow and remove black box */
+            padding-bottom: 20px;
         }
 
         .ring-container {
             position: absolute;
-            top: 42%; 
+            /* Adjusted position relative to the wrapper */
+            top: 130px; 
             left: 50%;
-            transform: translate(-50%, -50%) scale(0.85); 
+            transform: translateX(-50%) scale(0.9); 
             width: 350px;
             height: 350px;
             border-radius: 50%;
@@ -362,7 +364,6 @@
             box-shadow: 0 10px 50px rgba(0, 229, 255, 0.25);
             z-index: 1; 
             pointer-events: none;
-            margin-top: -100px;
         }
 
         .ring-inner {
@@ -386,9 +387,9 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
             z-index: 5;
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         .main-balance img {
@@ -398,54 +399,65 @@
 
         /* --- CHARACTER & BUTTONS --- */
         .character-img {
-            width: 253px;
+            width: 260px;
             height: auto;
             cursor: pointer;
             z-index: 10; 
             transition: transform 0.1s;
             filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.1));
-            margin-top: 62px; 
-            margin-bottom: 0px;
+            /* Spacing adjustments */
+            margin-top: 10px; 
+            margin-bottom: -40px;
         }
 
         .character-img:active { transform: scale(0.96) rotate(-2deg); }
         
-        /* Feed Button Section */
-        .feed-section {
+        /* Actions Group (Feed, Mining, Controls) */
+        .actions-group {
             display: flex;
             flex-direction: column;
             align-items: center;
+            width: 100%;
             z-index: 20;
-            margin-top: -20px; 
+            position: relative;
         }
         
+        /* Feed Button */
         .feed-btn-img {
-            width: 240px;
+            width: 180px;
             height: auto;
             transition: transform 0.1s;
             cursor: pointer;
             filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
-            margin-top: -85px;
+            /* Overlap the snowman slightly */
+            z-index: 21;
         }
         
         .feed-btn-img:active { transform: scale(0.9); }
         
+        /* Start Mining */
         .start-mining-wrapper {
-            /* EDITED: Increased negative margin to pull UP closer to Feed button */
-            margin-top: -95px;
-            z-index: 21;
+            margin-top: 0px; /* Directly below Feed */
+            z-index: 20;
+            display: flex;
+            justify-content: center;
+            width: 100%;
         }
 
-        /* --- BOTTOM CONTROLS --- */
+        .start-mining-wrapper img {
+            width: 130px;
+            height: auto;
+            filter: drop-shadow(0 0 5px var(--accent-cyan));
+        }
+
+        /* --- BOTTOM CONTROLS (Moved Inside) --- */
         .bottom-controls {
             display: flex;
             justify-content: space-between;
             width: 100%;
             padding: 10px 10px;
-            z-index: 10;
-            /* EDITED: Moved UP significantly and removed large bottom margin */
-            margin-bottom: 20px; 
-            margin-top: -50px;
+            z-index: 20;
+            margin-top: 10px; /* Below Start Mining */
         }
 
         .control-item {
@@ -455,6 +467,9 @@
             font-weight: 600;
             font-size: 0.9rem;
             color: rgba(255,255,255,0.8);
+            background: rgba(0,0,0,0.3); /* Slight background for readability */
+            padding: 5px 10px;
+            border-radius: 20px;
         }
         .control-item img { width: 22px; }
 
@@ -692,37 +707,36 @@
                         <div class="ring-inner"></div>
                     </div>
                     
-                    <!-- Character Image (Position Moved Down) -->
+                    <!-- Character Image -->
                     <img src="https://alamin12071985-a11y.github.io/cine-link/snowman.png" class="character-img" id="clickerBtn" alt="Snowman">
                     
-                    <!-- Feed Button & Start Mining -->
-                    <div class="feed-section">
+                    <!-- Actions Group: Feed -> Mining -> Controls -->
+                    <div class="actions-group">
                         <!-- Feed Button -->
                         <img src="https://alamin12071985-a11y.github.io/cine-link/feed.png" class="feed-btn-img" alt="Feed" onclick="handleTap(event)">
                         
                         <!-- Start Mining Image -->
                         <div class="start-mining-wrapper">
-                            <img src="https://alamin12071985-a11y.github.io/cine-link/start%20mining.png" style="width: 120px; height: auto; filter: drop-shadow(0 0 5px var(--accent-cyan));" alt="Start Mining">
+                            <img src="https://alamin12071985-a11y.github.io/cine-link/start%20mining.png" alt="Start Mining">
+                        </div>
+
+                        <!-- Bottom Controls -->
+                        <div class="bottom-controls">
+                            <div class="control-item">
+                                <img src="https://alamin12071985-a11y.github.io/cine-link/energy.png" alt="Energy">
+                                <span id="energyDisplay">500</span><span> / 500</span>
+                            </div>
+                            <div class="control-item">
+                                <img src="https://alamin12071985-a11y.github.io/cine-link/boost.png" alt="Boost">
+                                <span>Boost</span>
+                            </div>
                         </div>
                     </div>
                     
                 </div>
-
-                <!-- Bottom Controls -->
-                <div class="bottom-controls">
-                    <div class="control-item">
-                        <img src="https://alamin12071985-a11y.github.io/cine-link/energy.png" alt="Energy">
-                        <span id="energyDisplay">500</span><span> / 500</span>
-                    </div>
-                    <div class="control-item">
-                        <img src="https://alamin12071985-a11y.github.io/cine-link/boost.png" alt="Boost">
-                        <span>Boost</span>
-                    </div>
-                </div>
-
             </div>
 
-            <!-- EARN TAB (Updated Text & Image Opacity) -->
+            <!-- EARN TAB -->
             <div id="earn" class="tab-content">
                 <div class="glass-panel-full" style="text-align:center;">
                     <img src="https://alamin12071985-a11y.github.io/cine-link/earn%20page.png" class="earn-hero-img">
@@ -734,7 +748,7 @@
                 </div>
             </div>
 
-            <!-- FRIENDS TAB (Invite Friend Button changed to Image) -->
+            <!-- FRIENDS TAB -->
             <div id="friends" class="tab-content">
                 <div class="glass-panel-full" style="text-align:center;">
                     <img src="https://alamin12071985-a11y.github.io/cine-link/friends%20page.png" width="240" style="margin-bottom:10px; border-radius:10px;">
@@ -746,7 +760,7 @@
                 </div>
             </div>
 
-            <!-- WALLET TAB (Image Removed, Text Added, Button Image Added) -->
+            <!-- WALLET TAB -->
             <div id="wallet" class="tab-content">
                 <div class="glass-panel-full" style="text-align:center; padding-top: 50px;">
                     <!-- Removed old Image -->
@@ -762,13 +776,13 @@
                 </div>
             </div>
 
-            <!-- SPIN PAGE (Arrow moved down) -->
+            <!-- SPIN PAGE -->
             <div id="spinPage" class="tab-content">
                 <div class="glass-panel-full" style="text-align:center; position:relative; height: 80vh;">
                     <h2>Lucky Spin</h2>
                     <p>Spin to win coins!</p>
                     
-                    <!-- Marker Image (Position Adjusted in CSS) -->
+                    <!-- Marker Image -->
                     <img src="arrow.png" class="spin-marker-img" alt="Arrow">
                     
                     <!-- Wheel Container -->
