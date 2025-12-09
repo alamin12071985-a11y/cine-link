@@ -396,21 +396,39 @@
 
         /* --- CHARACTER --- */
         .character-img {
-            /* EDIT: Changed from 260px to 520px (2x bigger) */
             width: 520px;
-            max-width: 100%; /* Ensure it stays within screen bounds */
+            max-width: 100%; 
             height: auto;
             cursor: pointer;
             z-index: 10; 
             transition: transform 0.1s;
             filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.1));
-            /* EDIT: Adjusted margins to fit the larger image and controls */
             margin-top: 50px; 
             margin-bottom: 10px; 
+            position: relative;
         }
 
         .character-img:active { transform: scale(0.96) rotate(-2deg); }
         
+        /* NEW: Start Mining Image Class */
+        .start-mining-img {
+            position: absolute;
+            bottom: 40px; /* Adjust to sit at feet */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 180px; 
+            z-index: 25;
+            pointer-events: none; /* Allows click through to snowman if needed */
+            filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.5));
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.05); }
+            100% { transform: translateX(-50%) scale(1); }
+        }
+
         /* Actions Group */
         .actions-group {
             display: flex;
@@ -427,9 +445,9 @@
             justify-content: space-between;
             width: 100%;
             padding: 10px 10px;
-            z-index: 20;
-            /* EDIT: Changed from 110px to 10px (Moved UP) */
-            margin-top: 10px; 
+            z-index: 30; /* Increased Z-Index */
+            /* EDIT: Moved UP by 50px (Original was 10px, so 10-50 = -40px) */
+            margin-top: -40px; 
         }
 
         .control-item {
@@ -439,9 +457,10 @@
             font-weight: 600;
             font-size: 0.9rem;
             color: rgba(255,255,255,0.8);
-            background: rgba(0,0,0,0.3); /* Slight background for readability */
-            padding: 5px 10px;
+            background: rgba(0,0,0,0.5); /* Darker bg for visibility */
+            padding: 5px 15px;
             border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
         }
         .control-item img { width: 22px; }
 
@@ -679,10 +698,13 @@
                     <!-- Character Image -->
                     <img src="https://alamin12071985-a11y.github.io/cine-link/snowman.png" class="character-img" id="clickerBtn" alt="Snowman">
                     
+                    <!-- NEW: Start Mining Image at Feet -->
+                    <img src="https://alamin12071985-a11y.github.io/cine-link/start%20mining.png" class="start-mining-img" alt="Start Mining">
+                    
                     <!-- Actions Group: Controls only -->
                     <div class="actions-group">
                         
-                        <!-- Bottom Controls -->
+                        <!-- Bottom Controls (Moved Up via CSS) -->
                         <div class="bottom-controls">
                             <div class="control-item">
                                 <img src="https://alamin12071985-a11y.github.io/cine-link/energy.png" alt="Energy">
@@ -724,12 +746,11 @@
 
             <!-- WALLET TAB -->
             <div id="wallet" class="tab-content">
-                <!-- EDIT: Removed "glass-panel-full" class from here to remove the black box background -->
                 <div style="text-align:center; padding-top: 50px;">
                     <h1 style="font-size:2.5rem; line-height: 1.1; margin-bottom:10px; font-weight: 800;">Get Real<br>Crypto.</h1>
                     <p style="color:rgba(227, 244, 249, 0.7); font-size: 1rem;">Earn and buy and tokens.</p>
                     
-                    <!-- Connect Wallet Image Button -->
+                    <!-- Connect Wallet Image Button (UPDATED FUNCTION) -->
                     <img id="connectWalletBtn" src="https://alamin12071985-a11y.github.io/cine-link/connect%20wallet.png" onclick="connectWallet()" style="width:90%; max-width: 250px; margin-top:40px; cursor: pointer;">
                     
                     <div id="airdropMsg" style="margin-top:20px; opacity:0; transition:opacity 0.5s;">
@@ -1120,14 +1141,23 @@
         }
 
         function connectWallet() {
-            // Updated to reflect button image click interaction
+            // Updated wallet connection logic
+            // 1. Open TON Wallet link (Generic Tonkeeper link as placeholder)
+            window.open("https://tonkeeper.com/", "_blank");
+            
+            const btn = document.getElementById('connectWalletBtn');
             const msg = document.getElementById('airdropMsg');
-            alert("Connecting to Wallet...");
+
+            // 2. Simulate User Returning and Wallet Connecting
             setTimeout(() => {
-                document.getElementById('connectWalletBtn').style.opacity = '0.5';
+                // Change button to "Connected Wallet" Image
+                // Assuming filename is connected wallet.png based on your pattern
+                btn.src = "https://alamin12071985-a11y.github.io/cine-link/connected%20wallet.png";
+                
+                // Show success message
                 msg.style.opacity = '1';
                 saveUserData(); 
-            }, 1500);
+            }, 3000); // 3 Seconds delay
         }
 
         init();
