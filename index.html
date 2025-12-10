@@ -254,13 +254,13 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- MENU --- */
+        /* --- MENU (UPDATED MARGIN: 3px Up) --- */
         .daily-menu-container {
             display: flex;
             justify-content: space-between;
             gap: 12px;
             margin-bottom: 15px;
-            margin-top: 10px;
+            margin-top: 7px; /* Updated: Was 10px */
             position: relative;
             z-index: 5;
         }
@@ -396,9 +396,10 @@
 
         .character-img:active { transform: scale(0.96) rotate(-2deg); }
         
+        /* START MINING IMG UPDATED (Moved Up 15px) */
         .start-mining-img {
             position: absolute;
-            bottom: -20px; /* Moved down as requested */
+            bottom: -5px; /* Updated: Was -20px */
             left: 50%;
             transform: translateX(-50%);
             width: 230px; 
@@ -421,7 +422,7 @@
             width: 100%;
             padding: 10px 10px;
             z-index: 30; 
-            margin-top: 20px; /* Moved down (it was -40px) */
+            margin-top: 20px;
             position: relative;
         }
 
@@ -574,6 +575,25 @@
             line-height: 1.4;
         }
 
+        /* NEW STORE BADGES */
+        .badge {
+            font-size: 0.6rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 5px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+        .badge-hot { background: #ff4757; color: white; }
+        .badge-best { background: #ffa502; color: black; }
+        .badge-new { background: #2ed573; color: black; }
+
+        .boost-desc-small {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.5);
+            margin-top: 2px;
+        }
+
         .boost-item {
             background: rgba(30, 35, 50, 0.6);
             border-radius: 16px;
@@ -667,9 +687,10 @@
             color: var(--accent-cyan);
         }
 
+        /* UPDATED EXCHANGE BUTTON (Full Width) */
         .exchange-btn {
-            width: 90%;
-            max-width: 320px;
+            width: 100%; /* Full Width */
+            max-width: none;
             margin-top: 15px;
             background: #000;
             border: 1px solid rgba(255,255,255,0.2);
@@ -877,8 +898,8 @@
                     <!-- Character Image -->
                     <img src="https://alamin12071985-a11y.github.io/cine-link/snowman.png" class="character-img" id="clickerBtn" alt="Snowman">
                     
-                    <!-- Start Mining Image (Moves to market) -->
-                    <img src="https://alamin12071985-a11y.github.io/cine-link/start%20mining.png" class="start-mining-img" onclick="openMarket()" alt="Start Mining">
+                    <!-- Start Mining Image (Logic: Click -> Shop or Active) -->
+                    <img src="https://alamin12071985-a11y.github.io/cine-link/start%20mining.png" class="start-mining-img" onclick="handleStartMining()" alt="Start Mining">
                     
                     <!-- Bottom Controls (Trigger Boost Page) -->
                     <div class="bottom-controls">
@@ -895,27 +916,59 @@
                 </div>
             </div>
 
-            <!-- BOOST PAGE -->
+            <!-- BOOST / PREMIUM STORE PAGE -->
             <div id="boostPage" class="tab-content">
                 <div class="back-btn" onclick="switchTab('home')">
                     <i class="fas fa-arrow-left"></i>
                 </div>
                 
                 <div class="boost-header">
-                    <h2>Boosters</h2>
-                    <p style="opacity: 0.7; font-size: 0.9rem;">Buy upgrades with Stars</p>
+                    <h2>Premium Store</h2>
+                    <p style="opacity: 0.7; font-size: 0.9rem;">Upgrade your gameplay!</p>
+                </div>
+
+                <!-- 1. VIP MEMBERSHIP -->
+                <div class="glass-panel-full">
+                    <div class="boost-section-title">
+                        <img src="https://alamin12071985-a11y.github.io/cine-link/star.png" alt="VIP">
+                        VIP Membership <span class="badge badge-hot">HOT</span>
+                    </div>
+                    <div class="boost-desc">
+                        Double daily bonus, 2x farming speed & ad-free experience.
+                    </div>
+                    
+                    <div class="boost-item">
+                        <div class="boost-info">
+                            <span class="boost-name">7 Days VIP</span>
+                            <div class="boost-desc-small">2x Rewards for a week</div>
+                        </div>
+                        <div class="boost-price-btn" onclick="buyItem(this, 'vip_7d', 120)">
+                            <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
+                            <span class="boost-price-val">120</span>
+                        </div>
+                    </div>
+
+                    <div class="boost-item">
+                        <div class="boost-info">
+                            <span class="boost-name">30 Days VIP</span>
+                            <div class="boost-desc-small">Triple rewards + Badge</div>
+                        </div>
+                        <div class="boost-price-btn" onclick="buyItem(this, 'vip_30d', 350)">
+                            <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
+                            <span class="boost-price-val">350</span>
+                        </div>
+                    </div>
                 </div>
                 
-                <!-- Full Energy Refill -->
+                <!-- 2. FULL ENERGY REFILL -->
                 <div class="glass-panel-full">
                     <div class="boost-section-title">
                         <img src="https://alamin12071985-a11y.github.io/cine-link/energy-refill.png" alt="Energy">
                         Full Energy Refill
                     </div>
-                    <div class="boost-desc">
-                        Instantly restores your entire energy bar, so you can stay active longer without any breaks.
-                    </div>
+                    <div class="boost-desc">Instantly restores your energy bar.</div>
                     
+                    <!-- 3 Days -->
                     <div class="boost-item">
                         <div class="boost-info">
                             <span class="boost-name">3 Days</span>
@@ -925,19 +978,38 @@
                             <span class="boost-price-val">50</span>
                         </div>
                     </div>
-                    <!-- (More items abbreviated for brevity, logic applies same) -->
+                    <!-- 7 Days -->
+                    <div class="boost-item">
+                        <div class="boost-info">
+                            <span class="boost-name">7 Days</span>
+                            <span class="badge badge-best">Best</span>
+                        </div>
+                        <div class="boost-price-btn" onclick="buyItem(this, 'energy_7d', 100)">
+                            <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
+                            <span class="boost-price-val">100</span>
+                        </div>
+                    </div>
+                    <!-- 30 Days -->
+                    <div class="boost-item">
+                        <div class="boost-info">
+                            <span class="boost-name">30 Days</span>
+                        </div>
+                        <div class="boost-price-btn" onclick="buyItem(this, 'energy_30d', 300)">
+                            <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
+                            <span class="boost-price-val">300</span>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Multitap -->
+                <!-- 3. MULTITAP -->
                 <div class="glass-panel-full">
                     <div class="boost-section-title">
                         <img src="https://alamin12071985-a11y.github.io/cine-link/multitap.png" alt="Multitap">
                         Multitap
                     </div>
-                    <div class="boost-desc">
-                        Boosts the power of every tap, helping you earn more tokens in less time.
-                    </div>
+                    <div class="boost-desc">Boosts the power of every tap.</div>
                     
+                    <!-- 3 Days -->
                     <div class="boost-item">
                         <div class="boost-info">
                             <span class="boost-name">3 Days</span>
@@ -947,18 +1019,107 @@
                             <span class="boost-price-val">70</span>
                         </div>
                     </div>
+                    <!-- 7 Days -->
+                    <div class="boost-item">
+                        <div class="boost-info">
+                            <span class="boost-name">7 Days</span>
+                        </div>
+                        <div class="boost-price-btn" onclick="buyItem(this, 'multitap_7d', 150)">
+                            <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
+                            <span class="boost-price-val">150</span>
+                        </div>
+                    </div>
+                    <!-- 30 Days -->
+                    <div class="boost-item">
+                        <div class="boost-info">
+                            <span class="boost-name">30 Days</span>
+                            <span class="badge badge-best">Value</span>
+                        </div>
+                        <div class="boost-price-btn" onclick="buyItem(this, 'multitap_30d', 400)">
+                            <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
+                            <span class="boost-price-val">400</span>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Auto Bot -->
+                <!-- 4. XP BOOSTERS -->
+                <div class="glass-panel-full">
+                    <div class="boost-section-title">
+                        <img src="https://alamin12071985-a11y.github.io/cine-link/task.png" alt="XP">
+                        XP Boosters
+                    </div>
+                    <div class="boost-desc">Level up faster to unlock rewards.</div>
+                    
+                    <div class="boost-item">
+                        <div class="boost-info">
+                            <span class="boost-name">2x XP (1 Hour)</span>
+                        </div>
+                        <div class="boost-price-btn" onclick="buyItem(this, 'xp_2x', 20)">
+                            <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
+                            <span class="boost-price-val">20</span>
+                        </div>
+                    </div>
+                    <div class="boost-item">
+                        <div class="boost-info">
+                            <span class="boost-name">Skip 5 Levels</span>
+                            <span class="badge badge-new">New</span>
+                        </div>
+                        <div class="boost-price-btn" onclick="buyItem(this, 'xp_skip', 50)">
+                            <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
+                            <span class="boost-price-val">50</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. LOOT BOXES -->
+                <div class="glass-panel-full">
+                    <div class="boost-section-title">
+                        <img src="https://alamin12071985-a11y.github.io/cine-link/reward.png" alt="Loot">
+                        Loot Boxes
+                    </div>
+                    <div class="boost-desc">Open for a chance to win huge prizes!</div>
+                    
+                    <div class="boost-item">
+                        <div class="boost-info">
+                            <span class="boost-name">Basic Box</span>
+                            <div class="boost-desc-small">Random small rewards</div>
+                        </div>
+                        <div class="boost-price-btn" onclick="buyItem(this, 'loot_basic', 20)">
+                            <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
+                            <span class="boost-price-val">20</span>
+                        </div>
+                    </div>
+                    <div class="boost-item">
+                        <div class="boost-info">
+                            <span class="boost-name">Premium Box</span>
+                            <div class="boost-desc-small">Better chance for Stars</div>
+                        </div>
+                        <div class="boost-price-btn" onclick="buyItem(this, 'loot_prem', 50)">
+                            <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
+                            <span class="boost-price-val">50</span>
+                        </div>
+                    </div>
+                    <div class="boost-item">
+                        <div class="boost-info">
+                            <span class="boost-name">Elite Box</span>
+                            <span class="badge badge-hot">Jackpot</span>
+                        </div>
+                        <div class="boost-price-btn" onclick="buyItem(this, 'loot_elite', 120)">
+                            <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
+                            <span class="boost-price-val">120</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. AUTO BOT -->
                 <div class="glass-panel-full">
                     <div class="boost-section-title">
                         <img src="https://alamin12071985-a11y.github.io/cine-link/bot.png" alt="Bot">
                         Auto Bot
                     </div>
-                    <div class="boost-desc">
-                        Automatically taps for you, allowing you to keep earning tokens even when you're offline.
-                    </div>
+                    <div class="boost-desc">Automatically taps while you are offline.</div>
                     
+                    <!-- 3 Days -->
                     <div class="boost-item">
                         <div class="boost-info">
                             <span class="boost-name">3 Days</span>
@@ -966,6 +1127,27 @@
                         <div class="boost-price-btn" onclick="buyItem(this, 'bot_3d', 100)">
                             <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
                             <span class="boost-price-val">100</span>
+                        </div>
+                    </div>
+                    <!-- 7 Days -->
+                    <div class="boost-item">
+                        <div class="boost-info">
+                            <span class="boost-name">7 Days</span>
+                        </div>
+                        <div class="boost-price-btn" onclick="buyItem(this, 'bot_7d', 250)">
+                            <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
+                            <span class="boost-price-val">250</span>
+                        </div>
+                    </div>
+                    <!-- 30 Days -->
+                    <div class="boost-item">
+                        <div class="boost-info">
+                            <span class="boost-name">30 Days</span>
+                            <span class="badge badge-best">Must Have</span>
+                        </div>
+                        <div class="boost-price-btn" onclick="buyItem(this, 'bot_30d', 700)">
+                            <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
+                            <span class="boost-price-val">700</span>
                         </div>
                     </div>
                 </div>
@@ -990,7 +1172,6 @@
                     <h2 style="color:var(--accent-cyan);">Invite Friends</h2>
                     <p>Invite friends and get bonuses!</p>
                     
-                    <!-- Invite Button Image Moved Up slightly via style -->
                     <img src="https://alamin12071985-a11y.github.io/cine-link/invite%20friends.png" onclick="inviteFriend()" style="width: 80%; margin-top: 5px; cursor: pointer;">
                 </div>
             </div>
@@ -1001,14 +1182,11 @@
                     <h1 class="wallet-title">Get Real<br>Crypto.</h1>
                     <p style="color:rgba(227, 244, 249, 0.7); font-size: 1rem;">Earn and buy and tokens.</p>
                     
-                    <!-- Connect Wallet Image Button (Moved up -20px margin) -->
                     <img id="connectWalletBtn" src="https://alamin12071985-a11y.github.io/cine-link/connect%20wallet.png" onclick="connectWallet()" style="width:90%; max-width: 250px; margin-top:20px; cursor: pointer;">
                     
-                    <div id="airdropMsg" style="margin-top:10px; opacity:0; transition:opacity 0.5s;">
-                        <!-- Removed "Connected Successfully" text as requested -->
-                    </div>
+                    <div id="airdropMsg" style="margin-top:10px; opacity:0; transition:opacity 0.5s;"></div>
 
-                    <!-- NEW: Exchange Button -->
+                    <!-- UPDATED: Full Width Exchange Button -->
                     <div class="exchange-btn" onclick="openExchangePopup()">
                         <img src="https://alamin12071985-a11y.github.io/cine-link/exchange.png" class="exchange-icon" alt="Swap">
                         <div class="exchange-text">
@@ -1025,10 +1203,8 @@
                     <h2>Lucky Spin</h2>
                     <p>Spin to win coins!</p>
                     
-                    <!-- Marker Image -->
                     <img src="arrow.png" class="spin-marker-img" alt="Arrow">
                     
-                    <!-- Wheel Container -->
                     <div class="spin-wheel-container" id="wheel">
                         <img src="spin wheel.png" class="spin-wheel-img" alt="Wheel">
                     </div>
@@ -1088,6 +1264,7 @@
         let maxEnergy = 500;
         let level = 1;
         let userId = "test_user_001"; 
+        let isBotActive = false; // Flag to track if bot is purchased
         
         // --- DOM ELEMENTS ---
         const balanceDisplay = document.getElementById('displayBalance');
@@ -1111,7 +1288,6 @@
             if(wallet) {
                 const btn = document.getElementById('connectWalletBtn');
                 btn.src = "https://alamin12071985-a11y.github.io/cine-link/connected%20wallet.png";
-                // Removed Success Text logic
             } else {
                 document.getElementById('connectWalletBtn').src = "https://alamin12071985-a11y.github.io/cine-link/connect%20wallet.png";
             }
@@ -1240,8 +1416,7 @@
         }
 
         // --- LEVEL LOGIC WITH FORMULA ---
-        // L1: 0-4000. L2: 4000-12000. L3: 12000-20000.
-        // Formula for threshold of NEXT level: 4000 + (CurrentLevel - 1) * 8000
+        // Formula: 4000 + (CurrentLevel - 1) * 8000
         function updateUI() {
             balanceDisplay.innerText = Math.floor(balance).toLocaleString();
             energyDisplay.innerText = Math.floor(energy);
@@ -1295,23 +1470,35 @@
             showGlassPopup(html);
         }
 
+        // UPDATED EXCHANGE POPUP TEXT
         function openExchangePopup() {
             const html = `
                 <div style="margin-top:20px;">
                     <div class="hourglass-icon"><i class="fas fa-hourglass-half"></i></div>
                 </div>
-                <div class="popup-title">Marketplaces</div>
-                <div class="popup-msg" style="margin-bottom:5px; opacity:0.6;">Explore different NFT marketplaces</div>
-                <div style="height:20px;"></div>
-                <div style="font-weight:700; font-size:1.1rem; color:white; margin-bottom:10px;">The marketplace will be available soon</div>
-                <div class="popup-msg">Stay tuned for upcoming updates.</div>
+                <div class="popup-title">Exchange Tokens</div>
+                <div style="height:10px;"></div>
+                <div style="font-weight:700; font-size:1.1rem; color:white; margin-bottom:10px; line-height:1.4;">The Exchange Tokens Market Available Soon!</div>
+                <div class="popup-msg">Stay Tuned for Upcoming Updates.</div>
                 <button class="popup-btn" style="background:transparent; border:1px solid rgba(255,255,255,0.3); color:white;" onclick="closeGlassPopup()">Close</button>
             `;
             showGlassPopup(html);
         }
 
-        function openMarket() {
-            openExchangePopup(); // Using the popup for now as per "Market" context
+        // UPDATED: Handle Start Mining Click
+        function handleStartMining() {
+            if (isBotActive) {
+                // If bot is already bought
+                const html = `
+                    <div class="popup-title">Bot Active</div>
+                    <div class="popup-msg">Your Auto Bot is currently mining coins for you!</div>
+                    <button class="popup-btn" onclick="closeGlassPopup()">Great</button>
+                `;
+                showGlassPopup(html);
+            } else {
+                // If bot not bought, go to shop
+                openBoostPage();
+            }
         }
 
         // --- DAILY REWARD ---
@@ -1402,7 +1589,7 @@
                 balance++;
                 tapCount++; 
                 energy--;
-                updateUI(); // Check level up happens inside here
+                updateUI(); 
                 
                 let clientX = e.clientX;
                 let clientY = e.clientY;
@@ -1450,7 +1637,7 @@
             document.getElementById('mainHeader').style.display = 'none';
         }
 
-        // --- BUY ITEM (Ring Spinner) ---
+        // --- BUY ITEM (Simulated with Invoice Logic) ---
         async function buyItem(btnElement, itemId, price) {
             if (!window.Telegram.WebApp.initData) {
                 const html = `<div class="popup-title">Error</div><div class="popup-msg">Please open in Telegram</div><button class="popup-btn" onclick="closeGlassPopup()">OK</button>`;
@@ -1460,32 +1647,36 @@
 
             const backendUrl = "https://example-3-4e8t.onrender.com"; 
 
-            // Change content to Ring Loader
             const originalContent = btnElement.innerHTML;
             btnElement.innerHTML = `<div class="loader-ring"></div>`;
             btnElement.style.pointerEvents = "none";
 
             try {
+                // Simulated fetch for demo purposes
+                // In production, uncomment the fetch call below
+                /*
                 const response = await fetch(`${backendUrl}/generate-invoice`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ user_id: userId, item_id: itemId, amount: price })
                 });
                 const data = await response.json();
-                
-                if (data.invoice_link) {
-                    window.Telegram.WebApp.openInvoice(data.invoice_link, (status) => {
-                        if (status === 'paid') {
-                            const html = `<div class="popup-title">Success!</div><div class="popup-msg">Item activated successfully.</div><button class="popup-btn" onclick="closeGlassPopup()">OK</button>`;
-                            showGlassPopup(html);
-                        }
-                        btnElement.innerHTML = originalContent;
-                        btnElement.style.pointerEvents = "auto";
-                    });
-                } else {
-                    btnElement.innerHTML = originalContent;
-                    btnElement.style.pointerEvents = "auto";
-                }
+                */
+               
+               // For now, let's simulate a delay and success
+               setTimeout(() => {
+                   // If item is a bot, activate it
+                   if(itemId.startsWith('bot')) {
+                       isBotActive = true;
+                   }
+
+                   const html = `<div class="popup-title">Success!</div><div class="popup-msg">Item activated successfully.</div><button class="popup-btn" onclick="closeGlassPopup()">OK</button>`;
+                   showGlassPopup(html);
+                   
+                   btnElement.innerHTML = originalContent;
+                   btnElement.style.pointerEvents = "auto";
+               }, 1500);
+
             } catch (error) {
                 btnElement.innerHTML = originalContent;
                 btnElement.style.pointerEvents = "auto";
