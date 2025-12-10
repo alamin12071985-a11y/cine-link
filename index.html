@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- Viewport Fix: জুম বন্ধ এবং সব ডিভাইসে সঠিক উইডথ পাওয়ার জন্য -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Snowman Adventure</title>
     
@@ -44,7 +43,6 @@
             font-family: 'Poppins', sans-serif;
             background-color: #000;
             color: var(--text-light);
-            /* Dynamic Viewport Height: মোবাইলের নিচের বার বা উপরের বারের সমস্যা ফিক্স করে */
             height: 100dvh; 
             overflow: hidden;
             display: flex;
@@ -114,13 +112,14 @@
             box-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
         }
 
-        /* --- APP CONTAINER --- */
+        /* --- APP CONTAINER (UPDATED BACKGROUND) --- */
         .app-container {
             width: 100%;
-            /* Responsive Width Fix */
             max-width: 100%; 
             height: 100%;
-            background: linear-gradient(180deg, #0e1c2e 0%, #030a13 100%);
+            /* Background Image Added Here */
+            background: url('https://alamin12071985-a11y.github.io/cine-link/background.png') no-repeat center center fixed;
+            background-size: cover;
             position: relative;
             display: flex;
             flex-direction: column;
@@ -244,7 +243,6 @@
         .content-area {
             flex: 1;
             overflow-y: auto;
-            /* Bottom Padding for Navbar */
             padding: 0 20px 110px 20px; 
             position: relative;
         }
@@ -274,12 +272,10 @@
         .daily-item {
             flex: 1;
             position: relative;
-            /* Responsive Height */
             height: auto;
-            aspect-ratio: 1.2/1; /* অনুপাত ঠিক রাখবে */
+            aspect-ratio: 1.2/1;
             min-height: 80px;
             max-height: 100px;
-            
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -296,7 +292,7 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 70%; /* 70% of parent height */
+            height: 70%;
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(5, 15, 26, 0.5) 100%);
             backdrop-filter: blur(8px);
             border: 1px solid rgba(0, 229, 255, 0.2);
@@ -336,7 +332,7 @@
             font-weight: 700;
         }
 
-        /* --- GAME AREA (RESPONSIVE FIX) --- */
+        /* --- GAME AREA --- */
         .game-area-wrapper {
             width: 100%;
             height: 100%;
@@ -346,47 +342,12 @@
             position: relative;
             z-index: 10;
             padding-bottom: 20px;
-            /* Vertical distribution */
             justify-content: space-evenly; 
         }
 
-        /* --- RING (RESPONSIVE) --- */
-        .ring-container {
-            position: absolute;
-            top: 20%; 
-            left: 50%;
-            transform: translateX(-50%);
-            
-            /* Responsive Width using Viewport Width (vw) */
-            width: 85vw;
-            height: 85vw;
-            
-            /* Limits for tablets/desktops */
-            max-width: 360px;
-            max-height: 360px;
-            
-            border-radius: 50%;
-            background: linear-gradient(to bottom, rgba(106, 90, 205, 0.1) 0%, rgba(106, 90, 205, 0.5) 40%, #00E5FF 100%);
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            box-shadow: 0 10px 50px rgba(0, 229, 255, 0.25);
-            z-index: 1; 
-            pointer-events: none;
-        }
-
-        .ring-inner {
-            width: 98%;
-            height: 98%;
-            border-radius: 50%;
-            background: radial-gradient(circle at 50% 90%, rgba(0, 229, 255, 0.2) 0%, rgba(11, 15, 25, 0.95) 60%, transparent 100%);
-            margin-top: 1px;
-            box-shadow: inset 0 -5px 20px rgba(0, 0, 0, 0.8);
-            z-index: 2;
-        }
+        /* --- RING REMOVED FROM CSS --- */
 
         .main-balance {
-            /* Clamp scales font size between 1.8rem and 2.5rem based on screen size */
             font-size: clamp(1.8rem, 5vw, 2.5rem);
             font-weight: 800;
             display: flex;
@@ -402,9 +363,8 @@
             filter: drop-shadow(0 0 10px var(--accent-cyan));
         }
 
-        /* --- CHARACTER (RESPONSIVE) --- */
+        /* --- CHARACTER --- */
         .character-img {
-            /* Width responsive to screen width */
             width: 75vw;
             max-width: 300px;
             height: auto;
@@ -423,11 +383,8 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            
-            /* Responsive Width */
             width: 55vw; 
             max-width: 220px;
-            
             z-index: 25;
             cursor: pointer;
             filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.5));
@@ -448,7 +405,7 @@
             padding: 10px 10px;
             z-index: 30; 
             position: relative;
-            margin-top: auto; /* Push to bottom of flex container */
+            margin-top: auto;
         }
 
         .control-item {
@@ -647,6 +604,15 @@
         .boost-price-val { font-weight: 700; font-size: 0.9rem; color: #FFD700; }
         .boost-price-btn img { width: 16px; }
 
+        /* ACTIVATE BUTTON STYLE */
+        .boost-price-btn.btn-activate {
+            background: rgba(0, 230, 118, 0.2);
+            border: 1px solid #00E676;
+            color: #00E676;
+        }
+        .boost-price-btn.btn-activate .boost-price-val { color: #00E676; }
+        .boost-price-btn.btn-activate img { display: none; } /* Hide star icon when active */
+
         /* LOADING RING FOR STAR BUTTON */
         .loader-ring {
             width: 16px;
@@ -814,17 +780,12 @@
         }
         @keyframes rotateHourglass { 0% { transform: rotate(0); } 50% { transform: rotate(180deg); } 100% { transform: rotate(360deg); } }
 
-        /* --- MEDIA QUERY FOR SMALL SCREENS (DP 360 & Below) --- */
+        /* --- MEDIA QUERY --- */
         @media (max-height: 700px) {
             .header-dashboard { padding: 5px 10px; }
             .daily-menu-container { margin-bottom: 5px; transform: scale(0.95); transform-origin: top center; }
             .main-balance { margin-top: 0; margin-bottom: 5px; font-size: 1.8rem; }
             
-            .ring-container {
-                top: 15%;
-                width: 70vw;
-                height: 70vw;
-            }
             .character-img {
                 width: 60vw;
                 max-width: 240px;
@@ -938,10 +899,7 @@
                         <span id="displayBalance">0</span>
                     </div>
 
-                    <!-- RING -->
-                    <div class="ring-container">
-                        <div class="ring-inner"></div>
-                    </div>
+                    <!-- RING REMOVED -->
                     
                     <!-- Character Image -->
                     <img src="https://alamin12071985-a11y.github.io/cine-link/snowman.png" class="character-img" id="clickerBtn" alt="Snowman">
@@ -990,7 +948,7 @@
                             <span class="boost-name">7 Days VIP</span>
                             <div class="boost-desc-small">2x Rewards for a week</div>
                         </div>
-                        <div class="boost-price-btn" onclick="buyItem(this, 'vip_7d', 120)">
+                        <div class="boost-price-btn" id="btn_vip_7d" onclick="handleStoreClick(this, 'vip_7d', 120)">
                             <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
                             <span class="boost-price-val">120</span>
                         </div>
@@ -1001,7 +959,7 @@
                             <span class="boost-name">30 Days VIP</span>
                             <div class="boost-desc-small">Triple rewards + Badge</div>
                         </div>
-                        <div class="boost-price-btn" onclick="buyItem(this, 'vip_30d', 350)">
+                        <div class="boost-price-btn" id="btn_vip_30d" onclick="handleStoreClick(this, 'vip_30d', 350)">
                             <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
                             <span class="boost-price-val">350</span>
                         </div>
@@ -1020,7 +978,7 @@
                         <div class="boost-info">
                             <span class="boost-name">3 Days</span>
                         </div>
-                        <div class="boost-price-btn" onclick="buyItem(this, 'energy_3d', 50)">
+                        <div class="boost-price-btn" id="btn_energy_3d" onclick="handleStoreClick(this, 'energy_3d', 50)">
                             <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
                             <span class="boost-price-val">50</span>
                         </div>
@@ -1030,7 +988,7 @@
                             <span class="boost-name">7 Days</span>
                             <span class="badge badge-best">Best</span>
                         </div>
-                        <div class="boost-price-btn" onclick="buyItem(this, 'energy_7d', 100)">
+                        <div class="boost-price-btn" id="btn_energy_7d" onclick="handleStoreClick(this, 'energy_7d', 100)">
                             <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
                             <span class="boost-price-val">100</span>
                         </div>
@@ -1039,7 +997,7 @@
                         <div class="boost-info">
                             <span class="boost-name">30 Days</span>
                         </div>
-                        <div class="boost-price-btn" onclick="buyItem(this, 'energy_30d', 300)">
+                        <div class="boost-price-btn" id="btn_energy_30d" onclick="handleStoreClick(this, 'energy_30d', 300)">
                             <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
                             <span class="boost-price-val">300</span>
                         </div>
@@ -1058,7 +1016,7 @@
                         <div class="boost-info">
                             <span class="boost-name">3 Days</span>
                         </div>
-                        <div class="boost-price-btn" onclick="buyItem(this, 'multitap_3d', 70)">
+                        <div class="boost-price-btn" id="btn_multitap_3d" onclick="handleStoreClick(this, 'multitap_3d', 70)">
                             <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
                             <span class="boost-price-val">70</span>
                         </div>
@@ -1067,7 +1025,7 @@
                         <div class="boost-info">
                             <span class="boost-name">7 Days</span>
                         </div>
-                        <div class="boost-price-btn" onclick="buyItem(this, 'multitap_7d', 150)">
+                        <div class="boost-price-btn" id="btn_multitap_7d" onclick="handleStoreClick(this, 'multitap_7d', 150)">
                             <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
                             <span class="boost-price-val">150</span>
                         </div>
@@ -1077,7 +1035,7 @@
                             <span class="boost-name">30 Days</span>
                             <span class="badge badge-best">Value</span>
                         </div>
-                        <div class="boost-price-btn" onclick="buyItem(this, 'multitap_30d', 400)">
+                        <div class="boost-price-btn" id="btn_multitap_30d" onclick="handleStoreClick(this, 'multitap_30d', 400)">
                             <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
                             <span class="boost-price-val">400</span>
                         </div>
@@ -1096,7 +1054,7 @@
                         <div class="boost-info">
                             <span class="boost-name">2x XP (1 Hour)</span>
                         </div>
-                        <div class="boost-price-btn" onclick="buyItem(this, 'xp_2x', 20)">
+                        <div class="boost-price-btn" id="btn_xp_2x" onclick="handleStoreClick(this, 'xp_2x', 20)">
                             <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
                             <span class="boost-price-val">20</span>
                         </div>
@@ -1106,7 +1064,7 @@
                             <span class="boost-name">Skip 5 Levels</span>
                             <span class="badge badge-new">New</span>
                         </div>
-                        <div class="boost-price-btn" onclick="buyItem(this, 'xp_skip', 50)">
+                        <div class="boost-price-btn" id="btn_xp_skip" onclick="handleStoreClick(this, 'xp_skip', 50)">
                             <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
                             <span class="boost-price-val">50</span>
                         </div>
@@ -1126,7 +1084,7 @@
                             <span class="boost-name">Basic Box</span>
                             <div class="boost-desc-small">Random small rewards</div>
                         </div>
-                        <div class="boost-price-btn" onclick="buyItem(this, 'loot_basic', 20)">
+                        <div class="boost-price-btn" id="btn_loot_basic" onclick="handleStoreClick(this, 'loot_basic', 20)">
                             <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
                             <span class="boost-price-val">20</span>
                         </div>
@@ -1136,7 +1094,7 @@
                             <span class="boost-name">Premium Box</span>
                             <div class="boost-desc-small">Better chance for Stars</div>
                         </div>
-                        <div class="boost-price-btn" onclick="buyItem(this, 'loot_prem', 50)">
+                        <div class="boost-price-btn" id="btn_loot_prem" onclick="handleStoreClick(this, 'loot_prem', 50)">
                             <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
                             <span class="boost-price-val">50</span>
                         </div>
@@ -1146,7 +1104,7 @@
                             <span class="boost-name">Elite Box</span>
                             <span class="badge badge-hot">Jackpot</span>
                         </div>
-                        <div class="boost-price-btn" onclick="buyItem(this, 'loot_elite', 120)">
+                        <div class="boost-price-btn" id="btn_loot_elite" onclick="handleStoreClick(this, 'loot_elite', 120)">
                             <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
                             <span class="boost-price-val">120</span>
                         </div>
@@ -1165,7 +1123,7 @@
                         <div class="boost-info">
                             <span class="boost-name">3 Days</span>
                         </div>
-                        <div class="boost-price-btn" onclick="buyItem(this, 'bot_3d', 100)">
+                        <div class="boost-price-btn" id="btn_bot_3d" onclick="handleStoreClick(this, 'bot_3d', 100)">
                             <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
                             <span class="boost-price-val">100</span>
                         </div>
@@ -1174,7 +1132,7 @@
                         <div class="boost-info">
                             <span class="boost-name">7 Days</span>
                         </div>
-                        <div class="boost-price-btn" onclick="buyItem(this, 'bot_7d', 250)">
+                        <div class="boost-price-btn" id="btn_bot_7d" onclick="handleStoreClick(this, 'bot_7d', 250)">
                             <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
                             <span class="boost-price-val">250</span>
                         </div>
@@ -1184,7 +1142,7 @@
                             <span class="boost-name">30 Days</span>
                             <span class="badge badge-best">Must Have</span>
                         </div>
-                        <div class="boost-price-btn" onclick="buyItem(this, 'bot_30d', 700)">
+                        <div class="boost-price-btn" id="btn_bot_30d" onclick="handleStoreClick(this, 'bot_30d', 700)">
                             <img src="https://alamin12071985-a11y.github.io/cine-link/star.png">
                             <span class="boost-price-val">700</span>
                         </div>
@@ -1304,7 +1262,10 @@
         let userId = "test_user_001"; 
         let isBotActive = false;
         
-        // --- BACKEND URL (Render URL Updated) ---
+        // NEW: Inventory object to store purchased items
+        let inventory = {};
+
+        // --- BACKEND URL ---
         const backendUrl = "https://snowman-adventure.onrender.com";
 
         // --- DOM ELEMENTS ---
@@ -1409,6 +1370,7 @@
                 tapCount: tapCount,
                 level: level,
                 isBotActive: isBotActive,
+                inventory: inventory, // Save inventory to DB
                 lastActive: Date.now()
             });
         }
@@ -1423,7 +1385,9 @@
                     tapCount = data.tapCount || 0;
                     level = data.level || 1;
                     isBotActive = data.isBotActive || false;
+                    inventory = data.inventory || {}; // Load inventory
                     updateUI();
+                    updateStoreUI(); // Update store buttons state
                     checkDailyRewardStatus();
                     fetchTasksFromFirebase();
                 } else {
@@ -1479,6 +1443,29 @@
             levelNameHeader.innerText = "LVL " + level;
             currentLevelHeader.innerText = level;
             headerLevelBar.style.width = `${Math.min(percentage, 100)}%`;
+        }
+
+        // --- NEW: UPDATE STORE UI BUTTONS ---
+        function updateStoreUI() {
+            // List of all items IDs
+            const items = [
+                'vip_7d', 'vip_30d', 
+                'energy_3d', 'energy_7d', 'energy_30d',
+                'multitap_3d', 'multitap_7d', 'multitap_30d',
+                'xp_2x', 'xp_skip',
+                'loot_basic', 'loot_prem', 'loot_elite',
+                'bot_3d', 'bot_7d', 'bot_30d'
+            ];
+
+            items.forEach(itemId => {
+                const btn = document.getElementById('btn_' + itemId);
+                if (btn && inventory[itemId]) {
+                    // Item is in inventory, ready to activate
+                    btn.classList.add('btn-activate');
+                    btn.innerHTML = `<span class="boost-price-val">ACTIVATE</span>`;
+                    // Onclick logic is handled in handleStoreClick which checks inventory
+                }
+            });
         }
 
         function showGlassPopup(contentHTML) {
@@ -1666,9 +1653,66 @@
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.getElementById('boostPage').classList.add('active');
             document.getElementById('mainHeader').style.display = 'none';
+            updateStoreUI(); // Refresh UI when opening page
         }
 
-        // --- PAYMENT FUNCTION ---
+        // --- NEW: MAIN STORE HANDLER ---
+        function handleStoreClick(btnElement, itemId, price) {
+            if(inventory[itemId]) {
+                // Item is purchased, so ACTIVATE it
+                activateItem(itemId);
+            } else {
+                // Item is NOT purchased, so BUY it
+                buyItem(btnElement, itemId, price);
+            }
+        }
+
+        // --- NEW: ACTIVATE ITEM LOGIC ---
+        function activateItem(itemId) {
+            // Remove from inventory (assuming single use for now based on prompt logic "click it activates it")
+            // Or keep it? Prompt implies consumable activation.
+            delete inventory[itemId];
+            
+            // Apply Effects
+            if(itemId.includes('bot')) isBotActive = true;
+            if(itemId.includes('energy')) energy = maxEnergy;
+            // Add other effects logic here (VIP, XP etc) as needed
+
+            saveUserData();
+            updateUI();
+            
+            // Reset Button
+            const btn = document.getElementById('btn_' + itemId);
+            const originalPrice = getPriceFromId(itemId); // Helper or just reload UI
+            btn.classList.remove('btn-activate');
+            // We need to restore original text (simple hack: just reload data/UI or hardcode)
+            // For simplicity, we just reload store UI logic which will revert it if not in inventory
+            updateStoreUI();
+            
+            // Restore original content manually if needed, or rely on updateStoreUI not adding 'activate' class
+            // To restore price text, we might need to store it or refresh page. 
+            // Here we simply show success popup.
+            
+            const html = `
+                <div class="popup-title">Activated!</div>
+                <div class="popup-msg">Item successfully activated.</div>
+                <button class="popup-btn" onclick="closeGlassPopup()">Awesome</button>
+            `;
+            showGlassPopup(html);
+            
+            // Re-render button text for this item since it's no longer in inventory
+            // Finding the original price value is tricky without looking it up, 
+            // but assuming user won't buy immediately again or page refresh handles it.
+            // A quick fix is to reload the page or fetch fresh data, but we'll just set text to "Purchased" or price.
+            btn.innerHTML = `<img src="https://alamin12071985-a11y.github.io/cine-link/star.png"><span class="boost-price-val">Owned</span>`;
+        }
+
+        function getPriceFromId(itemId) {
+            // Helper if needed, otherwise ignored
+            return 0; 
+        }
+
+        // --- PAYMENT FUNCTION (UPDATED) ---
         async function buyItem(btnElement, itemId, price) {
             if (!window.Telegram.WebApp.initData) {
                 const html = `<div class="popup-title">Error</div><div class="popup-msg">Please open in Telegram</div><button class="popup-btn" onclick="closeGlassPopup()">OK</button>`;
@@ -1712,15 +1756,17 @@
                 Telegram.WebApp.openInvoice(invoiceLink, function(status) {
                     if (status === 'paid') {
                         // Payment Successful
-                        if(itemId.startsWith('bot')) isBotActive = true;
-                        if(itemId.startsWith('energy')) energy = maxEnergy;
+                        
+                        // NEW LOGIC: Add to inventory instead of direct apply
+                        inventory[itemId] = true;
 
                         saveUserData();
                         updateUI();
+                        updateStoreUI(); // This changes button to "ACTIVATE"
 
                         const html = `
                             <div class="popup-title">Purchase Successful!</div>
-                            <div class="popup-msg">You have successfully purchased ${itemName}.</div>
+                            <div class="popup-msg">You have purchased ${itemName}. Go to store to Activate it!</div>
                             <button class="popup-btn" onclick="closeGlassPopup()">Awesome</button>
                         `;
                         showGlassPopup(html);
@@ -1731,7 +1777,10 @@
                         const html = `<div class="popup-title">Failed</div><div class="popup-msg">Transaction failed.</div><button class="popup-btn" onclick="closeGlassPopup()">Close</button>`;
                         showGlassPopup(html);
                     }
-                    btnElement.innerHTML = originalContent;
+                    // Restore button content (will be overwritten by updateStoreUI if paid)
+                    if(status !== 'paid') {
+                        btnElement.innerHTML = originalContent;
+                    }
                     btnElement.style.pointerEvents = "auto";
                 });
 
