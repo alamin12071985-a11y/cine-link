@@ -2,10 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- Viewport Fix: জুম বন্ধ এবং সব ডিভাইসে সঠিক উইডথ পাওয়ার জন্য -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Snowman Adventure</title>
+    
     <!-- Telegram Web App Script -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
@@ -41,7 +44,8 @@
             font-family: 'Poppins', sans-serif;
             background-color: #000;
             color: var(--text-light);
-            height: 100vh;
+            /* Dynamic Viewport Height: মোবাইলের নিচের বার বা উপরের বারের সমস্যা ফিক্স করে */
+            height: 100dvh; 
             overflow: hidden;
             display: flex;
             justify-content: center;
@@ -113,7 +117,8 @@
         /* --- APP CONTAINER --- */
         .app-container {
             width: 100%;
-            max-width: 450px;
+            /* Responsive Width Fix */
+            max-width: 100%; 
             height: 100%;
             background: linear-gradient(180deg, #0e1c2e 0%, #030a13 100%);
             position: relative;
@@ -239,6 +244,7 @@
         .content-area {
             flex: 1;
             overflow-y: auto;
+            /* Bottom Padding for Navbar */
             padding: 0 20px 110px 20px; 
             position: relative;
         }
@@ -268,7 +274,12 @@
         .daily-item {
             flex: 1;
             position: relative;
-            height: 100px;
+            /* Responsive Height */
+            height: auto;
+            aspect-ratio: 1.2/1; /* অনুপাত ঠিক রাখবে */
+            min-height: 80px;
+            max-height: 100px;
+            
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -285,7 +296,7 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 70px;
+            height: 70%; /* 70% of parent height */
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(5, 15, 26, 0.5) 100%);
             backdrop-filter: blur(8px);
             border: 1px solid rgba(0, 229, 255, 0.2);
@@ -295,10 +306,10 @@
         }
 
         .daily-item img {
-            width: 70px;
-            height: 70px;
+            width: 60%;
+            height: auto;
             position: absolute;
-            top: -10px;
+            top: 0;
             left: 50%;
             transform: translateX(-50%);
             z-index: 0;
@@ -312,38 +323,48 @@
             font-weight: 600;
             color: rgba(255, 255, 255, 0.9);
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             line-height: 1.1;
         }
 
         .daily-sub-text {
             position: relative;
             z-index: 3;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: var(--accent-cyan);
-            margin-top: -10px;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             font-weight: 700;
         }
 
-        /* --- GAME AREA --- */
+        /* --- GAME AREA (RESPONSIVE FIX) --- */
         .game-area-wrapper {
             width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             position: relative;
             z-index: 10;
             padding-bottom: 20px;
+            /* Vertical distribution */
+            justify-content: space-evenly; 
         }
 
+        /* --- RING (RESPONSIVE) --- */
         .ring-container {
             position: absolute;
-            top: 120px; 
+            top: 20%; 
             left: 50%;
-            transform: translateX(-50%) scale(0.9); 
-            width: 350px;
-            height: 350px;
+            transform: translateX(-50%);
+            
+            /* Responsive Width using Viewport Width (vw) */
+            width: 85vw;
+            height: 85vw;
+            
+            /* Limits for tablets/desktops */
+            max-width: 360px;
+            max-height: 360px;
+            
             border-radius: 50%;
             background: linear-gradient(to bottom, rgba(106, 90, 205, 0.1) 0%, rgba(106, 90, 205, 0.5) 40%, #00E5FF 100%);
             display: flex;
@@ -355,8 +376,8 @@
         }
 
         .ring-inner {
-            width: 344px;
-            height: 344px;
+            width: 98%;
+            height: 98%;
             border-radius: 50%;
             background: radial-gradient(circle at 50% 90%, rgba(0, 229, 255, 0.2) 0%, rgba(11, 15, 25, 0.95) 60%, transparent 100%);
             margin-top: 1px;
@@ -365,32 +386,33 @@
         }
 
         .main-balance {
-            font-size: 2.2rem;
+            /* Clamp scales font size between 1.8rem and 2.5rem based on screen size */
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
             font-weight: 800;
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 20px;
             z-index: 5;
-            margin-top: 10px;
+            margin-top: 1vh;
+            margin-bottom: 2vh;
         }
 
         .main-balance img {
-            width: 45px; 
+            width: clamp(35px, 10vw, 45px); 
             filter: drop-shadow(0 0 10px var(--accent-cyan));
         }
 
-        /* --- CHARACTER --- */
+        /* --- CHARACTER (RESPONSIVE) --- */
         .character-img {
-            width: 520px;
-            max-width: 100%; 
+            /* Width responsive to screen width */
+            width: 75vw;
+            max-width: 300px;
             height: auto;
             cursor: pointer;
             z-index: 10; 
             transition: transform 0.1s;
             filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.1));
-            margin-top: -10px; 
-            margin-bottom: 10px; 
+            margin-top: 4vh; 
             position: relative;
         }
 
@@ -398,10 +420,14 @@
         
         .start-mining-img {
             position: absolute;
-            bottom: -5px;
+            bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 230px; 
+            
+            /* Responsive Width */
+            width: 55vw; 
+            max-width: 220px;
+            
             z-index: 25;
             cursor: pointer;
             filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.5));
@@ -421,8 +447,8 @@
             width: 100%;
             padding: 10px 10px;
             z-index: 30; 
-            margin-top: 20px;
             position: relative;
+            margin-top: auto; /* Push to bottom of flex container */
         }
 
         .control-item {
@@ -650,11 +676,13 @@
 
         /* --- SPIN WHEEL --- */
         .spin-wheel-container {
-            width: 300px;
-            height: 300px;
+            width: 80vw;
+            max-width: 300px;
+            height: 80vw;
+            max-height: 300px;
             background: transparent;
             position: relative;
-            margin: 50px auto;
+            margin: 5vh auto;
             transition: transform 4s cubic-bezier(0.1, 0.7, 0.1, 1);
         }
         
@@ -667,7 +695,7 @@
 
         .spin-marker-img {
             position: absolute;
-            top: 45px; 
+            top: 4vh; 
             left: 50%;
             transform: translateX(-50%);
             width: 50px; 
@@ -785,6 +813,30 @@
             animation: rotateHourglass 3s infinite ease-in-out;
         }
         @keyframes rotateHourglass { 0% { transform: rotate(0); } 50% { transform: rotate(180deg); } 100% { transform: rotate(360deg); } }
+
+        /* --- MEDIA QUERY FOR SMALL SCREENS (DP 360 & Below) --- */
+        @media (max-height: 700px) {
+            .header-dashboard { padding: 5px 10px; }
+            .daily-menu-container { margin-bottom: 5px; transform: scale(0.95); transform-origin: top center; }
+            .main-balance { margin-top: 0; margin-bottom: 5px; font-size: 1.8rem; }
+            
+            .ring-container {
+                top: 15%;
+                width: 70vw;
+                height: 70vw;
+            }
+            .character-img {
+                width: 60vw;
+                max-width: 240px;
+                margin-top: 0;
+            }
+            .start-mining-img {
+                width: 45vw;
+                bottom: 0;
+            }
+            .bottom-controls { padding: 5px; }
+            .nav-bar { height: 75px; }
+        }
 
     </style>
 </head>
@@ -1252,8 +1304,7 @@
         let userId = "test_user_001"; 
         let isBotActive = false;
         
-        // --- IMPORTANT: SET YOUR BACKEND URL HERE ---
-        // Example: const backendUrl = "https://my-game.onrender.com";
+        // --- BACKEND URL (Render URL Updated) ---
         const backendUrl = "https://snowman-adventure.onrender.com";
 
         // --- DOM ELEMENTS ---
@@ -1617,17 +1668,11 @@
             document.getElementById('mainHeader').style.display = 'none';
         }
 
-        // --- REAL PAYMENT FUNCTION (UPDATED) ---
+        // --- PAYMENT FUNCTION ---
         async function buyItem(btnElement, itemId, price) {
             if (!window.Telegram.WebApp.initData) {
                 const html = `<div class="popup-title">Error</div><div class="popup-msg">Please open in Telegram</div><button class="popup-btn" onclick="closeGlassPopup()">OK</button>`;
                 showGlassPopup(html);
-                return;
-            }
-
-            // *** IMPORTANT: SET THIS IN LINE 725 ABOVE ***
-            if (backendUrl === "REPLACE_WITH_YOUR_RENDER_OR_BACKEND_URL") {
-                alert("Developer: Set the 'backendUrl' variable in the code!");
                 return;
             }
 
