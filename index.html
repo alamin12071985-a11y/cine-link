@@ -61,67 +61,76 @@
             background-attachment: fixed;
         }
 
-        /* --- LOADING SCREEN --- */
+        /* --- UPDATED LOADING SCREEN --- */
         #loading-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at center, #163450 0%, #030a13 100%);
             z-index: 9999;
+            
+            /* Background Image Setup */
+            background-image: url('loading screen.png');
+            background-size: cover;
+            background-position: center bottom; /* Positioned to show footer area */
+            background-repeat: no-repeat;
+            
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between;
-            padding: 40px 20px;
+            justify-content: flex-end; /* Push content to bottom */
+            padding-bottom: 15vw; /* Bottom spacing */
             transition: opacity 0.5s ease;
         }
 
-        .loading-title {
-            font-size: 3rem;
-            font-weight: 900;
-            color: var(--accent-cyan);
-            text-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
-            letter-spacing: 2px;
-            margin-top: 20px;
-            text-align: center;
+        /* --- NEW PROGRESS BAR STYLES (Converted to VW) --- */
+        .loading-container {
+            width: 80vw;  /* Mobile width responsive */
+            height: 12vw; /* Height relative to viewport width */
+            background-color: #050f1a; /* Dark background */
+            border: 1vw solid var(--accent-cyan); /* Cyan Border matching theme */
+            border-radius: 6vw; /* Pill shape */
+            position: relative;
+            padding: 0.8vw; /* Spacing between border and bar */
+            box-shadow: 0 1.5vw 3vw rgba(0,0,0,0.6); /* Drop shadow */
         }
 
-        .loading-char {
-            width: 280px;
-            height: auto;
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
-            animation: bounce 2s infinite ease-in-out;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-
-        .loading-bar-container {
-            width: 80%;
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .progress-track {
-            width: 100%;
-            height: 12px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 10px;
-            overflow: hidden;
-            border: 1px solid rgba(0, 229, 255, 0.3);
-        }
-
-        .progress-fill {
+        .progress-bar {
+            width: 0%; /* Initial width, controlled by JS */
             height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #00E5FF, #6A5ACD);
-            border-radius: 10px;
-            transition: width 0.3s linear;
-            box-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+            /* Gradient matching your App Theme */
+            background: linear-gradient(to bottom, #00E5FF 0%, #6A5ACD 100%);
+            border-radius: 5vw;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end; /* Text on the right */
+            box-shadow: inset 0 0.5vw 0.5vw rgba(255,255,255,0.4); /* Inner highlight */
+            transition: width 0.1s linear;
+        }
+
+        /* Glossy Effect */
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 1.5%;
+            right: 1.5%;
+            height: 40%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0));
+            border-radius: 5vw;
+        }
+
+        .percentage {
+            color: white;
+            font-weight: 900;
+            font-size: 5.5vw; /* Responsive font size */
+            margin-right: 4vw;
+            text-shadow: 0.5vw 0.5vw 0px #000000; /* Hard shadow */
+            font-style: italic;
+            z-index: 2;
+            font-family: sans-serif;
         }
 
         /* --- APP CONTAINER --- */
@@ -826,18 +835,13 @@
         </div>
     </div>
 
-    <!-- LOADING SCREEN -->
+    <!-- UPDATED LOADING SCREEN -->
     <div id="loading-screen">
-        <div class="loading-title">WELCOME</div>
-        <img src="https://alamin12071985-a11y.github.io/cine-link/snowman.png" class="loading-char" alt="Loading">
-        
-        <div class="loading-bar-container">
-            <div class="loading-text">Get ready... Your adventure is about to begin!</div>
-            <div style="font-size: 1.2rem; font-weight: 800; color: var(--accent-cyan); margin-bottom:5px;" id="loadingPercent">0%</div>
-            <div class="progress-track">
-                <div class="progress-fill" id="loadingFill"></div>
+        <!-- New Progress Bar Design -->
+        <div class="loading-container">
+            <div class="progress-bar" id="loadingFill">
+                <span class="percentage" id="loadingPercent">0%</span>
             </div>
-            <div style="margin-top:10px; font-size:0.8rem; color:var(--text-light); opacity:0.6; letter-spacing:1px;">LOADING...</div>
         </div>
     </div>
 
