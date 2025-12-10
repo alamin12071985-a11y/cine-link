@@ -254,13 +254,13 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- MENU (UPDATED MARGIN: 3px Up) --- */
+        /* --- MENU --- */
         .daily-menu-container {
             display: flex;
             justify-content: space-between;
             gap: 12px;
             margin-bottom: 15px;
-            margin-top: 7px; /* Updated: Was 10px */
+            margin-top: 7px;
             position: relative;
             z-index: 5;
         }
@@ -396,10 +396,9 @@
 
         .character-img:active { transform: scale(0.96) rotate(-2deg); }
         
-        /* START MINING IMG UPDATED (Moved Up 15px) */
         .start-mining-img {
             position: absolute;
-            bottom: -5px; /* Updated: Was -20px */
+            bottom: -5px;
             left: 50%;
             transform: translateX(-50%);
             width: 230px; 
@@ -575,7 +574,6 @@
             line-height: 1.4;
         }
 
-        /* NEW STORE BADGES */
         .badge {
             font-size: 0.6rem;
             padding: 2px 6px;
@@ -687,9 +685,8 @@
             color: var(--accent-cyan);
         }
 
-        /* UPDATED EXCHANGE BUTTON (Full Width) */
         .exchange-btn {
-            width: 100%; /* Full Width */
+            width: 100%; 
             max-width: none;
             margin-top: 15px;
             background: #000;
@@ -781,7 +778,6 @@
         }
         .popup-btn:active { transform: scale(0.98); }
 
-        /* Custom for marketplace popup */
         .hourglass-icon {
             font-size: 3rem;
             color: #FFD700;
@@ -898,10 +894,10 @@
                     <!-- Character Image -->
                     <img src="https://alamin12071985-a11y.github.io/cine-link/snowman.png" class="character-img" id="clickerBtn" alt="Snowman">
                     
-                    <!-- Start Mining Image (Logic: Click -> Shop or Active) -->
+                    <!-- Start Mining Image -->
                     <img src="https://alamin12071985-a11y.github.io/cine-link/start%20mining.png" class="start-mining-img" onclick="handleStartMining()" alt="Start Mining">
                     
-                    <!-- Bottom Controls (Trigger Boost Page) -->
+                    <!-- Bottom Controls -->
                     <div class="bottom-controls">
                         <div class="control-item" onclick="openBoostPage()">
                             <img src="https://alamin12071985-a11y.github.io/cine-link/energy.png" alt="Energy">
@@ -968,7 +964,6 @@
                     </div>
                     <div class="boost-desc">Instantly restores your energy bar.</div>
                     
-                    <!-- 3 Days -->
                     <div class="boost-item">
                         <div class="boost-info">
                             <span class="boost-name">3 Days</span>
@@ -978,7 +973,6 @@
                             <span class="boost-price-val">50</span>
                         </div>
                     </div>
-                    <!-- 7 Days -->
                     <div class="boost-item">
                         <div class="boost-info">
                             <span class="boost-name">7 Days</span>
@@ -989,7 +983,6 @@
                             <span class="boost-price-val">100</span>
                         </div>
                     </div>
-                    <!-- 30 Days -->
                     <div class="boost-item">
                         <div class="boost-info">
                             <span class="boost-name">30 Days</span>
@@ -1009,7 +1002,6 @@
                     </div>
                     <div class="boost-desc">Boosts the power of every tap.</div>
                     
-                    <!-- 3 Days -->
                     <div class="boost-item">
                         <div class="boost-info">
                             <span class="boost-name">3 Days</span>
@@ -1019,7 +1011,6 @@
                             <span class="boost-price-val">70</span>
                         </div>
                     </div>
-                    <!-- 7 Days -->
                     <div class="boost-item">
                         <div class="boost-info">
                             <span class="boost-name">7 Days</span>
@@ -1029,7 +1020,6 @@
                             <span class="boost-price-val">150</span>
                         </div>
                     </div>
-                    <!-- 30 Days -->
                     <div class="boost-item">
                         <div class="boost-info">
                             <span class="boost-name">30 Days</span>
@@ -1119,7 +1109,6 @@
                     </div>
                     <div class="boost-desc">Automatically taps while you are offline.</div>
                     
-                    <!-- 3 Days -->
                     <div class="boost-item">
                         <div class="boost-info">
                             <span class="boost-name">3 Days</span>
@@ -1129,7 +1118,6 @@
                             <span class="boost-price-val">100</span>
                         </div>
                     </div>
-                    <!-- 7 Days -->
                     <div class="boost-item">
                         <div class="boost-info">
                             <span class="boost-name">7 Days</span>
@@ -1139,7 +1127,6 @@
                             <span class="boost-price-val">250</span>
                         </div>
                     </div>
-                    <!-- 30 Days -->
                     <div class="boost-item">
                         <div class="boost-info">
                             <span class="boost-name">30 Days</span>
@@ -1186,7 +1173,6 @@
                     
                     <div id="airdropMsg" style="margin-top:10px; opacity:0; transition:opacity 0.5s;"></div>
 
-                    <!-- UPDATED: Full Width Exchange Button -->
                     <div class="exchange-btn" onclick="openExchangePopup()">
                         <img src="https://alamin12071985-a11y.github.io/cine-link/exchange.png" class="exchange-icon" alt="Swap">
                         <div class="exchange-text">
@@ -1264,8 +1250,12 @@
         let maxEnergy = 500;
         let level = 1;
         let userId = "test_user_001"; 
-        let isBotActive = false; // Flag to track if bot is purchased
+        let isBotActive = false;
         
+        // --- IMPORTANT: SET YOUR BACKEND URL HERE ---
+        // Example: const backendUrl = "https://my-game.onrender.com";
+        const backendUrl = "https://example-3-4e8t.onrender.com/";
+
         // --- DOM ELEMENTS ---
         const balanceDisplay = document.getElementById('displayBalance');
         const energyDisplay = document.getElementById('energyDisplay');
@@ -1367,6 +1357,7 @@
                 energy: energy,
                 tapCount: tapCount,
                 level: level,
+                isBotActive: isBotActive,
                 lastActive: Date.now()
             });
         }
@@ -1380,6 +1371,7 @@
                     energy = data.energy || 500;
                     tapCount = data.tapCount || 0;
                     level = data.level || 1;
+                    isBotActive = data.isBotActive || false;
                     updateUI();
                     checkDailyRewardStatus();
                     fetchTasksFromFirebase();
@@ -1415,8 +1407,6 @@
             }, 600); 
         }
 
-        // --- LEVEL LOGIC WITH FORMULA ---
-        // Formula: 4000 + (CurrentLevel - 1) * 8000
         function updateUI() {
             balanceDisplay.innerText = Math.floor(balance).toLocaleString();
             energyDisplay.innerText = Math.floor(energy);
@@ -1425,7 +1415,6 @@
             let nextLevelThreshold = 4000 + ((level - 1) * 8000);
             let prevLevelThreshold = level === 1 ? 0 : (4000 + ((level - 2) * 8000));
             
-            // Progress Calculation
             let progress = balance - prevLevelThreshold;
             let range = nextLevelThreshold - prevLevelThreshold;
             let percentage = (progress / range) * 100;
@@ -1441,7 +1430,6 @@
             headerLevelBar.style.width = `${Math.min(percentage, 100)}%`;
         }
 
-        // --- POPUP SYSTEM ---
         function showGlassPopup(contentHTML) {
             const popup = document.getElementById('glassPopup');
             const content = document.getElementById('popupContent');
@@ -1470,7 +1458,6 @@
             showGlassPopup(html);
         }
 
-        // UPDATED EXCHANGE POPUP TEXT
         function openExchangePopup() {
             const html = `
                 <div style="margin-top:20px;">
@@ -1485,10 +1472,8 @@
             showGlassPopup(html);
         }
 
-        // UPDATED: Handle Start Mining Click
         function handleStartMining() {
             if (isBotActive) {
-                // If bot is already bought
                 const html = `
                     <div class="popup-title">Bot Active</div>
                     <div class="popup-msg">Your Auto Bot is currently mining coins for you!</div>
@@ -1496,12 +1481,10 @@
                 `;
                 showGlassPopup(html);
             } else {
-                // If bot not bought, go to shop
                 openBoostPage();
             }
         }
 
-        // --- DAILY REWARD ---
         function checkDailyRewardStatus() {
             const lastReward = localStorage.getItem('lastRewardDate');
             const today = new Date().toDateString();
@@ -1540,7 +1523,6 @@
             showGlassPopup(html);
         }
 
-        // --- SPIN WHEEL ---
         function goToSpinPage() {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.getElementById('spinPage').classList.add('active');
@@ -1579,7 +1561,6 @@
             }, 10000); 
         }
 
-        // --- TAP LOGIC ---
         clickerBtn.addEventListener('touchstart', handleTap, {passive: false});
         clickerBtn.addEventListener('click', handleTap);
 
@@ -1617,7 +1598,6 @@
             setTimeout(() => floatEl.remove(), 800);
         }
 
-        // --- TAB SWITCHING ---
         function switchTab(tabId, navElement) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
@@ -1637,7 +1617,7 @@
             document.getElementById('mainHeader').style.display = 'none';
         }
 
-        // --- BUY ITEM (Simulated with Invoice Logic) ---
+        // --- REAL PAYMENT FUNCTION (UPDATED) ---
         async function buyItem(btnElement, itemId, price) {
             if (!window.Telegram.WebApp.initData) {
                 const html = `<div class="popup-title">Error</div><div class="popup-msg">Please open in Telegram</div><button class="popup-btn" onclick="closeGlassPopup()">OK</button>`;
@@ -1645,46 +1625,80 @@
                 return;
             }
 
-            const backendUrl = "https://example-3-4e8t.onrender.com"; 
+            // *** IMPORTANT: SET THIS IN LINE 725 ABOVE ***
+            if (backendUrl === "REPLACE_WITH_YOUR_RENDER_OR_BACKEND_URL") {
+                alert("Developer: Set the 'backendUrl' variable in the code!");
+                return;
+            }
 
             const originalContent = btnElement.innerHTML;
             btnElement.innerHTML = `<div class="loader-ring"></div>`;
             btnElement.style.pointerEvents = "none";
 
+            let itemName = "Premium Item";
+            let itemDesc = "Purchase from Snowman Store";
+            
+            if(itemId.includes('vip')) itemName = "VIP Membership";
+            else if(itemId.includes('energy')) itemName = "Energy Refill";
+            else if(itemId.includes('multitap')) itemName = "Multitap Boost";
+            else if(itemId.includes('bot')) itemName = "Auto Bot";
+            else if(itemId.includes('loot')) itemName = "Loot Box";
+
             try {
-                // Simulated fetch for demo purposes
-                // In production, uncomment the fetch call below
-                /*
+                // Request invoice link from backend
                 const response = await fetch(`${backendUrl}/generate-invoice`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ user_id: userId, item_id: itemId, amount: price })
+                    body: JSON.stringify({ 
+                        user_id: userId, 
+                        item_id: itemId, 
+                        amount: price,
+                        title: itemName,
+                        description: itemDesc
+                    })
                 });
-                const data = await response.json();
-                */
-               
-               // For now, let's simulate a delay and success
-               setTimeout(() => {
-                   // If item is a bot, activate it
-                   if(itemId.startsWith('bot')) {
-                       isBotActive = true;
-                   }
 
-                   const html = `<div class="popup-title">Success!</div><div class="popup-msg">Item activated successfully.</div><button class="popup-btn" onclick="closeGlassPopup()">OK</button>`;
-                   showGlassPopup(html);
-                   
-                   btnElement.innerHTML = originalContent;
-                   btnElement.style.pointerEvents = "auto";
-               }, 1500);
+                if (!response.ok) throw new Error("Invoice generation failed");
+                
+                const data = await response.json();
+                const invoiceLink = data.invoice_link;
+
+                // Open Telegram Invoice
+                Telegram.WebApp.openInvoice(invoiceLink, function(status) {
+                    if (status === 'paid') {
+                        // Payment Successful
+                        if(itemId.startsWith('bot')) isBotActive = true;
+                        if(itemId.startsWith('energy')) energy = maxEnergy;
+
+                        saveUserData();
+                        updateUI();
+
+                        const html = `
+                            <div class="popup-title">Purchase Successful!</div>
+                            <div class="popup-msg">You have successfully purchased ${itemName}.</div>
+                            <button class="popup-btn" onclick="closeGlassPopup()">Awesome</button>
+                        `;
+                        showGlassPopup(html);
+                    } else if (status === 'cancelled') {
+                        const html = `<div class="popup-title">Cancelled</div><div class="popup-msg">Payment was cancelled.</div><button class="popup-btn" onclick="closeGlassPopup()">Close</button>`;
+                        showGlassPopup(html);
+                    } else {
+                        const html = `<div class="popup-title">Failed</div><div class="popup-msg">Transaction failed.</div><button class="popup-btn" onclick="closeGlassPopup()">Close</button>`;
+                        showGlassPopup(html);
+                    }
+                    btnElement.innerHTML = originalContent;
+                    btnElement.style.pointerEvents = "auto";
+                });
 
             } catch (error) {
+                console.error(error);
                 btnElement.innerHTML = originalContent;
                 btnElement.style.pointerEvents = "auto";
-                alert("Connection failed.");
+                const html = `<div class="popup-title">Connection Error</div><div class="popup-msg">Could not contact server.</div><button class="popup-btn" onclick="closeGlassPopup()">Close</button>`;
+                showGlassPopup(html);
             }
         }
 
-        // --- FIREBASE TASKS ---
         function fetchTasksFromFirebase() {
             const list = document.getElementById('taskList');
             db.ref('tasks').on('value', (snapshot) => {
