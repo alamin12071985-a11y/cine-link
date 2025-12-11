@@ -46,10 +46,13 @@
             overflow: hidden;
             display: flex;
             justify-content: center;
+
+            /* Default Dark Background (For other tabs) */
             background-color: #050f1a; 
             transition: background 0.3s ease;
         }
 
+        /* --- HOME PAGE BACKGROUND CLASS --- */
         body.home-active {
             background-image: url('https://alamin12071985-a11y.github.io/cine-link/background.png');
             background-size: cover;
@@ -58,56 +61,67 @@
             background-attachment: fixed;
         }
 
-        /* --- UPDATED LOADING SCREEN (THINNER BAR) --- */
+        /* --- UPDATED LOADING SCREEN (SLIM BAR) --- */
         #loading-screen {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: 9999;
             background-image: url('loading screen.png');
             background-size: cover;
-            background-position: center bottom;
+            background-position: center bottom; 
             background-repeat: no-repeat;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-end;
-            padding-bottom: 15vw;
+            justify-content: flex-end; 
+            padding-bottom: 15vw; 
             transition: opacity 0.5s ease;
         }
 
+        /* --- NEW SLIM PROGRESS BAR STYLES --- */
         .loading-container {
-            width: 80vw;
-            height: 12px; /* অনেক চিকন করা হয়েছে */
-            background-color: #050f1a;
-            border: 1px solid var(--accent-cyan);
-            border-radius: 10px;
+            width: 70vw;  
+            height: 3vw; /* Slimmer height */
+            max-height: 12px; /* Fixed max height for desktop */
+            background-color: #050f1a; 
+            border: 1px solid var(--accent-cyan); 
+            border-radius: 10px; 
             position: relative;
-            padding: 2px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.6);
+            padding: 2px; 
+            box-shadow: 0 0 10px rgba(0,0,0,0.6); 
         }
 
         .progress-bar {
-            width: 0%;
+            width: 0%; 
             height: 100%;
-            background: linear-gradient(to right, #00E5FF, #6A5ACD);
+            background: linear-gradient(to bottom, #00E5FF 0%, #6A5ACD 100%);
             border-radius: 8px;
             position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end; 
+            box-shadow: inset 0 0.5vw 0.5vw rgba(255,255,255,0.4); 
             transition: width 0.1s linear;
         }
 
         .percentage {
-            position: absolute;
-            top: -25px;
-            right: 0;
             color: white;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-shadow: 1px 1px 0px #000;
+            font-weight: 900;
+            font-size: 4vw; /* Slightly smaller text */
+            margin-bottom: 2vw; /* Text moved above bar */
+            text-shadow: 1px 1px 0px #000000; 
+            font-style: italic;
+            z-index: 2;
+            font-family: sans-serif;
         }
 
         /* --- APP CONTAINER --- */
         .app-container {
             width: 100%;
+            max-width: 100%; 
             height: 100%;
             background: rgba(0, 0, 0, 0.2); 
             position: relative;
@@ -119,7 +133,7 @@
 
         /* --- HEADER --- */
         .header-dashboard {
-            padding: 10px 15px;
+            padding: 15px 15px 5px 15px;
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
@@ -131,429 +145,845 @@
             background: var(--glass-bg);
             backdrop-filter: blur(5px);
             border: 1px solid rgba(0, 229, 255, 0.2);
-            border-radius: 12px; 
-            padding: 5px 10px;
+            border-radius: 12px 30px 12px 30px; 
+            padding: 8px 12px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-width: 80px;
+            width: 90px;
         }
-        .stat-label { font-size: 0.65rem; color: var(--accent-cyan); opacity: 0.8; }
-        .stat-value { font-size: 0.85rem; font-weight: 700; display: flex; align-items: center; gap: 4px; }
-        .stat-value img { width: 16px; }
+
+        .stat-label { font-size: 0.7rem; color: var(--accent-cyan); opacity: 0.8; }
+        .stat-value { font-size: 0.9rem; font-weight: 700; display: flex; align-items: center; gap: 4px; }
+        .stat-value img { width: 18px; }
 
         .profile-section {
             flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 0 5px;
+            margin: 0 10px;
         }
 
         .profile-top {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
             background: rgba(0, 0, 0, 0.3);
-            padding: 3px 12px 3px 3px;
+            padding: 4px 15px 4px 4px;
             border-radius: 30px;
             border: 1px solid rgba(0, 229, 255, 0.1);
-            margin-bottom: 3px;
+            margin-bottom: 5px;
         }
-        .user-avatar { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--accent-cyan); object-fit: cover; }
-        .user-name { font-weight: 700; font-size: 0.85rem; max-width: 90px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 
-        .header-level-box { width: 100%; max-width: 120px; }
-        .lvl-text { font-size: 0.65rem; color: rgba(255,255,255,0.7); display: flex; justify-content: space-between; margin-bottom: 2px; }
-        .header-progress-bg { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; border: 1px solid rgba(0,229,255,0.2); }
-        .header-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #FF8C00, #FFD700); }
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-cyan);
+            object-fit: cover;
+            background: #fff;
+        }
+
+        .user-name {
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            max-width: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .header-level-box {
+            width: 100%;
+            max-width: 140px;
+            text-align: center;
+        }
+        
+        .lvl-text {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 2px;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 4px;
+        }
+
+        .header-progress-bg {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+        }
+
+        .header-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #FF8C00, #FFD700); 
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            transition: width 0.3s ease;
+        }
 
         .settings-btn {
             background: var(--glass-bg);
-            border-radius: 50%; width: 35px; height: 35px;
-            display: flex; justify-content: center; align-items: center;
+            backdrop-filter: blur(5px);
             border: 1px solid rgba(0, 229, 255, 0.2);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--accent-cyan);
+            font-size: 1.1rem;
+            overflow: hidden;
         }
-        .settings-btn img { width: 20px; }
+        .settings-btn img { width: 24px; height: 24px; object-fit: contain; }
 
-        /* --- CONTENT AREA & RESPONSIVENESS --- */
+        /* --- CONTENT AREA --- */
         .content-area {
             flex: 1;
             overflow-y: auto;
-            padding: 0 15px 90px 15px; 
+            padding: 0 20px 110px 20px; 
             position: relative;
         }
-        .tab-content { display: none; flex-direction: column; animation: fadeIn 0.4s ease; height: 100%; }
+
+        .tab-content {
+            display: none;
+            flex-direction: column;
+            animation: fadeIn 0.4s ease;
+            height: 100%;
+        }
+
         .tab-content.active { display: flex; }
+
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* --- MENU --- */
         .daily-menu-container {
             display: flex;
             justify-content: space-between;
-            gap: 10px;
-            margin-top: 5px;
+            gap: 12px;
+            margin-bottom: 15px;
+            margin-top: 7px;
             position: relative;
             z-index: 5;
         }
+
         .daily-item {
             flex: 1;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(5, 15, 26, 0.6) 100%);
-            border: 1px solid rgba(0, 229, 255, 0.2);
-            border-radius: 12px;
-            padding: 8px 5px;
+            position: relative;
+            height: auto;
+            aspect-ratio: 1.2/1;
+            min-height: 80px;
+            max-height: 100px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-end;
             cursor: pointer;
             transition: transform 0.2s;
-            min-height: 75px;
         }
-        .daily-item:active { transform: scale(0.96); }
-        .daily-item img { width: 35px; height: 35px; margin-bottom: 5px; filter: drop-shadow(0 0 5px rgba(0,229,255,0.4)); }
-        .daily-item span { font-size: 0.65rem; font-weight: 600; text-align: center; line-height: 1.1; }
-        .daily-sub-text { font-size: 0.6rem; color: var(--accent-cyan); font-weight: 700; margin-top: 2px; }
 
-        /* --- GAME AREA --- */
+        .daily-item:active { transform: scale(0.96); }
+
+        .daily-item::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(5, 15, 26, 0.5) 100%);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            z-index: 1;
+        }
+
+        .daily-item img {
+            width: 60%;
+            height: auto;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 0;
+            filter: drop-shadow(0 5px 15px rgba(0, 229, 255, 0.3));
+        }
+
+        .daily-item span {
+            position: relative;
+            z-index: 2;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            margin-bottom: 5px;
+            line-height: 1.1;
+        }
+
+        .daily-sub-text {
+            position: relative;
+            z-index: 3;
+            font-size: 0.65rem;
+            color: var(--accent-cyan);
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        /* --- GAME AREA (FIXED RESPONSIVENESS) --- */
         .game-area-wrapper {
-            flex: 1;
+            width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-evenly;
-            padding: 10px 0;
             position: relative;
             z-index: 10;
+            padding-bottom: 20px;
+            justify-content: space-evenly; 
         }
 
         .main-balance {
-            font-size: clamp(2rem, 6vw, 2.8rem);
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
             font-weight: 800;
             display: flex;
             align-items: center;
             gap: 10px;
-            text-shadow: 0 0 20px rgba(0,229,255,0.3);
+            z-index: 5;
+            margin-top: 1vh;
+            margin-bottom: 2vh;
         }
-        .main-balance img { width: clamp(35px, 8vw, 50px); }
 
-        /* CHARACTER IMAGE - RESPONSIVE FIX */
-        .character-img {
-            width: auto;
-            height: clamp(250px, 45vh, 400px); /* Responsive height */
-            max-width: 90vw;
-            cursor: pointer;
-            z-index: 10;
-            transition: transform 0.1s;
-            filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.2));
-            object-fit: contain;
+        .main-balance img {
+            width: clamp(35px, 10vw, 45px); 
+            filter: drop-shadow(0 0 10px var(--accent-cyan));
         }
+
+        /* --- CHARACTER (UPDATED FOR DYNAMIC OUTFITS) --- */
+        .character-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-height: 55vh; /* Limit height so it doesn't break layout */
+            position: relative;
+        }
+
+        .character-img {
+            height: 100%;
+            width: auto;
+            max-width: 90%;
+            object-fit: contain; /* Prevents stretching */
+            cursor: pointer;
+            z-index: 10; 
+            transition: transform 0.1s;
+            filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.1));
+        }
+
         .character-img:active { transform: scale(0.96) rotate(-2deg); }
         
         .start-mining-img {
-            width: clamp(140px, 40vw, 200px);
-            cursor: pointer;
-            animation: pulse 2s infinite;
-            margin-top: -30px;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 55vw; 
+            max-width: 220px;
             z-index: 25;
+            cursor: pointer;
+            filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.5));
+            animation: pulse 2s infinite;
         }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
+        @keyframes pulse {
+            0% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.05); }
+            100% { transform: translateX(-50%) scale(1); }
+        }
+
+        /* --- BOTTOM CONTROLS --- */
         .bottom-controls {
             display: flex;
             justify-content: space-between;
             width: 100%;
-            padding: 0 10px;
-            margin-top: 10px;
+            padding: 10px 10px;
+            z-index: 30; 
+            position: relative;
+            margin-top: auto;
         }
+
         .control-item {
-            display: flex; align-items: center; gap: 6px;
-            font-size: 0.8rem; color: rgba(255,255,255,0.8);
-            background: rgba(0,0,0,0.4); padding: 5px 12px;
-            border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+            background: rgba(0,0,0,0.5); 
+            padding: 5px 15px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+            transition: 0.2s;
         }
-        .control-item img { width: 18px; }
+        .control-item:active { transform: scale(0.95); background: rgba(0, 229, 255, 0.1); }
+        .control-item img { width: 22px; }
+
+        .floating-score {
+            position: absolute;
+            color: var(--accent-cyan);
+            font-weight: 800;
+            font-size: 32px;
+            pointer-events: none;
+            animation: floatUp 0.8s ease-out forwards;
+            z-index: 100;
+            text-shadow: 0 0 10px var(--accent-violet);
+        }
+
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-80px) scale(1.2); }
+        }
 
         /* --- NAV BAR --- */
         .nav-bar {
-            position: absolute; bottom: 0; left: 0; right: 0; height: 80px;
-            background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.95) 100%);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 85px;
+            background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.9) 100%);
             border-top: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex; justify-content: space-around; align-items: center;
-            z-index: 100; padding-bottom: 10px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 100;
+            padding-bottom: 10px;
         }
-        .nav-item {
-            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
-            width: 60px; height: 55px; border-radius: 12px; color: rgba(255, 255, 255, 0.4);
-        }
-        .nav-item img { width: 24px; height: 24px; opacity: 0.5; filter: grayscale(100%); }
-        .nav-item span { font-size: 0.65rem; font-weight: 500; }
-        .nav-item.active { color: var(--accent-cyan); background: rgba(0, 229, 255, 0.05); }
-        .nav-item.active img { opacity: 1; filter: grayscale(0%); transform: scale(1.1); }
 
-        /* --- STORE & OUTFITS --- */
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            width: 65px;
+            height: 60px;
+            border-radius: 14px;
+            color: rgba(255, 255, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .nav-item img {
+            width: 26px;
+            height: 26px;
+            opacity: 0.5;
+            transition: all 0.3s;
+            filter: grayscale(100%);
+        }
+
+        .nav-item span { font-size: 0.7rem; font-weight: 500; }
+
+        .nav-item.active {
+            color: var(--accent-cyan);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(0, 229, 255, 0.05) 100%);
+            backdrop-filter: blur(5px);
+            border-top: 1px solid rgba(0, 229, 255, 0.5);
+            box-shadow: 0 -10px 20px rgba(0, 229, 255, 0.15) inset;
+        }
+
+        .nav-item.active img {
+            opacity: 1;
+            filter: grayscale(0%) drop-shadow(0 0 8px var(--accent-cyan));
+            transform: scale(1.1);
+        }
+
         .glass-panel-full {
             background: var(--glass-bg);
             border: var(--glass-border);
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 15px;
+            margin-top: 20px;
+        }
+        
+        .earn-hero-img {
+            width: 160px; 
+            margin-bottom: 10px; 
+            border-radius: 10px;
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+        }
+
+        .task-card {
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 16px;
-            padding: 15px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid rgba(255, 255, 255, 0.05);
             margin-bottom: 12px;
         }
-        .boost-section-title { font-size: 1rem; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+
+        .task-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(0, 229, 255, 0.1);
+            color: var(--accent-cyan);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+        }
+
+        /* --- UPDATED STORE STYLES --- */
+        .boost-header {
+            text-align: center;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+        .section-title {
+            color: #FFD700;
+            font-weight: 700;
+            margin: 15px 0 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 5px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
         .boost-item {
             background: rgba(30, 35, 50, 0.6);
-            border-radius: 12px;
-            padding: 10px;
+            border-radius: 16px;
+            padding: 12px 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .boost-info { display: flex; flex-direction: column; }
-        .boost-name { font-weight: 600; font-size: 0.85rem; color: #fff; }
-        .boost-desc-small { font-size: 0.65rem; color: rgba(255,255,255,0.5); }
         
-        .boost-price-btn {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 6px 12px;
-            border-radius: 15px;
-            display: flex; align-items: center; gap: 4px;
-            cursor: pointer;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            min-width: 70px;
-            justify-content: center;
-        }
-        .boost-price-val { font-weight: 700; font-size: 0.8rem; color: #FFD700; }
-        .btn-activate { background: rgba(0, 230, 118, 0.2); border-color: #00E676; }
-        .btn-activate .boost-price-val { color: #00E676; }
-        
-        .outfit-thumb {
-            width: 40px; height: 40px; border-radius: 8px; object-fit: cover; margin-right: 10px;
-            border: 1px solid rgba(255,255,255,0.2); background: #000;
+        .boost-thumb {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-right: 15px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* --- LOTTERY MODAL --- */
-        .lottery-modal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); z-index: 2000;
-            display: none; align-items: center; justify-content: center;
-            backdrop-filter: blur(10px);
+        .boost-info { display: flex; flex-direction: column; flex: 1; }
+        .boost-name { font-weight: 600; font-size: 0.95rem; color: #fff; }
+        .boost-desc-small { font-size: 0.7rem; color: rgba(255,255,255,0.5); margin-top: 2px; }
+
+        .boost-price-btn {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            color: #FFD700;
+            font-weight: 700;
+            font-size: 0.9rem;
+            min-width: 80px;
+            justify-content: center;
         }
-        .lottery-modal.active { display: flex; }
+        .boost-price-btn:active { transform: scale(0.95); background: rgba(255, 215, 0, 0.1); }
+        .boost-price-btn img { width: 14px; }
+
+        .active-btn {
+            background: #00E676;
+            color: #000;
+            border-color: #00E676;
+        }
+        .locked-btn {
+            background: rgba(255,255,255,0.05);
+            color: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.1);
+            pointer-events: none;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            z-index: 50;
+        }
+
+        /* --- LOTTERY MODAL (FULL OVERLAY) --- */
+        .lottery-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 5, 16, 0.95); z-index: 5000;
+            display: none; justify-content: center; align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
         .lottery-box {
-            background: linear-gradient(160deg, #6A5ACD 0%, #050f1a 100%);
-            border: 2px solid #00E5FF;
-            border-radius: 20px; padding: 15px; width: 90%; max-width: 350px;
-            box-shadow: 0 0 30px rgba(106, 90, 205, 0.6); position: relative;
+            background: linear-gradient(160deg, #6A5ACD 0%, #7B68EE 40%, #00E5FF 100%);
+            border-radius: 20px; padding: 20px; width: 90%; max-width: 360px;
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.4);
+            border: 2px solid #00E5FF; position: relative;
         }
-        .lottery-close {
-            position: absolute; top: -10px; right: -10px; width: 30px; height: 30px;
-            background: #FF4757; border-radius: 50%; color: white; display: flex;
-            justify-content: center; align-items: center; cursor: pointer; border: 2px solid white;
+
+        .lottery-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+            margin: 20px 0; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 15px;
         }
-        .grid-container {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
-            background: rgba(0,0,0,0.3); padding: 8px; border-radius: 12px; margin-top: 10px;
+
+        .lottery-cell {
+            background: #F0F4FF; border-radius: 10px; height: 80px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            position: relative; transition: all 0.1s;
         }
-        .grid-item {
-            background: #F0F4FF; border-radius: 8px; height: 70px;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            position: relative; border: 2px solid transparent;
+        .lottery-cell img { width: 40px; height: 40px; object-fit: contain; margin-bottom: 5px; }
+        .lottery-cell span { font-size: 0.6rem; color: #333; font-weight: 700; }
+        .lottery-cell.active {
+            background: #fff; box-shadow: 0 0 15px #00E5FF; border: 2px solid #6A5ACD; transform: scale(1.05); z-index: 5;
         }
-        .grid-item.active {
-            box-shadow: 0 0 15px #00E5FF; border: 2px solid #6A5ACD; transform: scale(1.05); z-index: 5;
-        }
-        .grid-item img { width: 35px; height: 35px; object-fit: contain; }
-        .grid-item span { font-size: 0.6rem; color: #333; font-weight: bold; margin-top: 2px; }
+        .lottery-center { background: linear-gradient(135deg, #e1f5fe, #b3e5fc); }
+
         .spin-btn {
-            width: 100%; padding: 12px; margin-top: 15px;
-            background: linear-gradient(180deg, #00E5FF 0%, #0091EA 100%);
-            border: none; border-radius: 25px; color: white; font-weight: 800;
-            text-transform: uppercase; box-shadow: 0 0 10px #00E5FF;
+            width: 100%; padding: 12px; background: linear-gradient(180deg, #00E5FF 0%, #0091EA 100%);
+            border: none; border-radius: 25px; color: white; font-weight: 800; font-size: 1rem;
+            text-transform: uppercase; box-shadow: 0 4px 10px rgba(0,0,0,0.3); cursor: pointer;
+        }
+        .close-lottery {
+            position: absolute; top: -15px; right: 10px; width: 35px; height: 35px;
+            background: #483D8B; border: 2px solid #00E5FF; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; color: white; font-weight: bold; cursor: pointer;
+        }
+
+        /* --- WALLET PAGE STYLES --- */
+        .wallet-title {
+            font-size: 3rem; 
+            line-height: 1.1; 
+            margin-bottom:10px; 
+            font-weight: 800;
+            color: var(--accent-cyan);
+        }
+
+        .exchange-btn {
+            width: 100%; 
+            max-width: none;
+            margin-top: 15px;
+            background: #000;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 40px;
+            padding: 8px 20px 8px 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            text-align: left;
         }
         
-        .floating-score {
-            position: absolute; color: var(--accent-cyan); font-weight: 800; font-size: 24px;
-            animation: floatUp 0.8s ease-out forwards; z-index: 100; pointer-events: none;
-            text-shadow: 0 0 5px black;
+        .exchange-icon {
+            width: 45px;
+            height: 45px;
         }
-        @keyframes floatUp { to { opacity: 0; transform: translateY(-80px); } }
-        
-        /* OTHER BUTTONS */
+
+        .exchange-text h3 {
+            color: white;
+            font-size: 0.95rem;
+            margin-bottom: 2px;
+        }
+        .exchange-text p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.7rem;
+            line-height: 1.2;
+        }
+
+        /* --- GLASS POPUP MODAL --- */
         .popup-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
-            z-index: 2000; display: none; justify-content: center; align-items: center;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .popup-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
         }
         .popup-content {
-            background: linear-gradient(145deg, #163450 0%, #08182b 100%);
-            border: 2px solid var(--accent-cyan); border-radius: 20px; padding: 25px;
-            text-align: center; width: 85%; max-width: 320px;
+            background: linear-gradient(145deg, rgba(22, 52, 80, 0.9) 0%, rgba(8, 24, 43, 0.95) 100%);
+            border: 2px solid var(--accent-cyan);
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            width: 85%;
+            max-width: 350px;
+            transform: scale(0.8);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 30px rgba(0,229,255,0.2);
+        }
+        .popup-overlay.active .popup-content {
+            transform: scale(1);
+        }
+        .popup-badge {
+            width: 70px;
+            margin-bottom: 15px;
+        }
+        .popup-title {
+            font-size: 1.5rem;
+            color: white;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+        .popup-msg {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
         }
         .popup-btn {
-            background: linear-gradient(90deg, #00C853, #64DD17); color: #000; border: none;
-            padding: 10px 0; width: 100%; border-radius: 10px; font-weight: 800; margin-top: 15px;
+            background: linear-gradient(90deg, #00C853, #64DD17);
+            color: #000;
+            border: none;
+            padding: 12px 0;
+            width: 100%;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(100, 221, 23, 0.4);
         }
-        
-        /* TASK CARD */
-        .task-card {
-            background: rgba(255,255,255,0.05); border-radius: 12px; padding: 12px;
-            display: flex; align-items: center; justify-content: space-between;
-            border: 1px solid rgba(255,255,255,0.05); margin-bottom: 10px;
+        .popup-btn:active { transform: scale(0.98); }
+
+        .hourglass-icon {
+            font-size: 3rem;
+            color: #FFD700;
+            margin-bottom: 15px;
+            animation: rotateHourglass 3s infinite ease-in-out;
+        }
+        @keyframes rotateHourglass { 0% { transform: rotate(0); } 50% { transform: rotate(180deg); } 100% { transform: rotate(360deg); } }
+
+        /* --- MEDIA QUERY --- */
+        @media (max-height: 700px) {
+            .header-dashboard { padding: 5px 10px; }
+            .daily-menu-container { margin-bottom: 5px; transform: scale(0.95); transform-origin: top center; }
+            .main-balance { margin-top: 0; margin-bottom: 5px; font-size: 1.8rem; }
+            .character-container { max-height: 45vh; }
+            .start-mining-img {
+                width: 45vw;
+                bottom: 0;
+            }
+            .bottom-controls { padding: 5px; }
+            .nav-bar { height: 75px; }
         }
 
     </style>
 </head>
 <body class="home-active">
 
-    <!-- AUDIO FOR SPIN -->
-    <audio id="spinSound" src="https://github.com/alamin12071985-a11y/cine-link/raw/bfe25795844512b96dc53827a257581c5d424bf4/spinning%20wheel.mp3"></audio>
-
-    <!-- GENERIC POPUP -->
+    <!-- GENERIC GLASS POPUP -->
     <div id="glassPopup" class="popup-overlay">
         <div class="popup-content" id="popupContent">
-            <!-- Injected via JS -->
+            <!-- Content Injected via JS -->
         </div>
     </div>
 
     <!-- LOTTERY MODAL -->
-    <div id="lotteryModal" class="lottery-modal">
+    <div id="lotteryModal" class="lottery-overlay">
         <div class="lottery-box">
-            <div class="lottery-close" onclick="closeLottery()">✕</div>
+            <div class="close-lottery" onclick="closeLotteryModal()">✕</div>
             <h3 style="text-align:center; color:white; margin-bottom:5px;">Lucky Draw</h3>
-            <p style="text-align:center; font-size:0.8rem; color:#ccc;">Grand Prize: Crystal-Tech Suit!</p>
+            <p style="text-align:center; font-size:0.8rem; color:#eee; margin-bottom:10px;">Grand Prize: Crystal-Tech Master Pack</p>
             
-            <div class="grid-container" id="lotteryGrid">
-                <!-- Row 1 -->
-                <div class="grid-item" id="c0"><img src="https://alamin12071985-a11y.github.io/cine-link/coin.png"><span>200 Coin</span></div>
-                <div class="grid-item" id="c1"><img src="https://alamin12071985-a11y.github.io/cine-link/coin.png"><span>500 Coin</span></div>
-                <div class="grid-item" id="c2"><img src="https://alamin12071985-a11y.github.io/cine-link/coin.png"><span>1000 Coin</span></div>
-                <!-- Row 2 -->
-                <div class="grid-item" id="c7"><img src="https://alamin12071985-a11y.github.io/cine-link/coin.png"><span>100 Coin</span></div>
-                <div class="grid-item" id="cCenter" style="background:#b3e5fc;"><img src="https://alamin12071985-a11y.github.io/cine-link/Crystal-Tech Master Pack.png" style="width:45px; height:45px;"><span>JACKPOT</span></div>
-                <div class="grid-item" id="c3"><img src="https://alamin12071985-a11y.github.io/cine-link/coin.png"><span>300 Coin</span></div>
-                <!-- Row 3 -->
-                <div class="grid-item" id="c6"><img src="https://alamin12071985-a11y.github.io/cine-link/coin.png"><span>50 Coin</span></div>
-                <div class="grid-item" id="c5"><img src="https://alamin12071985-a11y.github.io/cine-link/coin.png"><span>150 Coin</span></div>
-                <div class="grid-item" id="c4"><img src="https://alamin12071985-a11y.github.io/cine-link/coin.png"><span>800 Coin</span></div>
+            <div class="lottery-grid" id="lotteryGrid">
+                <!-- Grid Items Generated by JS -->
             </div>
 
-            <button class="spin-btn" id="lotterySpinBtn" onclick="playLottery()">
-                Spin (15 <img src="https://alamin12071985-a11y.github.io/cine-link/star.png" width="12" style="vertical-align:middle;">)
+            <button class="spin-btn" id="lotterySpinBtn" onclick="buyLotterySpin()">
+                SPIN (15 <i class="fas fa-star" style="color:gold"></i>)
             </button>
         </div>
     </div>
 
-    <!-- LOADING SCREEN -->
+    <!-- UPDATED LOADING SCREEN -->
     <div id="loading-screen">
+        <!-- Percentage Text above bar -->
+        <div class="percentage" id="loadingPercent">0%</div>
+        <!-- Slim Progress Bar -->
         <div class="loading-container">
-            <div class="progress-bar" id="loadingFill">
-                <span class="percentage" id="loadingPercent">0%</span>
-            </div>
+            <div class="progress-bar" id="loadingFill"></div>
         </div>
     </div>
 
     <div class="app-container">
         
-        <!-- HEADER -->
+        <!-- HEADER DASHBOARD -->
         <div class="header-dashboard" id="mainHeader">
+            
+            <!-- Left: Profit -->
             <div class="stat-card-left">
-                <div class="stat-value"><img src="https://alamin12071985-a11y.github.io/cine-link/coin.png" alt="C"><span id="miningRateText">+0</span></div>
+                <div class="stat-value">
+                    <img src="https://alamin12071985-a11y.github.io/cine-link/coin.png" alt="C">
+                    <span id="miningRateText">+0</span>
+                </div>
                 <div class="stat-label">/hour</div>
             </div>
+
+            <!-- Center: User Profile & Level -->
             <div class="profile-section">
                 <div class="profile-top">
                     <img id="headerAvatar" src="https://alamin12071985-a11y.github.io/cine-link/snowman.png" class="user-avatar" alt="User">
                     <span id="headerName" class="user-name">User</span>
                 </div>
+                
+                <!-- Level Progress -->
                 <div class="header-level-box">
-                    <div class="lvl-text"><span id="levelNameHeader">Lvl 1</span><span><span id="currentLevelHeader">0</span>/10</span></div>
-                    <div class="header-progress-bg"><div class="header-progress-fill" id="headerLevelBar"></div></div>
+                    <div class="lvl-text">
+                        <span id="levelNameHeader">Lvl 1</span>
+                        <span><span id="currentLevelHeader">0</span>/10</span>
+                    </div>
+                    <div class="header-progress-bg">
+                        <div class="header-progress-fill" id="headerLevelBar"></div>
+                    </div>
                 </div>
             </div>
-            <div class="settings-btn"><img src="https://alamin12071985-a11y.github.io/cine-link/setting.png" alt="Set"></div>
+
+            <!-- Right: Options -->
+            <div class="settings-btn">
+                <img src="https://alamin12071985-a11y.github.io/cine-link/setting.png" alt="Settings">
+            </div>
         </div>
 
         <div class="content-area">
             
             <!-- HOME TAB -->
             <div id="home" class="tab-content active">
+
+                <!-- Top Menu -->
                 <div class="daily-menu-container">
                     <div class="daily-item" onclick="claimDailyReward()">
                         <img src="https://alamin12071985-a11y.github.io/cine-link/reward.png" alt="Reward">
                         <span>Daily Reward</span>
-                        <div id="dailyRewardAmount" class="daily-sub-text">+500</div>
+                        <div id="dailyRewardAmount" class="daily-sub-text">+500 Coin</div>
                     </div>
                     <div class="daily-item" onclick="goToSpinPage()">
                         <img src="https://alamin12071985-a11y.github.io/cine-link/spin.png" alt="Spin">
-                        <span>Spin</span>
-                        <div class="daily-sub-text">Free</div>
+                        <span>Daily Spin</span>
+                        <div class="daily-sub-text">+1 Spin</div>
                     </div>
-                    <!-- NEW LOTTERY BUTTON REPLACING TAPS DONE -->
-                    <div class="daily-item" onclick="openLottery()">
-                        <img src="https://alamin12071985-a11y.github.io/cine-link/lottary.png" alt="Lottary">
+                    <!-- REPLACED TOTAL TAPS WITH LOTTERY -->
+                    <div class="daily-item" onclick="openLotteryModal()">
+                        <img src="https://alamin12071985-a11y.github.io/cine-link/lottary.png" alt="Lottery">
                         <span>Lottery</span>
-                        <div class="daily-sub-text">Win Suit</div>
+                        <div class="daily-sub-text">Win Outfit</div>
                     </div>
                 </div>
 
+                <!-- Game Area -->
                 <div class="game-area-wrapper" id="snowContainer">
+                    
                     <div class="main-balance">
                         <img src="https://alamin12071985-a11y.github.io/cine-link/coin.png" alt="C">
                         <span id="displayBalance">0</span>
                     </div>
                     
-                    <!-- DYNAMIC OUTFIT IMAGE -->
-                    <img src="https://alamin12071985-a11y.github.io/cine-link/snowman.png" class="character-img" id="clickerBtn" alt="Snowman">
+                    <!-- DYNAMIC CHARACTER IMAGE -->
+                    <div class="character-container">
+                        <img src="https://alamin12071985-a11y.github.io/cine-link/Starter%20Winter%20Pack.png" class="character-img" id="clickerBtn" alt="Character">
+                    </div>
                     
-                    <img src="https://alamin12071985-a11y.github.io/cine-link/start%20mining.png" class="start-mining-img" onclick="handleStartMining()" alt="Start">
+                    <!-- Start Mining Image -->
+                    <img src="https://alamin12071985-a11y.github.io/cine-link/start%20mining.png" class="start-mining-img" onclick="openBoostPage()" alt="Start Mining">
                     
+                    <!-- Bottom Controls -->
                     <div class="bottom-controls">
-                        <div class="control-item" onclick="openBoostPage()">
-                            <img src="https://alamin12071985-a11y.github.io/cine-link/energy.png" alt="E"><span id="energyDisplay">500</span>/500
+                        <div class="control-item">
+                            <img src="https://alamin12071985-a11y.github.io/cine-link/energy.png" alt="Energy">
+                            <span id="energyDisplay">500</span><span> / 500</span>
                         </div>
                         <div class="control-item" onclick="openBoostPage()">
-                            <img src="https://alamin12071985-a11y.github.io/cine-link/boost.png" alt="B"><span>Boost</span>
+                            <img src="https://alamin12071985-a11y.github.io/cine-link/boost.png" alt="Boost">
+                            <span>Store</span>
                         </div>
                     </div>
+                    
                 </div>
             </div>
 
-            <!-- BOOST / PREMIUM STORE PAGE -->
+            <!-- BOOST / STORE PAGE -->
             <div id="boostPage" class="tab-content">
-                <div style="padding: 10px 0; display:flex; align-items:center;">
-                    <div onclick="switchTab('home')" style="width:30px; height:30px; background:rgba(255,255,255,0.1); border-radius:50%; display:flex; justify-content:center; align-items:center; margin-right:15px; cursor:pointer;">
-                        <i class="fas fa-arrow-left"></i>
-                    </div>
-                    <h2>Store</h2>
+                <div class="back-btn" onclick="switchTab('home')">
+                    <i class="fas fa-arrow-left"></i>
+                </div>
+                
+                <div class="boost-header">
+                    <h2>Premium Store</h2>
+                    <p style="opacity: 0.7; font-size: 0.9rem;">Unlock Outfits & Boosts</p>
                 </div>
 
-                <!-- OUTFITS SECTION (DYNAMICALLY GENERATED) -->
-                <div class="glass-panel-full" id="outfitStore">
-                    <!-- JS WILL FILL THIS -->
-                </div>
-
-                <!-- EXISTING BOOSTS -->
+                <!-- PREMIUM OUTFITS -->
                 <div class="glass-panel-full">
-                    <div class="boost-section-title">Essential Boosts</div>
+                    <div class="section-title">💎 PREMIUM BUNDLES (Paid)</div>
+                    <div id="premiumOutfitsList">
+                        <!-- Content Generated by JS -->
+                    </div>
+                </div>
+
+                <!-- FREE OUTFITS -->
+                <div class="glass-panel-full">
+                    <div class="section-title">🎁 FREE BUNDLES (Level Based)</div>
+                    <div id="freeOutfitsList">
+                        <!-- Content Generated by JS -->
+                    </div>
+                </div>
+
+                <!-- GAME BOOSTS -->
+                <div class="glass-panel-full">
+                    <div class="section-title">⚡ GAME BOOSTS</div>
                     
                     <div class="boost-item">
-                        <div class="boost-info"><span class="boost-name">Full Energy Refill</span></div>
-                        <div class="boost-price-btn" id="btn_energy_refill" onclick="handleStoreClick(this, 'energy_refill', 50)">
-                            <img src="https://alamin12071985-a11y.github.io/cine-link/star.png"><span class="boost-price-val">50</span>
+                        <img src="https://alamin12071985-a11y.github.io/cine-link/energy.png" class="boost-thumb">
+                        <div class="boost-info">
+                            <span class="boost-name">Full Energy Refill</span>
+                            <div class="boost-desc-small">Restore max energy</div>
+                        </div>
+                        <div class="boost-price-btn" onclick="buyBoost('energy_refill', 50, this)">
+                            <img src="https://alamin12071985-a11y.github.io/cine-link/star.png"> 50
                         </div>
                     </div>
+
                     <div class="boost-item">
-                        <div class="boost-info"><span class="boost-name">Multitap (7 Days)</span></div>
-                        <div class="boost-price-btn" id="btn_multitap_7d" onclick="handleStoreClick(this, 'multitap_7d', 150)">
-                            <img src="https://alamin12071985-a11y.github.io/cine-link/star.png"><span class="boost-price-val">150</span>
+                        <img src="https://alamin12071985-a11y.github.io/cine-link/multitap.png" class="boost-thumb">
+                        <div class="boost-info">
+                            <span class="boost-name">Multitap +1</span>
+                            <div class="boost-desc-small">Increase tap value</div>
                         </div>
-                    </div>
-                    <div class="boost-item">
-                        <div class="boost-info"><span class="boost-name">Auto Bot (30 Days)</span></div>
-                        <div class="boost-price-btn" id="btn_bot_30d" onclick="handleStoreClick(this, 'bot_30d', 700)">
-                            <img src="https://alamin12071985-a11y.github.io/cine-link/star.png"><span class="boost-price-val">700</span>
+                        <div class="boost-price-btn" onclick="buyBoost('multitap_1', 100, this)">
+                            <img src="https://alamin12071985-a11y.github.io/cine-link/star.png"> 100
                         </div>
                     </div>
                 </div>
@@ -562,12 +992,12 @@
             <!-- EARN TAB -->
             <div id="earn" class="tab-content">
                 <div class="glass-panel-full" style="text-align:center;">
-                    <img src="https://alamin12071985-a11y.github.io/cine-link/earn%20page.png" style="width:150px; border-radius:10px; margin-bottom:10px;">
-                    <h2 style="color:var(--accent-cyan); margin-bottom:5px;">Earn Coins</h2>
-                    <p style="font-size:0.8rem; opacity:0.8;">Complete tasks to earn more!</p>
+                    <img src="https://alamin12071985-a11y.github.io/cine-link/earn%20page.png" class="earn-hero-img">
+                    <h2 style="color:var(--accent-cyan); margin-bottom:2px; font-size: 2rem;">Earn Coins</h2>
+                    <p style="opacity:0.8; font-size:0.9rem; margin-bottom: 5px;">Claim Coin Everyday or Finish Task</p>
                 </div>
                 <div class="glass-panel-full" id="taskList">
-                    <div style="text-align:center; padding:10px;">Loading tasks...</div>
+                    <div style="text-align:center; padding:20px;">Loading tasks...</div>
                 </div>
             </div>
 
@@ -576,42 +1006,46 @@
                 <div class="glass-panel-full" style="text-align:center; padding-top: 10px;">
                     <img src="https://alamin12071985-a11y.github.io/cine-link/friends%20page.png" width="240" style="margin-bottom:10px; border-radius:10px;">
                     <h2 style="color:var(--accent-cyan);">Invite Friends</h2>
-                    <p style="font-size:0.9rem;">Invite friends and get bonuses!</p>
-                    <img src="https://alamin12071985-a11y.github.io/cine-link/invite%20friends.png" onclick="inviteFriend()" style="width: 80%; margin-top: 15px; cursor: pointer;">
+                    <p>Invite friends and get bonuses!</p>
+                    
+                    <img src="https://alamin12071985-a11y.github.io/cine-link/invite%20friends.png" onclick="inviteFriend()" style="width: 80%; margin-top: 5px; cursor: pointer;">
                 </div>
             </div>
 
             <!-- WALLET TAB -->
             <div id="wallet" class="tab-content">
-                <div style="text-align:center; padding-top: 20px;">
-                    <h1 style="font-size:3rem; line-height:1.1; font-weight:800; color:var(--accent-cyan);">Get Real<br>Crypto.</h1>
-                    <p style="color:rgba(227, 244, 249, 0.7); font-size: 1rem; margin-top:10px;">Connect your TON wallet.</p>
+                <div style="text-align:center; padding-top: 10px;">
+                    <h1 class="wallet-title">Get Real<br>Crypto.</h1>
+                    <p style="color:rgba(227, 244, 249, 0.7); font-size: 1rem;">Earn and buy and tokens.</p>
                     
                     <img id="connectWalletBtn" src="https://alamin12071985-a11y.github.io/cine-link/connect%20wallet.png" onclick="connectWallet()" style="width:90%; max-width: 250px; margin-top:20px; cursor: pointer;">
                     
-                    <div style="margin-top:20px; background:#000; border:1px solid rgba(255,255,255,0.2); border-radius:40px; padding:10px 20px; display:flex; align-items:center; gap:15px; cursor:pointer;" onclick="openExchangePopup()">
-                        <img src="https://alamin12071985-a11y.github.io/cine-link/exchange.png" style="width:40px;">
-                        <div style="text-align:left;">
-                            <h3 style="font-size:0.9rem; color:white;">Exchange</h3>
-                            <p style="font-size:0.7rem; color:grey;">Coming Soon</p>
+                    <div id="airdropMsg" style="margin-top:10px; opacity:0; transition:opacity 0.5s;"></div>
+
+                    <div class="exchange-btn" onclick="openExchangePopup()">
+                        <img src="https://alamin12071985-a11y.github.io/cine-link/exchange.png" class="exchange-icon" alt="Swap">
+                        <div class="exchange-text">
+                            <h3>Exchange Tokens!</h3>
+                            <p>Convert your tokens into cryptocurrency.</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- SPIN PAGE -->
+            <!-- OLD SPIN PAGE (Kept as placeholder) -->
             <div id="spinPage" class="tab-content">
                 <div class="glass-panel-full" style="text-align:center; position:relative; height: 80vh;">
                     <h2>Lucky Spin</h2>
                     <p>Spin to win coins!</p>
                     
-                    <img src="arrow.png" style="position:absolute; top:4vh; left:50%; transform:translateX(-50%); width:50px; z-index:15;" alt="Arrow">
+                    <img src="arrow.png" class="spin-marker-img" alt="Arrow" style="position:absolute; top:4vh; left:50%; transform:translateX(-50%); width:50px; z-index:15;">
                     
-                    <div style="width:80vw; max-width:300px; height:80vw; max-height:300px; margin:20px auto; transition:transform 4s cubic-bezier(0.1, 0.7, 0.1, 1);" id="wheel">
-                        <img src="spin wheel.png" style="width:100%; height:100%; object-fit:contain;">
+                    <div class="spin-wheel-container" id="wheel" style="width:80vw; height:80vw; max-width:300px; max-height:300px; margin:5vh auto; position:relative;">
+                        <img src="spin wheel.png" class="spin-wheel-img" alt="Wheel" style="width:100%;">
                     </div>
                     
                     <button onclick="doSpin()" style="margin-top:20px; padding:15px 40px; background:var(--accent-cyan); border:none; border-radius:25px; font-weight:bold; font-size:1.2rem;">SPIN</button>
+                    
                     <button onclick="switchTab('home')" style="margin-top:20px; display:block; width:100%; background:transparent; border:1px solid white; color:white; padding:10px; border-radius:10px;">Back to Home</button>
                 </div>
             </div>
@@ -649,82 +1083,151 @@
             projectId: "fir-55206",
             storageBucket: "fir-55206.firebasestorage.app",
             messagingSenderId: "24586463698",
-            appId: "1:24586463698:web:8b2f21073295ef4382400b"
+            appId: "1:24586463698:web:8b2f21073295ef4382400b",
+            measurementId: "G-K676BWHYR4"
         };
-        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
         const db = firebase.database();
 
-        // --- BACKEND & STATE ---
+        // --- BACKEND URL ---
         const backendUrl = "https://snowman-adventure.onrender.com";
+
+        // --- GAME STATE VARIABLES ---
         let balance = 0;
+        let tapCount = 0; 
         let energy = 500;
         let maxEnergy = 500;
         let level = 1;
         let userId = "test_user_001"; 
         let isBotActive = false;
         let inventory = {};
-        let currentOutfit = "https://alamin12071985-a11y.github.io/cine-link/snowman.png"; // Default Image
+        let currentOutfit = 'outfit_1'; // Default
 
-        // --- OUTFIT DATA LIST ---
-        const outfits = [
-            // FREE (Level based)
-            { id: 'outfit_1', name: 'Starter Winter Pack', price: 0, levelReq: 1, img: 'https://alamin12071985-a11y.github.io/cine-link/Starter Winter Pack.png', desc: 'Royal Blue Jacket' },
-            { id: 'outfit_2', name: 'Aurora Gift Pack', price: 0, levelReq: 2, img: 'https://alamin12071985-a11y.github.io/cine-link/Aurora Gift Pack.png', desc: 'Violet Aurora Cape' },
-            { id: 'outfit_4', name: 'Arctic Tech Trial', price: 0, levelReq: 3, img: 'https://alamin12071985-a11y.github.io/cine-link/Arctic Tech Trial.png', desc: 'Ice-Mint Hoodie' },
-            { id: 'outfit_5', name: 'Cozy Winter Bundle', price: 0, levelReq: 4, img: 'https://alamin12071985-a11y.github.io/cine-link/Cozy Winter Bundle.png', desc: 'Red Scarf & Sweater' },
-            { id: 'outfit_6', name: 'Purple Style Access', price: 0, levelReq: 5, img: 'https://alamin12071985-a11y.github.io/cine-link/Purple Style Access.png', desc: 'Deep Purple Coat' },
-            // PREMIUM (Stars)
-            { id: 'outfit_3', name: 'Gold Explorer Pack', price: 59, levelReq: 1, img: 'https://alamin12071985-a11y.github.io/cine-link/Gold Explorer Pack.png', desc: 'Black & Gold Suit' },
-            { id: 'outfit_7', name: 'Emerald Adventure', price: 99, levelReq: 1, img: 'https://alamin12071985-a11y.github.io/cine-link/Emerald Adventure Pack.png', desc: 'Green Adventure Outfit' },
-            { id: 'outfit_8', name: 'Fantasy Royal Pack', price: 149, levelReq: 1, img: 'https://alamin12071985-a11y.github.io/cine-link/Fantasy Royal Pack.png', desc: 'White & Gold Armor' },
-            { id: 'outfit_9', name: 'Arctic Puffer Pack', price: 199, levelReq: 1, img: 'https://alamin12071985-a11y.github.io/cine-link/Arctic Puffer Pack.png', desc: 'Navy Puffer Jacket' },
-            { id: 'outfit_10', name: 'Crystal-Tech Master', price: 299, levelReq: 1, img: 'https://alamin12071985-a11y.github.io/cine-link/Crystal-Tech Master Pack.png', desc: 'Electric Ice Suit' }
-        ];
+        // --- NEW: OUTFIT DATA MAPPING ---
+        const baseUrl = "https://alamin12071985-a11y.github.io/cine-link/";
+        const outfitData = {
+            // FREE (Level Based)
+            'outfit_1': { name: "Starter Winter Pack", img: "Starter%20Winter%20Pack.png", type: 'free', req: 1, desc: "Lv1 Basic Jacket" },
+            'outfit_2': { name: "Aurora Gift Pack", img: "Aurora%20Gift%20Pack.png", type: 'free', req: 2, desc: "Lv2 Aurora Cape" },
+            'outfit_3': { name: "Arctic Tech Trial", img: "Arctic%20Tech%20Trial.png", type: 'free', req: 3, desc: "Lv3 Tech Hoodie" },
+            'outfit_4': { name: "Cozy Winter Bundle", img: "Cozy%20Winter%20Bundle.png", type: 'free', req: 4, desc: "Lv4 Warm Scarf" },
+            'outfit_5': { name: "Purple Style Access", img: "Purple%20Style%20Access.png", type: 'free', req: 5, desc: "Lv5 Purple Coat" },
+            
+            // PREMIUM (Paid)
+            'outfit_6': { name: "Gold Explorer Pack", img: "Gold%20Explorer%20Pack.png", type: 'prem', price: 59, desc: "Black & Gold Suit" },
+            'outfit_7': { name: "Emerald Adventure", img: "Emerald%20Adventure%20Pack.png", type: 'prem', price: 99, desc: "Green Detail" },
+            'outfit_8': { name: "Fantasy Royal Pack", img: "Fantasy%20Royal%20Pack.png", type: 'prem', price: 149, desc: "Royal Armor" },
+            'outfit_9': { name: "Arctic Puffer Pack", img: "Arctic%20Puffer%20Pack.png", type: 'prem', price: 199, desc: "Navy Puffer" },
+            'outfit_10': { name: "Crystal-Tech Master", img: "Crystal-Tech%20Master%20Pack.png", type: 'prem', price: 299, desc: "Electric Ice Suit" }
+        };
 
-        // --- TON CONNECT ---
+        // --- DOM ELEMENTS ---
+        const balanceDisplay = document.getElementById('displayBalance');
+        const energyDisplay = document.getElementById('energyDisplay');
+        const clickerBtn = document.getElementById('clickerBtn');
+        const headerName = document.getElementById('headerName');
+        const headerAvatar = document.getElementById('headerAvatar');
+        const headerLevelBar = document.getElementById('headerLevelBar');
+        const currentLevelHeader = document.getElementById('currentLevelHeader');
+        const levelNameHeader = document.getElementById('levelNameHeader');
+        const dailyRewardText = document.getElementById('dailyRewardAmount');
+
+        // --- TON CONNECT INITIALIZATION ---
         const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-            manifestUrl: 'https://alamin12071985-a11y.github.io/cine-link/tonconnect-manifest.json'
+            manifestUrl: 'https://alamin12071985-a11y.github.io/cine-link/tonconnect-manifest.json',
+            buttonRootId: null 
         });
 
-        // --- INIT ---
-        window.addEventListener('load', () => {
-            // Fake Loader
-            let p = 0;
-            const bar = document.getElementById('loadingFill');
-            const txt = document.getElementById('loadingPercent');
-            const screen = document.getElementById('loading-screen');
-            const int = setInterval(() => {
-                p += Math.floor(Math.random()*5)+1;
-                if(p>100) p=100;
-                bar.style.width = p+'%'; txt.innerText = p+'%';
-                if(p>=100) { clearInterval(int); setTimeout(() => { screen.style.opacity='0'; setTimeout(()=>screen.style.display='none',500); }, 500); }
-            }, 50);
+        tonConnectUI.onStatusChange(wallet => {
+            if(wallet) {
+                const btn = document.getElementById('connectWalletBtn');
+                btn.src = "https://alamin12071985-a11y.github.io/cine-link/connected%20wallet.png";
+            } else {
+                document.getElementById('connectWalletBtn').src = "https://alamin12071985-a11y.github.io/cine-link/connect%20wallet.png";
+            }
+        });
 
-            initTelegramUser();
+        async function connectWallet() {
+            try {
+                if(!tonConnectUI.connected) {
+                    await tonConnectUI.openModal();
+                }
+            } catch(e) {
+                console.error(e);
+            }
+        }
+
+        // --- LOADING & INIT ---
+        window.addEventListener('load', () => {
+            let loadPercent = 0;
+            const bar = document.getElementById('loadingFill');
+            const percentText = document.getElementById('loadingPercent');
+            const screen = document.getElementById('loading-screen');
+            
+            const interval = setInterval(() => {
+                loadPercent += Math.floor(Math.random() * 5) + 1;
+                if(loadPercent > 100) loadPercent = 100;
+                
+                bar.style.width = loadPercent + '%';
+                percentText.innerText = loadPercent + '%';
+
+                if(loadPercent >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        screen.style.opacity = '0';
+                        setTimeout(() => {
+                            screen.style.display = 'none';
+                        }, 500);
+                    }, 500);
+                }
+            }, 50);
+        });
+
+        function init() {
+            initTelegramUser(); 
             startSnowfall();
             loadUserData();
-            setInterval(() => { if(energy<maxEnergy){ energy++; updateUI(); } }, 1500);
+            
+            setInterval(() => {
+                if (energy < maxEnergy) {
+                    energy++;
+                    updateUI();
+                }
+            }, 1500);
+
             setInterval(saveUserData, 5000);
-        });
+        }
 
         function initTelegramUser() {
             try {
                 const tg = window.Telegram.WebApp;
-                tg.expand();
+                tg.expand(); 
                 const user = tg.initDataUnsafe.user;
                 if (user) {
-                    userId = user.id.toString();
-                    if(user.username) document.getElementById('headerName').innerText = user.username;
-                    if(user.photo_url) document.getElementById('headerAvatar').src = user.photo_url;
+                    userId = user.id.toString(); 
+                    if (user.username) headerName.innerText = user.username;
+                    else if (user.first_name) headerName.innerText = user.first_name;
+                    if (user.photo_url) headerAvatar.src = user.photo_url;
                 }
-            } catch(e) {}
+            } catch (e) {
+                console.log("Not running in Telegram");
+            }
         }
 
-        // --- DATA SYNC ---
         function saveUserData() {
             if(!userId) return;
             db.ref('users/' + userId).update({
-                balance, energy, level, inventory, currentOutfit, lastActive: Date.now()
+                balance: balance,
+                energy: energy,
+                tapCount: tapCount,
+                level: level,
+                isBotActive: isBotActive,
+                inventory: inventory, 
+                currentOutfit: currentOutfit,
+                lastActive: Date.now()
             });
         }
 
@@ -735,264 +1238,396 @@
                 if (data) {
                     balance = data.balance || 0;
                     energy = data.energy || 500;
+                    tapCount = data.tapCount || 0;
                     level = data.level || 1;
-                    inventory = data.inventory || {};
-                    currentOutfit = data.currentOutfit || "https://alamin12071985-a11y.github.io/cine-link/snowman.png";
+                    isBotActive = data.isBotActive || false;
+                    inventory = data.inventory || {}; 
+                    currentOutfit = data.currentOutfit || 'outfit_1';
+
+                    // Default Unlock Outfit 1
+                    inventory['outfit_1'] = true;
+
+                    updateUI();
+                    updateCharacter();
+                    renderStore(); // NEW: Render store on load
+                    checkDailyRewardStatus();
+                    fetchTasksFromFirebase();
+                } else {
+                    inventory['outfit_1'] = true;
+                    updateUI();
+                    updateCharacter();
+                    checkDailyRewardStatus();
+                    fetchTasksFromFirebase();
                 }
-                updateUI();
-                renderStore(); 
-                fetchTasksFromFirebase();
             });
         }
 
+        function startSnowfall() {
+            const container = document.getElementById('snowContainer');
+            const styleSheet = document.createElement("style");
+            styleSheet.innerText = `@keyframes fall { 0% { transform: translateY(-10px); opacity: 0.8; } 100% { transform: translateY(300px); opacity: 0; } }`;
+            document.head.appendChild(styleSheet);
+
+            setInterval(() => {
+                const flake = document.createElement('div');
+                flake.style.position = 'absolute';
+                flake.style.background = 'white';
+                flake.style.borderRadius = '50%';
+                flake.style.opacity = '0.8';
+                flake.style.pointerEvents = 'none';
+                flake.style.animation = 'fall linear infinite';
+                const size = Math.random() * 4 + 2 + 'px';
+                flake.style.width = size;
+                flake.style.height = size;
+                flake.style.left = Math.random() * 90 + 5 + '%';
+                flake.style.animationDuration = Math.random() * 3 + 3 + 's';
+                container.appendChild(flake);
+                setTimeout(() => { flake.remove(); }, 5000);
+            }, 600); 
+        }
+
         function updateUI() {
-            document.getElementById('displayBalance').innerText = Math.floor(balance).toLocaleString();
-            document.getElementById('energyDisplay').innerText = Math.floor(energy);
-            document.getElementById('clickerBtn').src = currentOutfit;
-            
-            // Level Logic
+            balanceDisplay.innerText = Math.floor(balance).toLocaleString();
+            energyDisplay.innerText = Math.floor(energy);
+
             let nextLevelThreshold = 4000 + ((level - 1) * 8000);
             let prevLevelThreshold = level === 1 ? 0 : (4000 + ((level - 2) * 8000));
+            
             let progress = balance - prevLevelThreshold;
             let range = nextLevelThreshold - prevLevelThreshold;
             let percentage = (progress / range) * 100;
 
-            if (percentage >= 100) { level++; percentage = 0; showGlassPopup(`<h2>Level Up!</h2><p>You are now Lvl ${level}</p><button class="popup-btn" onclick="closeGlassPopup()">OK</button>`); }
-            
-            document.getElementById('levelNameHeader').innerText = "LVL " + level;
-            document.getElementById('currentLevelHeader').innerText = level;
-            document.getElementById('headerLevelBar').style.width = Math.min(percentage, 100) + '%';
+            if (percentage >= 100) {
+                level++;
+                percentage = 0;
+                showLevelUpPopup(level);
+            }
+
+            // AUTO UNLOCK FREE OUTFITS BY LEVEL
+            for(let i=1; i<=5; i++) {
+                if(level >= i && !inventory[`outfit_${i}`]) {
+                    inventory[`outfit_${i}`] = true;
+                }
+            }
+
+            levelNameHeader.innerText = "LVL " + level;
+            currentLevelHeader.innerText = level;
+            headerLevelBar.style.width = `${Math.min(percentage, 100)}%`;
         }
 
-        // --- GAMEPLAY ---
-        document.getElementById('clickerBtn').addEventListener('click', (e) => {
-            if (energy > 0) {
-                balance++; energy--;
-                updateUI();
-                const el = document.createElement('div');
-                el.className = 'floating-score'; el.innerText = '+1';
-                el.style.left = e.clientX + 'px'; el.style.top = e.clientY + 'px';
-                document.body.appendChild(el);
-                setTimeout(() => el.remove(), 800);
-            }
-        });
+        // --- NEW: CHARACTER UPDATE ---
+        function updateCharacter() {
+            const outfit = outfitData[currentOutfit] || outfitData['outfit_1'];
+            document.getElementById('clickerBtn').src = baseUrl + outfit.img;
+        }
 
-        // --- STORE LOGIC (DYNAMIC) ---
+        // --- NEW: RENDER STORE UI ---
         function renderStore() {
-            const container = document.getElementById('outfitStore');
-            container.innerHTML = `
-                <div class="boost-section-title">
-                    <img src="https://alamin12071985-a11y.github.io/cine-link/star.png" width="20"> Premium Outfits
-                </div>
-                <p style="font-size:0.7rem; opacity:0.7; margin-bottom:10px;">Buy outfits to change your look!</p>
-            `;
+            const freeList = document.getElementById('freeOutfitsList');
+            const premList = document.getElementById('premiumOutfitsList');
+            freeList.innerHTML = ''; premList.innerHTML = '';
 
-            outfits.forEach(item => {
-                const isOwned = inventory[item.id];
-                const isEquipped = currentOutfit === item.img;
-                
-                let btnHTML = '';
-                if (isEquipped) {
-                    btnHTML = `<div class="boost-price-btn btn-activate" style="border-color:#ccc; opacity:0.7;"><span class="boost-price-val" style="color:#fff">EQUIPPED</span></div>`;
+            for (const [id, data] of Object.entries(outfitData)) {
+                const isOwned = inventory[id];
+                const isActive = currentOutfit === id;
+                let btnHtml = '';
+
+                if (isActive) {
+                    btnHtml = `<div class="boost-price-btn active-btn">Active</div>`;
                 } else if (isOwned) {
-                    btnHTML = `<div class="boost-price-btn btn-activate" onclick="equipOutfit('${item.id}')"><span class="boost-price-val">EQUIP</span></div>`;
+                    btnHtml = `<div class="boost-price-btn active-btn" onclick="equipOutfit('${id}')">ACTIVATE</div>`;
                 } else {
-                    if (item.price === 0) {
-                        // FREE LOGIC
-                        if (level >= item.levelReq) {
-                            btnHTML = `<div class="boost-price-btn" onclick="claimFreeItem('${item.id}')"><span class="boost-price-val" style="color:#00E676">FREE</span></div>`;
+                    if (data.type === 'free') {
+                        if (level >= data.req) {
+                            btnHtml = `<div class="boost-price-btn active-btn" onclick="equipOutfit('${id}')">ACTIVATE</div>`;
                         } else {
-                            btnHTML = `<div class="boost-price-btn" style="opacity:0.5"><span class="boost-price-val">Lvl ${item.levelReq}</span></div>`;
+                            btnHtml = `<div class="boost-price-btn locked-btn">Lvl ${data.req}</div>`;
                         }
                     } else {
-                        // PAID LOGIC
-                        btnHTML = `<div class="boost-price-btn" onclick="buyItem(this, '${item.id}', ${item.price})"><img src="https://alamin12071985-a11y.github.io/cine-link/star.png" width="14"><span class="boost-price-val">${item.price}</span></div>`;
+                        btnHtml = `<div class="boost-price-btn" onclick="buyItem(this, '${id}', ${data.price})">
+                            <img src="${baseUrl}star.png"> ${data.price}
+                        </div>`;
                     }
                 }
 
-                const div = document.createElement('div');
-                div.className = 'boost-item';
-                div.innerHTML = `
-                    <div style="display:flex; align-items:center;">
-                        <img src="${item.img}" class="outfit-thumb">
+                const html = `
+                    <div class="boost-item">
+                        <img src="${baseUrl}${data.img}" class="boost-thumb">
                         <div class="boost-info">
-                            <span class="boost-name">${item.name}</span>
-                            <div class="boost-desc-small">${item.desc}</div>
+                            <span class="boost-name">${data.name}</span>
+                            <div class="boost-desc-small">${data.desc}</div>
                         </div>
+                        ${btnHtml}
                     </div>
-                    ${btnHTML}
                 `;
-                container.appendChild(div);
-            });
-        }
 
-        function claimFreeItem(id) {
-            inventory[id] = true; saveUserData(); renderStore();
-            showGlassPopup(`<h2>Claimed!</h2><p>You got a new outfit.</p><button class="popup-btn" onclick="closeGlassPopup()">OK</button>`);
+                if(data.type === 'prem') premList.innerHTML += html;
+                else freeList.innerHTML += html;
+            }
         }
 
         function equipOutfit(id) {
-            const item = outfits.find(o => o.id === id);
-            if(item) {
-                currentOutfit = item.img; saveUserData(); updateUI(); renderStore();
-                showGlassPopup(`<h2>Equipped</h2><p>You look great!</p><button class="popup-btn" onclick="closeGlassPopup()">Nice</button>`);
+            currentOutfit = id;
+            updateCharacter();
+            renderStore();
+            saveUserData();
+            const html = `
+                <div class="popup-title">Equipped!</div>
+                <div class="popup-msg">You are now wearing ${outfitData[id].name}.</div>
+                <button class="popup-btn" onclick="closeGlassPopup()">Awesome</button>
+            `;
+            showGlassPopup(html);
+        }
+
+        function showGlassPopup(contentHTML) {
+            const popup = document.getElementById('glassPopup');
+            const content = document.getElementById('popupContent');
+            content.innerHTML = contentHTML;
+            popup.classList.add('active');
+        }
+
+        function closeGlassPopup() {
+            document.getElementById('glassPopup').classList.remove('active');
+        }
+
+        function showLevelUpPopup(newLevel) {
+            const html = `
+                <img src="https://alamin12071985-a11y.github.io/cine-link/reward.png" class="popup-badge" alt="Badge">
+                <div style="font-size: 3rem; font-weight: 900; color: #FFD700; margin-bottom: 5px;">${newLevel}</div>
+                <div class="popup-title">Congratulations!</div>
+                <div style="color: white; font-weight: 700; margin-bottom: 5px;">You have leveled up</div>
+                <button class="popup-btn" onclick="closeGlassPopup()">Great!</button>
+            `;
+            showGlassPopup(html);
+        }
+
+        function openExchangePopup() {
+            const html = `
+                <div style="margin-top:20px;">
+                    <div class="hourglass-icon"><i class="fas fa-hourglass-half"></i></div>
+                </div>
+                <div class="popup-title">Exchange Tokens</div>
+                <div style="height:10px;"></div>
+                <div style="font-weight:700; font-size:1.1rem; color:white; margin-bottom:10px; line-height:1.4;">The Exchange Tokens Market Available Soon!</div>
+                <div class="popup-msg">Stay Tuned for Upcoming Updates.</div>
+                <button class="popup-btn" style="background:transparent; border:1px solid rgba(255,255,255,0.3); color:white;" onclick="closeGlassPopup()">Close</button>
+            `;
+            showGlassPopup(html);
+        }
+
+        function checkDailyRewardStatus() {
+            const lastReward = localStorage.getItem('lastRewardDate');
+            const today = new Date().toDateString();
+            if (lastReward === today) {
+                dailyRewardText.innerText = "Claimed";
             }
         }
 
-        async function buyItem(btn, itemId, price) {
-            if (!window.Telegram.WebApp.initData) return;
-            const original = btn.innerHTML;
-            btn.innerHTML = "...";
+        function claimDailyReward() {
+            const lastReward = localStorage.getItem('lastRewardDate');
+            const today = new Date().toDateString();
+
+            if (lastReward === today) {
+                const html = `
+                    <div class="popup-title">Already Claimed</div>
+                    <div class="popup-msg">Come back tomorrow!</div>
+                    <button class="popup-btn" onclick="closeGlassPopup()">OK</button>
+                `;
+                showGlassPopup(html);
+                return;
+            }
+
+            balance += 500;
+            localStorage.setItem('lastRewardDate', today);
             
-            let itemName = "Boost";
-            let itemDesc = "Purchase";
-            const outfit = outfits.find(o => o.id === itemId);
-            if(outfit) { itemName = outfit.name; itemDesc = outfit.desc; }
-
-            try {
-                const res = await fetch(`${backendUrl}/generate-invoice`, {
-                    method: 'POST',
-                    headers: {'Content-Type':'application/json'},
-                    body: JSON.stringify({ user_id: userId, item_id: itemId, amount: price, title: itemName, description: itemDesc })
-                });
-                const data = await res.json();
-                
-                Telegram.WebApp.openInvoice(data.invoice_link, (status) => {
-                    if(status === 'paid') {
-                        inventory[itemId] = true; saveUserData(); renderStore();
-                        showGlassPopup(`<h2>Success!</h2><p>You bought ${itemName}</p><button class="popup-btn" onclick="closeGlassPopup()">OK</button>`);
-                    }
-                    btn.innerHTML = original;
-                });
-            } catch(e) {
-                btn.innerHTML = original;
-                console.error(e);
-            }
-        }
-
-        function handleStoreClick(btn, itemId, price) {
-            // Handler for boosts (not outfits)
-            if(inventory[itemId]) {
-                // Activate
-                if(itemId.includes('energy')) energy = maxEnergy;
-                delete inventory[itemId];
-                saveUserData(); updateUI();
-                showGlassPopup(`<h2>Activated</h2><button class="popup-btn" onclick="closeGlassPopup()">OK</button>`);
-            } else {
-                buyItem(btn, itemId, price);
-            }
-        }
-
-        // --- LOTTERY ---
-        function openLottery() { document.getElementById('lotteryModal').classList.add('active'); }
-        function closeLottery() { document.getElementById('lotteryModal').classList.remove('active'); }
-
-        async function playLottery() {
-            const btn = document.getElementById('lotterySpinBtn');
-            btn.innerHTML = "Processing...";
-            try {
-                const res = await fetch(`${backendUrl}/generate-invoice`, {
-                    method: 'POST', headers: {'Content-Type':'application/json'},
-                    body: JSON.stringify({ user_id: userId, item_id: "lottery_spin", amount: 15, title: "Lottery Spin", description: "Chance to win Jackpot" })
-                });
-                const data = await res.json();
-                Telegram.WebApp.openInvoice(data.invoice_link, (status) => {
-                    if(status === 'paid') {
-                        btn.style.display = 'none';
-                        startLotteryAnimation();
-                    } else {
-                        btn.innerHTML = 'Spin (15 Stars)';
-                    }
-                });
-            } catch(e) { btn.innerHTML = 'Spin (15 Stars)'; }
-        }
-
-        function startLotteryAnimation() {
-            const items = document.querySelectorAll('.grid-item');
-            const path = [0, 1, 2, 5, 8, 7, 6, 3]; // Outer circle
-            let currentStep = 0; let speed = 50; 
-            const winJackpot = Math.random() < 0.05; // 5% Chance
+            dailyRewardText.innerText = "Claimed";
+            saveUserData(); 
+            updateUI();
             
-            function step() {
-                items.forEach(i => i.classList.remove('active'));
-                let visualIndex = path[currentStep % path.length];
-                items[visualIndex].classList.add('active');
-                currentStep++;
+            const html = `
+                <img src="https://alamin12071985-a11y.github.io/cine-link/reward.png" width="60" style="margin-bottom:10px;">
+                <div class="popup-title">Daily Reward</div>
+                <div class="popup-msg">You received +500 Coins!</div>
+                <button class="popup-btn" onclick="closeGlassPopup()">Awesome</button>
+            `;
+            showGlassPopup(html);
+        }
+
+        function goToSpinPage() {
+            // Keep existing spin page functionality if needed, but menu directs to Lottery now
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.getElementById('spinPage').classList.add('active');
+            document.getElementById('mainHeader').style.display = 'none';
+        }
+
+        function doSpin() {
+            // Existing Spin Logic (Kept as backup)
+            const wheel = document.getElementById('wheel');
+            const deg = Math.floor(5000 + Math.random() * 5000); 
+            wheel.style.transition = 'transform 10s cubic-bezier(0.1, 0.7, 0.1, 1)';
+            wheel.style.transform = `rotate(${deg}deg)`;
+            
+            setTimeout(() => {
+                const won = Math.floor(Math.random() * 500) + 100;
+                balance += won;
+                saveUserData(); 
+                updateUI();
+                const html = `<div class="popup-title">You Won!</div><div class="popup-msg">+${won} Coins</div><button class="popup-btn" onclick="closeGlassPopup()">Collect</button>`;
+                showGlassPopup(html);
+                wheel.style.transition = 'none';
+                wheel.style.transform = `rotate(${deg % 360}deg)`;
+            }, 10000); 
+        }
+
+        clickerBtn.addEventListener('touchstart', handleTap, {passive: false});
+        clickerBtn.addEventListener('click', handleTap);
+
+        function handleTap(e) {
+            e.preventDefault(); 
+            if (energy > 0) {
+                balance++;
+                tapCount++; 
+                energy--;
+                updateUI(); 
                 
-                if(currentStep > 30) speed += 10;
-                
-                if(currentStep > 50) {
-                    items.forEach(i => i.classList.remove('active'));
-                    if(winJackpot) {
-                        document.getElementById('cCenter').classList.add('active');
-                        inventory['outfit_10'] = true;
-                        showGlassPopup(`<h2>JACKPOT!</h2><p>You won the Crystal-Tech Master Pack!</p><button class="popup-btn" onclick="closeGlassPopup()">WOW</button>`);
-                    } else {
-                        let finalIdx = path[Math.floor(Math.random() * path.length)];
-                        items[finalIdx].classList.add('active');
-                        let txt = items[finalIdx].querySelector('span').innerText;
-                        let amt = parseInt(txt);
-                        balance += amt;
-                        showGlassPopup(`<h2>Won!</h2><p>+${amt} Coins</p><button class="popup-btn" onclick="closeGlassPopup()">Collect</button>`);
-                    }
-                    saveUserData(); updateUI();
-                    document.getElementById('lotterySpinBtn').style.display = 'block';
-                    document.getElementById('lotterySpinBtn').innerHTML = 'Spin Again (15 Stars)';
-                    return;
+                let clientX = e.clientX;
+                let clientY = e.clientY;
+                if(e.touches && e.touches.length > 0) {
+                    clientX = e.touches[0].clientX;
+                    clientY = e.touches[0].clientY;
                 }
-                setTimeout(step, speed);
+                if (!clientX) {
+                    const rect = e.target.getBoundingClientRect();
+                    clientX = rect.left + rect.width / 2;
+                    clientY = rect.top + rect.height / 2;
+                }
+                showFloatingText(clientX, clientY);
+                if (navigator.vibrate) navigator.vibrate(10);
             }
-            step();
         }
 
-        // --- UTILS ---
-        function switchTab(id, el) {
-            document.querySelectorAll('.tab-content').forEach(d => d.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            if(el) {
-                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-                el.classList.add('active');
+        function showFloatingText(x, y) {
+            const floatEl = document.createElement('div');
+            floatEl.className = 'floating-score';
+            floatEl.innerText = '+1';
+            floatEl.style.left = `${x}px`;
+            floatEl.style.top = `${y}px`;
+            document.body.appendChild(floatEl);
+            setTimeout(() => floatEl.remove(), 800);
+        }
+
+        function switchTab(tabId, navElement) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            
+            if(navElement) {
+                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+                navElement.classList.add('active');
             }
-            if(id === 'home') {
+
+            if(tabId === 'home') {
                 document.body.classList.add('home-active');
-                document.getElementById('mainHeader').style.display='flex';
+                document.getElementById('mainHeader').style.display = 'flex';
             } else {
                 document.body.classList.remove('home-active');
-                document.getElementById('mainHeader').style.display='none';
+                document.getElementById('mainHeader').style.display = 'none';
+            }
+        }
+        
+        function openBoostPage() {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.getElementById('boostPage').classList.add('active');
+            document.getElementById('mainHeader').style.display = 'none';
+            document.body.classList.remove('home-active');
+            renderStore(); 
+        }
+
+        // --- PAYMENT FUNCTION (Updated to support Backend) ---
+        async function buyItem(btnElement, itemId, price) {
+            if (!window.Telegram.WebApp.initData) {
+                const html = `<div class="popup-title">Error</div><div class="popup-msg">Please open in Telegram</div><button class="popup-btn" onclick="closeGlassPopup()">OK</button>`;
+                showGlassPopup(html);
+                return;
+            }
+
+            const originalContent = btnElement.innerHTML;
+            btnElement.innerHTML = `Wait...`;
+            btnElement.style.pointerEvents = "none";
+
+            let itemName = outfitData[itemId] ? outfitData[itemId].name : "Premium Item";
+            
+            try {
+                const response = await fetch(`${backendUrl}/generate-invoice`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        user_id: userId, 
+                        item_id: itemId, 
+                        amount: price,
+                        title: itemName,
+                        description: "Purchase from Snowman Store"
+                    })
+                });
+
+                if (!response.ok) throw new Error("Invoice generation failed");
+                const data = await response.json();
+
+                Telegram.WebApp.openInvoice(data.invoice_link, function(status) {
+                    if (status === 'paid') {
+                        inventory[itemId] = true;
+                        saveUserData();
+                        updateUI();
+                        renderStore();
+                        const html = `<div class="popup-title">Success!</div><div class="popup-msg">Item Purchased. Go Activate it!</div><button class="popup-btn" onclick="closeGlassPopup()">Awesome</button>`;
+                        showGlassPopup(html);
+                    } else {
+                        // Cancelled or Failed
+                    }
+                    btnElement.innerHTML = originalContent;
+                    btnElement.style.pointerEvents = "auto";
+                });
+
+            } catch (error) {
+                console.error(error);
+                btnElement.innerHTML = originalContent;
+                btnElement.style.pointerEvents = "auto";
             }
         }
 
-        function showGlassPopup(html) {
-            const p = document.getElementById('glassPopup');
-            document.getElementById('popupContent').innerHTML = html;
-            p.style.display = 'flex';
-        }
-        function closeGlassPopup() {
-            document.getElementById('glassPopup').style.display = 'none';
-        }
-
-        function startSnowfall() {
-            const c = document.getElementById('snowContainer');
-            setInterval(() => {
-                const f = document.createElement('div');
-                f.style.cssText = `position:absolute; background:white; border-radius:50%; width:3px; height:3px; top:-5px; opacity:0.8; pointer-events:none; left:${Math.random()*100}%; transition: top 3s linear;`;
-                c.appendChild(f);
-                setTimeout(() => { f.style.top = '100%'; }, 50);
-                setTimeout(() => f.remove(), 3000);
-            }, 800);
+        async function buyBoost(itemId, price, btn) {
+            // Reusing buyItem for boosts simple implementation
+            buyItem(btn, itemId, price);
         }
 
         function fetchTasksFromFirebase() {
             const list = document.getElementById('taskList');
             db.ref('tasks').on('value', (snapshot) => {
+                list.innerHTML = ''; 
                 const data = snapshot.val();
                 if (!data) return;
-                list.innerHTML = '';
                 Object.keys(data).forEach(key => {
-                    const t = data[key];
-                    list.innerHTML += `<div class="task-card" onclick="balance+=${t.reward};saveUserData();updateUI();showGlassPopup('<h2>Done</h2><p>+${t.reward}</p><button class=popup-btn onclick=closeGlassPopup()>OK</button>')">
-                        <div style="display:flex;align-items:center;gap:15px;"><i class="${t.icon||'fas fa-star'}" style="color:#00E5FF"></i><div><h4>${t.title}</h4><span style="color:#00E5FF">+${t.reward}</span></div></div>
-                        <i class="fas fa-chevron-right"></i></div>`;
+                    const task = data[key];
+                    const item = document.createElement('div');
+                    item.className = 'task-card';
+                    item.onclick = () => {
+                         balance += parseInt(task.reward || 0);
+                         saveUserData();
+                         updateUI();
+                         const html = `<div class="popup-title">Task Done</div><div class="popup-msg">Reward Added!</div><button class="popup-btn" onclick="closeGlassPopup()">OK</button>`;
+                         showGlassPopup(html);
+                    };
+                    const iconClass = task.icon || 'fas fa-star'; 
+                    item.innerHTML = `
+                        <div style="display:flex; align-items:center; gap:15px;">
+                            <div class="task-icon"><i class="${iconClass}"></i></div>
+                            <div class="task-info">
+                                <h4 style="margin:0; font-size:0.9rem; color:var(--text-light)">${task.title}</h4>
+                                <span style="font-size:0.8rem; color:var(--accent-cyan)">+${parseInt(task.reward).toLocaleString()}</span>
+                            </div>
+                        </div>
+                        <div style="color:var(--text-light); opacity:0.5;"><i class="fas fa-chevron-right"></i></div>
+                    `;
+                    list.appendChild(item);
                 });
             });
         }
@@ -1000,39 +1635,127 @@
         function inviteFriend() {
             const url = "https://t.me/thesnowmanbot?start=" + userId;
             navigator.clipboard.writeText(url);
-            showGlassPopup(`<h2>Link Copied</h2><p>${url}</p><button class="popup-btn" onclick="closeGlassPopup()">OK</button>`);
+            const html = `
+                <div class="popup-title">Link Copied</div>
+                <div class="popup-msg">${url}</div>
+                <button class="popup-btn" onclick="closeGlassPopup()">OK</button>
+            `;
+            showGlassPopup(html);
         }
 
-        function connectWallet() { tonConnectUI.openModal(); }
-        function openBoostPage() { switchTab('boostPage'); }
-        function goToSpinPage() { switchTab('spinPage'); }
-        function handleStartMining() { 
-            if(isBotActive) showGlassPopup(`<h2>Bot Active</h2><p>Auto bot is mining!</p><button class="popup-btn" onclick="closeGlassPopup()">OK</button>`);
-            else openBoostPage();
+        // --- NEW: LOTTERY LOGIC ---
+        const lotteryItems = [
+            { val: "100 Coin", img: "coin.png" }, 
+            { val: "50 Coin", img: "coin.png" }, 
+            { val: "200 Coin", img: "coin.png" },
+            { val: "500 Coin", img: "coin.png" }, 
+            { val: "JACKPOT", img: "Crystal-Tech%20Master%20Pack.png", isCenter: true }, // CENTER PRIZE
+            { val: "20 Coin", img: "coin.png" },
+            { val: "1000 Coin", img: "coin.png" }, 
+            { val: "10 Coin", img: "coin.png" }, 
+            { val: "150 Coin", img: "coin.png" }
+        ];
+        // Path around the center: 0->1->2->5->8->7->6->3 -> loop
+        const prizePath = [0, 1, 2, 5, 8, 7, 6, 3]; 
+
+        function openLotteryModal() {
+            document.getElementById('lotteryModal').style.display = 'flex';
+            const grid = document.getElementById('lotteryGrid');
+            grid.innerHTML = '';
+            lotteryItems.forEach((item, i) => {
+                const cls = item.isCenter ? "lottery-cell lottery-center" : "lottery-cell";
+                grid.innerHTML += `<div class="${cls}" id="cell-${i}">
+                    <img src="${baseUrl}${item.img}">
+                    <span>${item.val}</span>
+                </div>`;
+            });
         }
-        function openExchangePopup() { showGlassPopup(`<h2>Exchange</h2><p>Coming Soon</p><button class="popup-btn" onclick="closeGlassPopup()">Close</button>`); }
-        function claimDailyReward() {
-            const last = localStorage.getItem('lastReward');
-            const today = new Date().toDateString();
-            if(last === today) { showGlassPopup(`<h2>Claimed</h2><p>Come back tomorrow</p><button class="popup-btn" onclick="closeGlassPopup()">OK</button>`); return; }
-            balance += 500; localStorage.setItem('lastReward', today);
-            document.getElementById('dailyRewardAmount').innerText = "Claimed";
-            saveUserData(); updateUI();
-            showGlassPopup(`<h2>Reward</h2><p>+500 Coins</p><button class="popup-btn" onclick="closeGlassPopup()">OK</button>`);
+        function closeLotteryModal() { document.getElementById('lotteryModal').style.display = 'none'; }
+
+        async function buyLotterySpin() {
+            const btn = document.getElementById('lotterySpinBtn');
+            const orig = btn.innerHTML;
+            btn.innerHTML = "Processing...";
+            
+            try {
+                const res = await fetch(`${backendUrl}/generate-invoice`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        user_id: userId, item_id: 'lottery_spin', amount: 15,
+                        title: "Lottery Spin", description: "Spin for Crystal Tech Pack"
+                    })
+                });
+                const data = await res.json();
+                Telegram.WebApp.openInvoice(data.invoice_link, function(status) {
+                    if (status === 'paid') {
+                        startSpin();
+                    }
+                    btn.innerHTML = orig;
+                });
+            } catch(e) {
+                console.error(e);
+                btn.innerHTML = orig;
+            }
         }
 
-        function doSpin() {
-            // Basic spin simulation from your old code
-            const wheel = document.getElementById('wheel');
-            const deg = Math.floor(5000 + Math.random() * 5000);
-            wheel.style.transform = `rotate(${deg}deg)`;
-            setTimeout(() => {
-                const won = 100 + Math.floor(Math.random()*500);
-                balance += won; saveUserData(); updateUI();
-                showGlassPopup(`<h2>You Won</h2><p>+${won} Coins</p><button class="popup-btn" onclick="closeGlassPopup()">OK</button>`);
-            }, 4000);
+        function startSpin() {
+            let pathIdx = 0;
+            let rounds = 0;
+            let speed = 50;
+            
+            // Logic: 5% chance to win Center (Index 4), else random outer path
+            const winCenter = Math.random() < 0.05 && !inventory['outfit_10'];
+            const winTarget = winCenter ? 4 : prizePath[Math.floor(Math.random() * prizePath.length)];
+            
+            const cells = document.querySelectorAll('.lottery-cell');
+            
+            function step() {
+                cells.forEach(c => c.classList.remove('active'));
+                
+                // Highlight current path cell
+                const currentGridIdx = prizePath[pathIdx];
+                document.getElementById(`cell-${currentGridIdx}`).classList.add('active');
+                
+                pathIdx++;
+                if(pathIdx >= prizePath.length) { pathIdx = 0; rounds++; }
+                
+                if(rounds > 3) {
+                    // Check stopping condition
+                    if (winCenter) {
+                         // Stop loop, flash center
+                         cells.forEach(c => c.classList.remove('active'));
+                         document.getElementById('cell-4').classList.add('active');
+                         setTimeout(() => endLottery(4), 500);
+                         return;
+                    } else if (currentGridIdx === winTarget) {
+                        endLottery(winTarget);
+                        return;
+                    }
+                }
+                // Slow down
+                setTimeout(step, speed + (rounds*10));
+            }
+            step();
         }
 
+        function endLottery(idx) {
+            if(idx === 4) {
+                inventory['outfit_10'] = true; // Unlock the Master Pack
+                saveUserData();
+                renderStore();
+                alert("JACKPOT! You won the Crystal-Tech Master Pack!");
+            } else {
+                const txt = lotteryItems[idx].val;
+                const amt = parseInt(txt);
+                balance += amt;
+                saveUserData();
+                updateUI();
+                alert("You won " + txt);
+            }
+        }
+
+        init();
     </script>
 </body>
 </html>
